@@ -1,6 +1,6 @@
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages';
-const MODEL = 'claude-opus-4-5';
+const MODEL = 'claude-opus-4-7';
 
 const PROMPTS = {
 
@@ -123,8 +123,9 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     const text = data.content?.[0]?.text || '';
+    const cleaned = text.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '').trim();
     try {
-      return res.status(200).json({ ok: true, result: JSON.parse(text) });
+      return res.status(200).json({ ok: true, result: JSON.parse(cleaned) });
     } catch {
       return res.status(200).json({ ok: true, result: text });
     }
