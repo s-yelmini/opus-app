@@ -388,6 +388,8 @@ body {
   font-size: 0.62rem; color: var(--text-3); background: var(--surface3);
   padding: 1px 6px; border-radius: 4px; flex-shrink: 0; margin-left: 8px;
 }
+.row-day-badge.badge-today { color: var(--accent); background: var(--accent-soft); }
+.row-day-badge.badge-tomorrow { color: var(--text-2); }
 .row-actions { display: flex; gap: 3px; opacity: 0; transition: opacity 0.1s; margin-left: 6px; }
 .task-row:hover .row-actions { opacity: 1; }
 .row-action-btn {
@@ -526,7 +528,7 @@ body {
   transition: all 0.1s; text-align: center; line-height: 1.4;
 }
 .day-mini-btn:hover { background: var(--surface3); color: var(--text-2); }
-.day-mini-btn.selected { background: var(--accent); border-color: var(--accent); color: white; }
+.day-mini-btn.selected { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 .day-mini-btn.today-d { border-color: var(--accent-border); color: var(--accent); }
 
 /* Detail footer */
@@ -1742,7 +1744,7 @@ function esc(s) {
 // ── DATE HELPERS ──
 function today() { const d = new Date(); d.setHours(0,0,0,0); return d; }
 function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate()+n); return r; }
-function toKey(d) { return d.toISOString().split('T')[0]; }
+function toKey(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 
 function getWeekDays(offset) {
   const base = today(), dow = base.getDay();
@@ -2168,7 +2170,7 @@ function renderGroup(label, statusClass, items, key) {
       <div class="row-priority"><div class="priority-icon" style="background:${PM[t.priority].color}"></div></div>
       <span class="row-id">TSK-${String(t.id).padStart(3,'0')}</span>
       <span class="row-text">${esc(t.text)}${getTodayDot(t)}</span>
-      ${t.day?`<span class="row-day-badge">${t.day.slice(5)}</span>`:''}
+      ${t.day?`<span class="row-day-badge ${t.day===toKey(today())?'badge-today':t.day===toKey(addDays(today(),1))?'badge-tomorrow':''}">${t.day===toKey(today())?'Hoy':t.day===toKey(addDays(today(),1))?'Mañana':t.day===toKey(addDays(today(),-1))?'Ayer':t.day.slice(5)}</span>`:''}
       <div class="row-actions">
         <button class="row-action-btn" onclick="event.stopPropagation();deleteTask(${t.id})">✕</button>
       </div>
