@@ -1428,7 +1428,6 @@ input:focus, textarea:focus, select:focus {
       <button class="nav-item" id="nav-mood" onclick="switchView('mood'); setNavActive(this)">
         <span>◑</span> Mood
       </button>
-      <div id="sidebar-habits-widget" style="padding:4px 8px 6px"></div>
     </div>
   </nav>
 </div>
@@ -1769,6 +1768,9 @@ let savedViews = JSON.parse(localStorage.getItem('saved_views_v1') || '[]');
 let moodEntries = JSON.parse(localStorage.getItem('mood_v1') || '{}');
 let moodSubView = 'checkin';
 let moodDraft = null;
+let moodCheckinDate = null;
+let moodTrendAnalysis = null;
+let moodTrendLoading = false;
 let selectedIds = new Set(); // multi-select
 let counter  = parseInt(localStorage.getItem('tasks_v4_c') || '1');
 let currentView  = 'list';
@@ -1971,7 +1973,7 @@ function switchView(v) {
   if (v==='triage')     { renderTriage(); setTimeout(()=>{ const inp=el('triage-inbox-input'); if(inp) inp.focus(); }, 80); }
   if (v==='list')       renderList();
   if (v==='week')       renderWeek();
-  if (v==='mood')       { moodSubView='checkin'; initMoodDraft(); renderMood(); }
+  if (v==='mood')       { moodCheckinDate=toKey(today()); moodSubView='checkin'; initMoodDraft(); renderMood(); }
 
   updateBadges();
   updateTriageBadge();
@@ -3938,12 +3940,23 @@ function getMoodSorted(n) {
 }
 
 function initMoodDraft() {
-  const key = toKey(today()), ex = moodEntries[key];
+  const key = moodCheckinDate || toKey(today()), ex = moodEntries[key];
   moodDraft = ex ? {...ex} : {
     moodScore:null, energyScore:null, sleepHours:null, sleepQuality:null,
     anxietyScore:null, impulsivityScore:null, medicationTaken:null,
     medicationNotes:'', exercise:null, alcohol:null, caffeineLevel:null, note:''
   };
+}
+
+function shiftMoodDay(delta) {
+  captureTextDraft();
+  const d = new Date((moodCheckinDate||toKey(today()))+'T00:00:00');
+  d.setDate(d.getDate()+delta);
+  const newKey = toKey(d);
+  if (newKey > toKey(today())) return;
+  moodCheckinDate = newKey;
+  initMoodDraft();
+  renderMoodContent();
 }
 
 function captureTextDraft() {
@@ -3979,7 +3992,7 @@ function saveMoodCheckin() {
     if (s) { s.style.outline='1.5px solid var(--accent)'; setTimeout(()=>s.style.outline='',1800); }
     return;
   }
-  const key = toKey(today()), now = new Date().toISOString();
+  const key = moodCheckinDate||toKey(today()), now = new Date().toISOString();
   moodEntries[key] = {...moodDraft, date:key, createdAt:moodEntries[key]?.createdAt||now, updatedAt:now};
   saveMoodData();
   renderMoodContent();
@@ -4044,14 +4057,33 @@ function detectMoodPatterns() {
   return alerts;
 }
 
+const DAY_NAMES_ES = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+const MONTHS_ES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
 function renderMoodCheckinForm() {
   if (!moodDraft) initMoodDraft();
-  const d = moodDraft, key = toKey(today()), saved = !!moodEntries[key];
+  const d = moodDraft;
+  const key = moodCheckinDate || toKey(today());
+  const saved = !!moodEntries[key];
+  const isToday = key === toKey(today());
+  const dateObj = new Date(key+'T00:00:00');
+  const dowIdx = dateObj.getDay()===0 ? 6 : dateObj.getDay()-1;
+  const dayLabel = `${DAY_NAMES_ES[dowIdx]}, ${dateObj.getDate()} de ${MONTHS_ES[dateObj.getMonth()]}`;
+
   let html = '<div class="mood-inner">';
+
+  // Day navigation
+  html += `<div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+    <button onclick="shiftMoodDay(-1)" style="width:28px;height:28px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:var(--text-2);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center" onmouseover="this.style.background='var(--surface3)'" onmouseout="this.style.background='none'">‹</button>
+    <span style="font-size:0.82rem;font-weight:500;color:var(--text);min-width:200px;text-align:center">${esc(dayLabel)}</span>
+    <button onclick="shiftMoodDay(1)" ${isToday?'disabled':''} style="width:28px;height:28px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:${isToday?'var(--border2)':'var(--text-2)'};cursor:${isToday?'default':'pointer'};font-size:1rem;display:flex;align-items:center;justify-content:center" ${!isToday?'onmouseover="this.style.background=\'var(--surface3)\'" onmouseout="this.style.background=\'none\'"':''}>›</button>
+    ${isToday?'<span style="font-size:0.62rem;color:var(--accent);letter-spacing:0.04em">HOY</span>':''}
+  </div>`;
+
   detectMoodPatterns().forEach(a => {
     html += `<div class="pattern-alert ${a.level}"><div class="pattern-alert-title">${esc(a.title)}</div><div class="pattern-alert-body">${esc(a.msg)}</div></div>`;
   });
-  if (saved) html += `<div class="mood-done-banner">✓ Check-in completado hoy &nbsp;·&nbsp; <span style="color:var(--text-2)">Podés actualizar tus valores.</span></div>`;
+  if (saved) html += `<div class="mood-done-banner">✓ Check-in registrado &nbsp;·&nbsp; <span style="color:var(--text-2)">Podés actualizar tus valores.</span></div>`;
 
   // MOOD SCORE
   html += `<div class="mood-section" id="mood-score-section"><div class="mood-section-title">Ánimo</div><div class="mood-field"><span class="mood-field-label">Puntaje de ánimo <span style="font-weight:300;color:var(--text-3)">(-3 severo — 0 estable — +3 hipo)</span></span><div class="mood-score-row">`;
@@ -4131,20 +4163,69 @@ function moodChartSVG(entries, field, min, max, color) {
   </svg>`;
 }
 
+async function runMoodTrendAnalysis() {
+  if (moodTrendLoading) return;
+  moodTrendLoading = true;
+  renderMoodContent();
+  try {
+    const entries = getMoodSorted(14);
+    const todayD = today();
+    const cutoff = entries[0]?.date || toKey(addDays(todayD,-14));
+    const activeHabits = habits.filter(h=>!h.paused).map(h=>({id:h.id, name:h.name, freq:h.freq}));
+    const habitCompliance = activeHabits.map(h=>{
+      const logs = Object.keys(habitLogs)
+        .filter(k=>k.startsWith(h.id+'_'))
+        .map(k=>k.split('_')[1])
+        .filter(date=>date>=cutoff)
+        .sort();
+      return {...h, loggedDates:logs};
+    });
+    const result = await callClaude('mood-trend', {entries, habits:habitCompliance});
+    moodTrendAnalysis = typeof result==='string' ? result : JSON.stringify(result);
+  } catch(err) {
+    moodTrendAnalysis = 'Error al obtener el análisis: '+err.message;
+  } finally {
+    moodTrendLoading = false;
+    renderMoodContent();
+  }
+}
+
 function renderMoodTrendsView() {
   const entries=getMoodSorted(30);
   let html='<div class="mood-inner">';
-  if (entries.length<2) return html+`<div style="padding:40px 0;text-align:center;color:var(--text-3);font-size:0.75rem">Completá al menos 2 check-ins para ver tendencias.</div></div>`;
-  html+=`<div class="mood-section"><div class="mood-section-title">Últimos ${entries.length} registros</div>`;
-  [{field:'moodScore',label:'Ánimo',min:-3,max:3,color:'#7575a8'},
-   {field:'energyScore',label:'Energía',min:1,max:5,color:'#4fa87d'},
-   {field:'sleepHours',label:'Horas de sueño',min:0,max:12,color:'#5e6ad2'},
-   {field:'anxietyScore',label:'Ansiedad / Irritabilidad',min:1,max:5,color:'#e8a825'},
-   {field:'impulsivityScore',label:'Impulsividad',min:1,max:5,color:'#e07d3c'},
-  ].forEach(c=>{
-    html+=`<div class="chart-wrap"><div class="chart-label">${c.label}</div>${moodChartSVG(entries,c.field,c.min,c.max,c.color)}</div>`;
-  });
-  return html+'</div></div>';
+
+  // AI Analysis section
+  html+=`<div class="mood-section"><div class="mood-section-title">Análisis de tendencias · IA</div>`;
+  if (moodTrendLoading) {
+    html+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;color:var(--text-3);font-size:0.72rem">
+      <div class="plan-loading-dot"></div><div class="plan-loading-dot"></div><div class="plan-loading-dot"></div>
+      Analizando tus datos…
+    </div>`;
+  } else if (moodTrendAnalysis) {
+    html+=`<div style="font-size:0.73rem;color:var(--text-2);line-height:1.8;white-space:pre-wrap">${esc(moodTrendAnalysis)}</div>
+    <div style="margin-top:16px"><button onclick="runMoodTrendAnalysis()" style="font-family:'Geist Mono',monospace;font-size:0.68rem;padding:6px 14px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:var(--text-3);cursor:pointer" onmouseover="this.style.color='var(--text-2)'" onmouseout="this.style.color='var(--text-3)'">↻ Regenerar análisis</button></div>`;
+  } else if (entries.length<2) {
+    html+=`<div style="font-size:0.7rem;color:var(--text-3)">Completá al menos 2 check-ins para generar un análisis.</div>`;
+  } else {
+    html+=`<div style="font-size:0.7rem;color:var(--text-3);margin-bottom:14px">El análisis considera tus check-ins de los últimos 14 días y el cumplimiento de tus hábitos.</div>
+    <button onclick="runMoodTrendAnalysis()" style="font-family:'Geist Mono',monospace;font-size:0.72rem;padding:8px 20px;border-radius:var(--radius);background:linear-gradient(135deg,var(--accent) 0%,#7c3aed 100%);border:1px solid var(--accent);color:white;cursor:pointer">✦ Generar análisis</button>`;
+  }
+  html+='</div>';
+
+  // Charts
+  if (entries.length>=2) {
+    html+=`<div class="mood-section"><div class="mood-section-title">Últimos ${entries.length} registros</div>`;
+    [{field:'moodScore',label:'Ánimo',min:-3,max:3,color:'#7575a8'},
+     {field:'energyScore',label:'Energía',min:1,max:5,color:'#4fa87d'},
+     {field:'sleepHours',label:'Horas de sueño',min:0,max:12,color:'#5e6ad2'},
+     {field:'anxietyScore',label:'Ansiedad / Irritabilidad',min:1,max:5,color:'#e8a825'},
+     {field:'impulsivityScore',label:'Impulsividad',min:1,max:5,color:'#e07d3c'},
+    ].forEach(c=>{
+      html+=`<div class="chart-wrap"><div class="chart-label">${c.label}</div>${moodChartSVG(entries,c.field,c.min,c.max,c.color)}</div>`;
+    });
+    html+='</div>';
+  }
+  return html+'</div>';
 }
 
 function renderWeeklySummaryView() {

@@ -77,6 +77,37 @@ Priority guide: p1=today/urgent deadline, p2=this week/important, p3=this week/n
     user: input
   }),
 
+  'mood-trend': ({ entries, habits }) => ({
+    system: `Sos un asistente de bienestar personal que ayuda a una persona con Trastorno Bipolar II a entender sus patrones de ánimo y hábitos.
+Analizá los datos provistos y generá un informe de tendencias claro, empático y útil.
+
+Reglas fundamentales:
+- NUNCA diagnostiques ni sugieras cambios en la medicación
+- Usá "posible patrón", "señal a observar" o "señal temprana" en lugar de afirmaciones categóricas
+- Tono: cálido, profesional, no alarmista
+- Idioma: español rioplatense
+- Máximo 380 palabras en total
+- Sin markdown, sin asteriscos, texto plano
+
+Estructura tu respuesta con exactamente estas secciones separadas por línea en blanco:
+TENDENCIA GENERAL
+[2-3 oraciones sobre el patrón general de ánimo, energía y sueño]
+
+SEÑALES A OBSERVAR
+[1-3 señales específicas que merecen atención, o "Sin señales destacadas este período." si no hay ninguna]
+
+FACTORES PROTECTORES
+[1-3 aspectos positivos o estabilizadores observados en los datos, incluyendo hábitos cumplidos]
+
+SUGERENCIA PRÁCTICA
+[1 sugerencia concreta y accionable, no médica, basada en los datos]`,
+    user: `Datos de check-in de los últimos días (ordenados del más antiguo al más reciente):
+${JSON.stringify(entries, null, 2)}
+
+Hábitos y cumplimiento en el mismo período:
+${JSON.stringify(habits, null, 2)}`
+  }),
+
   'notes': ({ taskText, notes, action }) => ({
     system: `You are a writing assistant helping expand task notes.
 Be concise. Plain text only, no markdown headers.
