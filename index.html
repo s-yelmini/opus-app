@@ -1713,13 +1713,21 @@ const DAY_NAMES  = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 let _saveTimer = null;
+let _syncTimer = null;
 function save() {
-  // Debounce: batch writes within 200ms into a single localStorage call
   clearTimeout(_saveTimer);
   _saveTimer = setTimeout(() => {
     localStorage.setItem('tasks_v4', JSON.stringify(tasks));
     localStorage.setItem('tasks_v4_c', counter);
   }, 200);
+  clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(() => {
+    fetch('/api/sync', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tasks, milestones }),
+    }).catch(() => {});
+  }, 5000);
 }
 function saveImmediate() {
   clearTimeout(_saveTimer);
