@@ -1,5 +1,5 @@
-const KV_URL   = process.env.UPSTASH_REDIS_REST_URL;
-const KV_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const SUPABASE_URL  = process.env.SUPABASE_URL;
+const SERVICE_KEY   = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || '*');
@@ -8,17 +8,24 @@ export default async function handler(req, res) {
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).end();
-  if (!KV_URL || !KV_TOKEN) return res.status(500).json({ error: 'KV not configured' });
+  if (!SUPABASE_URL || !SERVICE_KEY) return res.status(500).json({ error: 'Supabase not configured' });
 
   const { tasks = [], milestones = [] } = req.body;
-  const payload = JSON.stringify({ tasks, milestones, updatedAt: new Date().toISOString() });
 
-  const r = await fetch(`${KV_URL}/set/opus_data`, {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/snapshots`, {
     method: 'POST',
-    headers: { Authorization: `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    headers: {
+      apikey: SERVICE_KEY,
+      Authorization: `Bearer ${SERVICE_KEY}`,
+      'Content-Type': 'application/json',
+      Prefer: 'resolution=merge-duplicates',
+    },
+    body: JSON.stringify({
+      key: 'main',
+      data: { tasks, milestones, updatedAt: new Date().toISOString() },
+    }),
   });
 
-  if (!r.ok) return res.status(500).json({ error: 'KV write failed' });
+  if (!r.ok) return res.status(500).json({ error: 'Supabase write failed' });
   return res.status(200).json({ ok: true });
 }

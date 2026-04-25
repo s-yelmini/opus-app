@@ -71,6 +71,14 @@ create table saved_views (
 alter table saved_views enable row level security;
 create policy "owner" on saved_views using (user_id = auth.uid());
 
+-- ── SNAPSHOTS (daily report sync, no auth required) ──────
+create table if not exists snapshots (
+  key        text primary key,
+  data       jsonb not null,
+  updated_at timestamptz not null default now()
+);
+-- No RLS: protected server-side via service role key only
+
 -- ── UPDATED_AT trigger ────────────────────────────────────
 create or replace function update_updated_at()
 returns trigger as $$
