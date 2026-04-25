@@ -204,7 +204,7 @@ body {
 
 .day-col {
   border-right: 1px solid var(--border);
-  min-height: 100%; padding: 4px 0;
+  min-height: 100%; padding: 4px 0; min-width: 0;
 }
 .day-col:last-child { border-right: none; }
 .today-line {
@@ -224,7 +224,7 @@ body {
   padding: 5px 7px; margin: 1px 3px;
   border-radius: 4px; cursor: pointer;
   transition: background 0.08s; animation: rowIn 0.12s ease;
-  border: 1px solid transparent;
+  border: 1px solid transparent; min-width: 0; overflow: hidden;
 }
 
 .week-task:hover { background: var(--surface3); }
