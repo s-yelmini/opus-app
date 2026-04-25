@@ -2859,7 +2859,7 @@ function renderTriage() {
   const rows = inbox.map(t => `
     <div class="triage-row" id="triage-row-${t.id}">
       <div class="triage-row-prio" style="background:${PM[t.priority||'p4'].color}"></div>
-      <span class="triage-row-text">${esc(t.text)}</span>
+      <span class="triage-row-text" ondblclick="triageEditText(${t.id})" title="Double-click to edit">${esc(t.text)}</span>
       <div class="triage-row-actions">
         <button class="triage-row-btn skip" onclick="triageDiscard(${t.id})">Discard</button>
         <button class="triage-row-btn accept" onclick="triageAccept(${t.id})">Accept</button>
@@ -2874,6 +2874,34 @@ function renderTriage() {
       </div>
       <div id="triage-list">${rows}</div>
     </div>`;
+}
+
+function triageEditText(id) {
+  const row = document.getElementById('triage-row-' + id);
+  if (!row) return;
+  const span = row.querySelector('.triage-row-text');
+  if (!span) return;
+  const t = tasks.find(t => t.id === id);
+  if (!t) return;
+  const inp = document.createElement('input');
+  inp.type = 'text';
+  inp.value = t.text;
+  inp.style.cssText = 'flex:1;background:none;border:none;border-bottom:1px solid var(--accent);color:var(--text);font-family:"Geist Mono",monospace;font-size:0.78rem;outline:none;padding:0 2px;min-width:0';
+  span.replaceWith(inp);
+  inp.focus();
+  inp.select();
+  let done = false;
+  const commit = () => {
+    if (done) return; done = true;
+    const v = inp.value.trim();
+    if (v && v !== t.text) updateTask(id, { text: v }); else renderTriage();
+  };
+  const cancel = () => { if (done) return; done = true; renderTriage(); };
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); commit(); }
+    if (e.key === 'Escape') { e.preventDefault(); cancel(); }
+  });
+  inp.addEventListener('blur', commit);
 }
 
 function triageQuickAdd() {
