@@ -1,5 +1,5 @@
-const KV_URL      = process.env.KV_REST_API_URL;
-const KV_TOKEN    = process.env.KV_REST_API_TOKEN;
+const KV_URL      = process.env.UPSTASH_REDIS_REST_URL;
+const KV_TOKEN    = process.env.UPSTASH_REDIS_REST_TOKEN;
 const RESEND_KEY  = process.env.RESEND_API_KEY;
 const TO_EMAIL    = process.env.REPORT_EMAIL || 'syelmini@gmail.com';
 const FROM_EMAIL  = process.env.REPORT_FROM  || 'Opus <onboarding@resend.dev>';
