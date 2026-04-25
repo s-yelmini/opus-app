@@ -1326,6 +1326,68 @@ input:focus, textarea:focus, select:focus {
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── MOOD TRACKER ── */
+.mood-subnav-btn {
+  font-family: 'Geist Mono', monospace; font-size: 0.7rem;
+  padding: 7px 16px; border-radius: var(--radius) var(--radius) 0 0;
+  border: 1px solid transparent; border-bottom: none; margin-bottom: -1px;
+  background: none; color: var(--text-3); cursor: pointer; transition: all 0.1s;
+}
+.mood-subnav-btn:hover { color: var(--text-2); }
+.mood-subnav-btn.active { background: var(--bg); color: var(--text); border-color: var(--border); }
+.mood-inner { padding: 20px 24px; max-width: 680px; }
+.mood-section {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 14px;
+}
+.mood-section-title { font-size: 0.6rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+.mood-field { margin-bottom: 18px; }
+.mood-field:last-child { margin-bottom: 0; }
+.mood-field-label { font-size: 0.7rem; color: var(--text-2); margin-bottom: 8px; display: block; }
+.mood-field-sub { font-size: 0.62rem; color: var(--text-3); margin-bottom: 8px; display: block; }
+.mood-score-row { display: flex; gap: 4px; }
+.mood-score-btn {
+  flex: 1; padding: 8px 2px; border-radius: var(--radius);
+  border: 1px solid var(--border2); background: var(--surface2);
+  color: var(--text-3); cursor: pointer; font-family: 'Geist Mono', monospace;
+  font-size: 0.7rem; transition: all 0.1s; text-align: center; line-height: 1.3;
+}
+.mood-score-btn:hover { background: var(--surface3); color: var(--text-2); }
+.mood-score-btn.active { color: white; border-color: transparent; }
+.toggle-pair { display: flex; border: 1px solid var(--border2); border-radius: var(--radius); overflow: hidden; width: fit-content; }
+.toggle-btn { padding: 6px 14px; background: none; border: none; cursor: pointer; font-family: 'Geist Mono', monospace; font-size: 0.7rem; color: var(--text-3); transition: all 0.1s; }
+.toggle-btn.active { background: var(--surface3); color: var(--text); }
+.lifestyle-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-start; }
+.lifestyle-item { display: flex; flex-direction: column; gap: 6px; }
+.lifestyle-label { font-size: 0.68rem; color: var(--text-2); }
+.caff-row { display: flex; gap: 3px; }
+.caff-btn { padding: 6px 10px; border: 1px solid var(--border2); border-radius: var(--radius); background: none; font-family: 'Geist Mono', monospace; font-size: 0.68rem; color: var(--text-3); cursor: pointer; transition: all 0.1s; }
+.caff-btn.active { background: var(--surface3); border-color: var(--border); color: var(--text-2); }
+.mood-note-ta { width: 100%; min-height: 80px; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 10px 12px; font-family: 'Geist Mono', monospace; font-size: 0.73rem; color: var(--text); line-height: 1.6; resize: none; outline: none; transition: border-color 0.15s; color-scheme: dark; }
+.mood-note-ta:focus { border-color: var(--accent); }
+.mood-save-row { display: flex; padding-bottom: 6px; }
+.mood-save-btn { font-family: 'Geist Mono', monospace; font-size: 0.73rem; padding: 9px 28px; border-radius: var(--radius); background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%); border: 1px solid var(--accent); color: white; cursor: pointer; transition: opacity 0.12s; }
+.mood-save-btn:hover { opacity: 0.88; }
+.mood-char-count { font-size: 0.6rem; color: var(--text-3); margin-top: 4px; text-align: right; }
+.pattern-alert { border-radius: var(--radius-lg); padding: 14px 18px; margin-bottom: 14px; border: 1px solid; }
+.pattern-alert.warning { background: rgba(240,164,40,0.05); border-color: rgba(240,164,40,0.22); }
+.pattern-alert.info    { background: rgba(94,106,210,0.06); border-color: rgba(94,106,210,0.22); }
+.pattern-alert.support { background: rgba(160,100,220,0.06); border-color: rgba(160,100,220,0.22); }
+.pattern-alert-title { font-size: 0.68rem; font-weight: 500; margin-bottom: 6px; }
+.pattern-alert.warning .pattern-alert-title { color: #e8a825; }
+.pattern-alert.info    .pattern-alert-title { color: var(--accent); }
+.pattern-alert.support .pattern-alert-title { color: #c084fc; }
+.pattern-alert-body { font-size: 0.7rem; color: var(--text-3); line-height: 1.65; }
+.mood-disclaimer { font-size: 0.62rem; color: var(--text-3); line-height: 1.65; padding: 12px 0 20px; border-top: 1px solid var(--border); margin-top: 6px; }
+.chart-label { font-size: 0.6rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
+.chart-wrap { margin-bottom: 22px; }
+.chart-wrap:last-child { margin-bottom: 0; }
+.weekly-stat { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.weekly-stat:last-child { border-bottom: none; }
+.weekly-stat-label { font-size: 0.7rem; color: var(--text-2); }
+.weekly-stat-value { font-family: 'Geist Mono', monospace; font-size: 0.72rem; color: var(--text); }
+.mood-done-banner { background: var(--green-soft); border: 1px solid rgba(48,164,108,0.22); border-radius: var(--radius-lg); padding: 10px 16px; margin-bottom: 14px; font-size: 0.72rem; color: var(--green); display: flex; align-items: center; gap: 8px; }
 </style>
 </head>
 <body>
@@ -1362,6 +1424,9 @@ input:focus, textarea:focus, select:focus {
     <div class="nav-section">
       <button class="nav-item" id="nav-habits" onclick="switchView('habits'); setNavActive(this)">
         <span>◉</span> Habits
+      </button>
+      <button class="nav-item" id="nav-mood" onclick="switchView('mood'); setNavActive(this)">
+        <span>◑</span> Mood
       </button>
       <div id="sidebar-habits-widget" style="padding:4px 8px 6px"></div>
     </div>
@@ -1563,6 +1628,16 @@ input:focus, textarea:focus, select:focus {
       <div class="triage-view" id="triage-content" style="flex:1;overflow-y:auto"></div>
     </div>
 
+    <!-- MOOD VIEW -->
+    <div id="mood-view" style="display:none;flex:1;flex-direction:column;overflow:hidden;min-width:0">
+      <div style="display:flex;gap:2px;padding:10px 18px 0;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--surface)">
+        <button class="mood-subnav-btn active" data-v="checkin" onclick="setMoodSubView('checkin')">Hoy</button>
+        <button class="mood-subnav-btn" data-v="trends" onclick="setMoodSubView('trends')">Tendencias</button>
+        <button class="mood-subnav-btn" data-v="weekly" onclick="setMoodSubView('weekly')">Semanal</button>
+      </div>
+      <div id="mood-content" style="flex:1;overflow-y:auto"></div>
+    </div>
+
     <!-- MILESTONES VIEW -->
     <div id="milestones-view" style="display:none;flex:1;overflow-y:auto;flex-direction:column">
       <div class="milestone-list" id="milestones-content" style="max-width:100%"></div>
@@ -1691,6 +1766,9 @@ let habits = JSON.parse(localStorage.getItem('habits_v2') || '[]');
 let habitLogs = JSON.parse(localStorage.getItem('habit_logs_v2') || '{}');
 let habitCounter = parseInt(localStorage.getItem('habit_counter_v2') || '1');
 let savedViews = JSON.parse(localStorage.getItem('saved_views_v1') || '[]');
+let moodEntries = JSON.parse(localStorage.getItem('mood_v1') || '{}');
+let moodSubView = 'checkin';
+let moodDraft = null;
 let selectedIds = new Set(); // multi-select
 let counter  = parseInt(localStorage.getItem('tasks_v4_c') || '1');
 let currentView  = 'list';
@@ -1850,7 +1928,7 @@ function deleteTask(id) {
 // ── VIEW SWITCHING ──
 const VIEW_TITLES = {
   list: 'List', week: 'Week', triage: 'Triage',
-  habits: 'Habits', milestones: 'Milestones'
+  habits: 'Habits', milestones: 'Milestones', mood: 'Mood'
 };
 
 function switchView(v) {
@@ -1869,6 +1947,7 @@ function switchView(v) {
   show('habits-view',     v==='habits'     ? 'flex'  : 'none');
   show('milestones-view', v==='milestones' ? 'flex'  : 'none');
   show('triage-view',     v==='triage'     ? 'flex'  : 'none');
+  show('mood-view',       v==='mood'       ? 'flex'  : 'none');
 
   // Week nav
   show('week-sep',  v==='week'   ? 'block' : 'none');
@@ -1892,6 +1971,7 @@ function switchView(v) {
   if (v==='triage')     { renderTriage(); setTimeout(()=>{ const inp=el('triage-inbox-input'); if(inp) inp.focus(); }, 80); }
   if (v==='list')       renderList();
   if (v==='week')       renderWeek();
+  if (v==='mood')       { moodSubView='checkin'; initMoodDraft(); renderMood(); }
 
   updateBadges();
   updateTriageBadge();
@@ -1907,7 +1987,7 @@ function setNavActive(btn) {
 function syncSidebarNav(v) {
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
   const navId = { list:'nav-list', week:'nav-week', triage:'nav-triage',
-                  milestones:'nav-milestones', habits:'nav-habits' }[v];
+                  milestones:'nav-milestones', habits:'nav-habits', mood:'nav-mood' }[v];
   if (navId) { const el = document.getElementById(navId); if (el) el.classList.add('active'); }
   // Refresh habits widget whenever view changes
   setTimeout(updateSidebarHabitsWidget, 50);
@@ -3774,7 +3854,7 @@ let ctxMenu=null;
 function showContextMenu(e,taskId){e.preventDefault();hideContextMenu();const t=tasks.find(t=>t.id===taskId);if(!t)return;const tk=toKey(today());const menu=document.createElement('div');menu.id='ctx-menu';menu.style.cssText='position:fixed;z-index:500;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:4px;min-width:160px;box-shadow:0 8px 32px rgba(0,0,0,0.45);backdrop-filter:blur(12px);font-family:"Geist Mono",monospace;left:'+Math.min(e.clientX,window.innerWidth-180)+'px;top:'+Math.min(e.clientY,window.innerHeight-160)+'px;';[{label:t.done?'&#9675; Todo':'&#10003; Done',fn:()=>toggleDone(taskId)},{label:t.day===tk?'&#8212; Clear':'Today',fn:()=>updateTask(taskId,{day:t.day===tk?null:tk})},{sep:true},{label:'&#10005; Delete',fn:()=>deleteTask(taskId),danger:true}].forEach(item=>{if(item.sep){const hr=document.createElement('div');hr.style.cssText='height:1px;background:var(--border);margin:3px 0';menu.appendChild(hr);return;}const btn=document.createElement('button');btn.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;border:none;background:none;border-radius:3px;cursor:pointer;font-size:0.72rem;font-family:"Geist Mono",monospace;color:'+(item.danger?'var(--red)':'var(--text-2)')+';transition:background 0.08s';btn.innerHTML=item.label;btn.onmouseover=()=>btn.style.background='var(--surface3)';btn.onmouseout=()=>btn.style.background='none';btn.onclick=()=>{item.fn();hideContextMenu();};menu.appendChild(btn);});document.body.appendChild(menu);ctxMenu=menu;setTimeout(()=>document.addEventListener('click',hideContextMenu,{once:true}),10);}
 function hideContextMenu(){ctxMenu?.remove();ctxMenu=null;}
 function getTodayDot(t){return t.day===toKey(today())&&!t.done?'<span style="width:5px;height:5px;border-radius:50%;background:var(--accent);display:inline-block;margin-left:6px;flex-shrink:0;vertical-align:middle"></span>':'';}
-document.addEventListener('keydown',e=>{if(e.key!=='Tab'||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(document.getElementById('modal')?.style.display!=='none')return;e.preventDefault();const views=['triage','list','week','milestones','habits'];const next=views[(views.indexOf(currentView)+1)%views.length];switchView(next);syncSidebarNav(next);});
+document.addEventListener('keydown',e=>{if(e.key!=='Tab'||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(document.getElementById('modal')?.style.display!=='none')return;e.preventDefault();const views=['triage','list','week','milestones','habits','mood'];const next=views[(views.indexOf(currentView)+1)%views.length];switchView(next);syncSidebarNav(next);});
 function updateSidebarHabitsWidget() {
   const el = document.getElementById('sidebar-habits-widget');
   if (!el) return;
@@ -3812,6 +3892,7 @@ function renderAll() {
     case 'habits':     renderHabits(); break;
     case 'milestones': renderMilestones(); break;
     case 'triage':     renderTriage(); break;
+    case 'mood':       renderMood(); break;
   }
   updateBadges();
   updateTriageBadge();
@@ -3840,6 +3921,284 @@ function updateBadges() {
   _badgeCache = vals;
 }
 
+
+// ════════════════════════════════════════
+// ── MOOD TRACKER ──
+// ════════════════════════════════════════
+
+const MOOD_COLORS = {
+  '-3':'#9857d3','-2':'#7575a8','-1':'#6e7c8c',
+  '0':'#908f9e','1':'#4fa87d','2':'#e8a825','3':'#e07d3c'
+};
+
+function saveMoodData() { localStorage.setItem('mood_v1', JSON.stringify(moodEntries)); }
+
+function getMoodSorted(n) {
+  return Object.values(moodEntries).sort((a,b)=>a.date>b.date?1:-1).slice(n?-n:undefined);
+}
+
+function initMoodDraft() {
+  const key = toKey(today()), ex = moodEntries[key];
+  moodDraft = ex ? {...ex} : {
+    moodScore:null, energyScore:null, sleepHours:null, sleepQuality:null,
+    anxietyScore:null, impulsivityScore:null, medicationTaken:null,
+    medicationNotes:'', exercise:null, alcohol:null, caffeineLevel:null, note:''
+  };
+}
+
+function captureTextDraft() {
+  if (!moodDraft) return;
+  const g = id => document.getElementById(id);
+  const sh = g('mood-sleep-hours'); if (sh) moodDraft.sleepHours = sh.value ? parseFloat(sh.value) : null;
+  const mn = g('mood-note-input');  if (mn) moodDraft.note = mn.value.slice(0,280);
+  const mm = g('mood-med-notes');   if (mm) moodDraft.medicationNotes = mm.value;
+}
+
+function setMoodField(field, value) {
+  if (!moodDraft) initMoodDraft();
+  captureTextDraft();
+  moodDraft[field] = value;
+  const c = document.getElementById('mood-content');
+  if (!c) return;
+  const sc = c.scrollTop;
+  c.innerHTML = moodSubView==='checkin' ? renderMoodCheckinForm() : moodSubView==='trends' ? renderMoodTrendsView() : renderWeeklySummaryView();
+  c.scrollTop = sc;
+}
+
+function setMoodSubView(v) {
+  moodSubView = v;
+  document.querySelectorAll('.mood-subnav-btn').forEach(b => b.classList.toggle('active', b.dataset.v===v));
+  renderMoodContent();
+}
+
+function saveMoodCheckin() {
+  if (!moodDraft) return;
+  captureTextDraft();
+  if (moodDraft.moodScore === null) {
+    const s = document.getElementById('mood-score-section');
+    if (s) { s.style.outline='1.5px solid var(--accent)'; setTimeout(()=>s.style.outline='',1800); }
+    return;
+  }
+  const key = toKey(today()), now = new Date().toISOString();
+  moodEntries[key] = {...moodDraft, date:key, createdAt:moodEntries[key]?.createdAt||now, updatedAt:now};
+  saveMoodData();
+  renderMoodContent();
+}
+
+function detectMoodPatterns() {
+  const all = getMoodSorted(14);
+  if (all.length < 2) return [];
+  const alerts = [], wm = all.filter(e=>e.moodScore!==null);
+  if (!wm.length) return alerts;
+
+  // Severe depression support
+  const last3 = wm.slice(-3);
+  if (last3.length >= 2 && last3.filter(e=>e.moodScore<=-3).length >= 2)
+    alerts.push({level:'support', title:'Nota de apoyo', msg:'Has registrado un estado anímico muy bajo en varios días recientes. Contactar a alguien de confianza o a tu profesional de salud mental es una señal de fortaleza.'});
+
+  // Depressive: mood <= -2 for 3+ consecutive days
+  let dc=0;
+  for (let i=wm.length-1; i>=0 && wm[i].moodScore<=-2; i--) dc++;
+  if (dc>=3)
+    alerts.push({level:'warning', title:'Posible patrón depresivo', msg:`Ánimo moderadamente bajo durante ${dc} días seguidos. Si persiste, considerá revisarlo con tu profesional.`});
+
+  // Low mood + low energy 4+ days
+  if (!alerts.find(a=>a.title.includes('depresivo'))) {
+    let lc=0;
+    for (let i=wm.length-1; i>=0; i--) {
+      const e=wm[i];
+      if (e.moodScore<0 && e.energyScore!==null && e.energyScore<=2) lc++; else break;
+    }
+    if (lc>=4)
+      alerts.push({level:'warning', title:'Señal depresiva temprana', msg:`Ánimo bajo con energía reducida por ${lc} días. Considerá hablar con tu profesional.`});
+  }
+
+  // Hypomanic: mood>=+2 AND energy>=4 for 2+ days + sleep<=6 or impulsivity>=4
+  let hc=0;
+  for (let i=wm.length-1; i>=0; i--) {
+    const e=wm[i];
+    if (e.moodScore>=2 && e.energyScore!==null && e.energyScore>=4) hc++; else break;
+  }
+  if (hc>=2) {
+    const last=wm[wm.length-1];
+    const slNote = last.sleepHours!==null && last.sleepHours<=6 ? ' con sueño reducido':'';
+    const impNote = last.impulsivityScore!==null && last.impulsivityScore>=4 ? ' e impulsividad elevada':'';
+    if (slNote||impNote)
+      alerts.push({level:'warning', title:'Posible activación hipomaníaca', msg:`Ánimo elevado y energía alta${slNote}${impNote} por ${hc} días consecutivos. Señal temprana a observar. Si persiste, comentalo con tu clínico.`});
+  }
+
+  // Sleep risk: sleep<=5 for 2+ consecutive days
+  const ws=all.filter(e=>e.sleepHours!==null); let sc2=0;
+  for (let i=ws.length-1; i>=0 && ws[i].sleepHours<=5; i--) sc2++;
+  if (sc2>=2) {
+    const last=ws[ws.length-1];
+    const eNote = last.energyScore!==null && last.energyScore>=4 ? ' combinado con energía alta':'';
+    alerts.push({level:'info', title:'Señal de riesgo de sueño', msg:`Sueño de 5 hs o menos por ${sc2} días consecutivos${eNote}. El sueño es clave para la estabilidad del ánimo.`});
+  }
+
+  // Mixed state: mood<=-1 AND energy>=4 AND anxiety>=4
+  const last=wm[wm.length-1];
+  if (last && last.moodScore<=-1 && last.energyScore!==null && last.energyScore>=4 && last.anxietyScore!==null && last.anxietyScore>=4)
+    alerts.push({level:'warning', title:'Señal de estado mixto', msg:'Combinación de ánimo bajo, energía alta e irritabilidad elevada. Esta combinación merece atención especial. Considerá contactar a tu profesional.'});
+
+  return alerts;
+}
+
+function renderMoodCheckinForm() {
+  if (!moodDraft) initMoodDraft();
+  const d = moodDraft, key = toKey(today()), saved = !!moodEntries[key];
+  let html = '<div class="mood-inner">';
+  detectMoodPatterns().forEach(a => {
+    html += `<div class="pattern-alert ${a.level}"><div class="pattern-alert-title">${esc(a.title)}</div><div class="pattern-alert-body">${esc(a.msg)}</div></div>`;
+  });
+  if (saved) html += `<div class="mood-done-banner">✓ Check-in completado hoy &nbsp;·&nbsp; <span style="color:var(--text-2)">Podés actualizar tus valores.</span></div>`;
+
+  // MOOD SCORE
+  html += `<div class="mood-section" id="mood-score-section"><div class="mood-section-title">Ánimo</div><div class="mood-field"><span class="mood-field-label">Puntaje de ánimo <span style="font-weight:300;color:var(--text-3)">(-3 severo — 0 estable — +3 hipo)</span></span><div class="mood-score-row">`;
+  [[-3,'Severo'],[-2,'Moderado'],[-1,'Leve ↓'],[0,'Estable'],[1,'Positivo'],[2,'Elevado'],[3,'Hipo']].forEach(([v,lbl]) => {
+    const act=d.moodScore===v, col=MOOD_COLORS[String(v)];
+    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?`background:${col};border-color:${col};`:`color:${col}`}" onclick="setMoodField('moodScore',${v})"><div>${v>0?'+':''}${v}</div><div style="font-size:0.52rem;margin-top:2px;opacity:0.75">${esc(lbl)}</div></button>`;
+  });
+  html += `</div></div></div>`;
+
+  // ENERGY & SLEEP
+  html += `<div class="mood-section"><div class="mood-section-title">Energía & Sueño</div><div class="mood-field"><span class="mood-field-label">Energía / Activación <span style="font-weight:300;color:var(--text-3)">(1 muy baja — 5 muy alta)</span></span><div class="mood-score-row">`;
+  [1,2,3,4,5].forEach(v => {
+    const act=d.energyScore===v;
+    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?'background:var(--accent);border-color:var(--accent);':''}" onclick="setMoodField('energyScore',${v})">${v}</button>`;
+  });
+  html += `</div></div><div class="mood-field" style="display:flex;gap:16px"><div style="flex:1"><span class="mood-field-label">Horas de sueño</span><input id="mood-sleep-hours" type="number" min="0" max="24" step="0.5" value="${d.sleepHours??''}" placeholder="ej. 7.5" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:8px 10px;font-family:'Geist Mono',monospace;font-size:0.78rem;color:var(--text);outline:none;color-scheme:dark" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"/></div><div style="flex:2"><span class="mood-field-label">Calidad del sueño <span style="font-weight:300;color:var(--text-3)">(1–5)</span></span><div class="mood-score-row">`;
+  [1,2,3,4,5].forEach(v => {
+    const act=d.sleepQuality===v;
+    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?'background:var(--accent);border-color:var(--accent);':''}" onclick="setMoodField('sleepQuality',${v})">${v}</button>`;
+  });
+  html += `</div></div></div></div>`;
+
+  // MENTAL STATE
+  html += `<div class="mood-section"><div class="mood-section-title">Estado Mental</div><div class="mood-field"><span class="mood-field-label">Ansiedad / Irritabilidad <span style="font-weight:300;color:var(--text-3)">(1–5)</span></span><div class="mood-score-row">`;
+  [1,2,3,4,5].forEach(v => {
+    const act=d.anxietyScore===v;
+    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?'background:var(--accent);border-color:var(--accent);':''}" onclick="setMoodField('anxietyScore',${v})">${v}</button>`;
+  });
+  html += `</div></div><div class="mood-field" style="margin-bottom:0"><span class="mood-field-label">Impulsividad / Conductas de riesgo <span style="font-weight:300;color:var(--text-3)">(1–5)</span></span><span class="mood-field-sub">Compras impulsivas, decisiones apresuradas, planificación excesiva, exceso de confianza</span><div class="mood-score-row">`;
+  [1,2,3,4,5].forEach(v => {
+    const act=d.impulsivityScore===v;
+    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?'background:var(--accent);border-color:var(--accent);':''}" onclick="setMoodField('impulsivityScore',${v})">${v}</button>`;
+  });
+  html += `</div></div></div>`;
+
+  // MEDICATION
+  html += `<div class="mood-section"><div class="mood-section-title">Medicación</div><div class="mood-field"><span class="mood-field-label">¿Tomaste tu medicación hoy?</span><div class="toggle-pair"><button class="toggle-btn ${d.medicationTaken===true?'active':''}" onclick="setMoodField('medicationTaken',true)">Sí</button><button class="toggle-btn ${d.medicationTaken===false?'active':''}" onclick="setMoodField('medicationTaken',false)">No</button></div></div><div class="mood-field" style="margin-bottom:0"><span class="mood-field-label">Notas de medicación <span style="font-weight:300;color:var(--text-3)">(opcional)</span></span><input id="mood-med-notes" type="text" value="${esc(d.medicationNotes||'')}" placeholder="Cambios, dosis, efectos..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:8px 10px;font-family:'Geist Mono',monospace;font-size:0.73rem;color:var(--text);outline:none;color-scheme:dark" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"/></div></div>`;
+
+  // LIFESTYLE
+  html += `<div class="mood-section"><div class="mood-section-title">Estilo de Vida</div><div class="lifestyle-row">`;
+  [['exercise','Ejercicio'],['alcohol','Alcohol']].forEach(([f,lbl]) => {
+    html += `<div class="lifestyle-item"><span class="lifestyle-label">${lbl}</span><div class="toggle-pair"><button class="toggle-btn ${d[f]===true?'active':''}" onclick="setMoodField('${f}',true)">Sí</button><button class="toggle-btn ${d[f]===false?'active':''}" onclick="setMoodField('${f}',false)">No</button></div></div>`;
+  });
+  html += `<div class="lifestyle-item"><span class="lifestyle-label">Cafeína</span><div class="caff-row">`;
+  [['none','Ninguna'],['low','Baja'],['medium','Media'],['high','Alta']].forEach(([v,lbl]) => {
+    html += `<button class="caff-btn ${d.caffeineLevel===v?'active':''}" onclick="setMoodField('caffeineLevel','${v}')">${esc(lbl)}</button>`;
+  });
+  html += `</div></div></div></div>`;
+
+  // NOTE
+  const noteLen=(d.note||'').length;
+  html += `<div class="mood-section"><div class="mood-section-title">Nota del Día</div><div class="mood-field" style="margin-bottom:0"><textarea class="mood-note-ta" id="mood-note-input" maxlength="280" placeholder="¿Cómo te sentiste hoy? (opcional, máx. 280 caracteres)" oninput="document.getElementById('mood-char-count').textContent=this.value.length+'/280'">${esc(d.note||'')}</textarea><div class="mood-char-count" id="mood-char-count">${noteLen}/280</div></div></div>`;
+
+  // SAVE
+  html += `<div class="mood-save-row"><button class="mood-save-btn" onclick="saveMoodCheckin()">${saved?'Actualizar check-in':'Guardar check-in'}</button></div>`;
+  html += `<div class="mood-disclaimer">Este tracker es solo para autoobservación y reconocimiento de patrones. No es un dispositivo médico y no reemplaza la atención profesional. Si estás en crisis, contactá a tu médico o a una línea de crisis de salud mental.</div>`;
+  return html + '</div>';
+}
+
+function moodChartSVG(entries, field, min, max, color) {
+  const W=600, H=58;
+  const valid=entries.filter(e=>e[field]!==null&&e[field]!==undefined);
+  if (!valid.length) return `<div style="height:${H}px;display:flex;align-items:center;color:var(--text-3);font-size:0.65rem">Sin datos suficientes</div>`;
+  const pts=valid.map((e,i)=>({
+    x: valid.length===1 ? W/2 : (i/(valid.length-1))*W,
+    y: H-3-((e[field]-min)/(max-min))*(H-6)
+  }));
+  const line=pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  const fill=`${pts[0].x.toFixed(1)},${H} ${line} ${pts[pts.length-1].x.toFixed(1)},${H}`;
+  const zy=(H-3-((0-min)/(max-min))*(H-6)).toFixed(1);
+  const zeroLine=(min<0&&max>0)?`<line x1="0" y1="${zy}" x2="${W}" y2="${zy}" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>`:'';
+  return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:${H}px;display:block">
+    <defs><linearGradient id="g_${field}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity="0.18"/><stop offset="100%" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
+    ${zeroLine}<polygon points="${fill}" fill="url(#g_${field})"/>
+    <polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+    ${pts.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.5" fill="${color}"/>`).join('')}
+  </svg>`;
+}
+
+function renderMoodTrendsView() {
+  const entries=getMoodSorted(30);
+  let html='<div class="mood-inner">';
+  if (entries.length<2) return html+`<div style="padding:40px 0;text-align:center;color:var(--text-3);font-size:0.75rem">Completá al menos 2 check-ins para ver tendencias.</div></div>`;
+  html+=`<div class="mood-section"><div class="mood-section-title">Últimos ${entries.length} registros</div>`;
+  [{field:'moodScore',label:'Ánimo',min:-3,max:3,color:'#7575a8'},
+   {field:'energyScore',label:'Energía',min:1,max:5,color:'#4fa87d'},
+   {field:'sleepHours',label:'Horas de sueño',min:0,max:12,color:'#5e6ad2'},
+   {field:'anxietyScore',label:'Ansiedad / Irritabilidad',min:1,max:5,color:'#e8a825'},
+   {field:'impulsivityScore',label:'Impulsividad',min:1,max:5,color:'#e07d3c'},
+  ].forEach(c=>{
+    html+=`<div class="chart-wrap"><div class="chart-label">${c.label}</div>${moodChartSVG(entries,c.field,c.min,c.max,c.color)}</div>`;
+  });
+  return html+'</div></div>';
+}
+
+function renderWeeklySummaryView() {
+  const entries=getMoodSorted(7);
+  let html='<div class="mood-inner">';
+  if (!entries.length) return html+`<div style="padding:40px 0;text-align:center;color:var(--text-3);font-size:0.75rem">Aún no hay datos esta semana.</div></div>`;
+  const avgF=(f)=>{const v=entries.filter(e=>e[f]!==null&&e[f]!==undefined);return v.length?(v.reduce((s,e)=>s+e[f],0)/v.length).toFixed(1):'—';};
+  const mAvg=avgF('moodScore'), mNum=parseFloat(mAvg);
+  const mc=isNaN(mNum)?'var(--text-3)':(MOOD_COLORS[String(Math.round(Math.max(-3,Math.min(3,mNum))))]||'var(--text-3)');
+  const medDays=entries.filter(e=>e.medicationTaken===true).length;
+  const exDays=entries.filter(e=>e.exercise===true).length;
+  const alcDays=entries.filter(e=>e.alcohol===true).length;
+  const slAvg=avgF('sleepHours');
+
+  html+=`<div class="mood-section"><div class="mood-section-title">Promedios · últimos 7 días (${entries.length} registros)</div>
+    <div class="weekly-stat"><span class="weekly-stat-label">Ánimo promedio</span><span class="weekly-stat-value" style="color:${mc}">${mAvg!=='—'?(parseFloat(mAvg)>0?'+':'')+mAvg:'—'}</span></div>
+    <div class="weekly-stat"><span class="weekly-stat-label">Energía promedio</span><span class="weekly-stat-value">${avgF('energyScore')}</span></div>
+    <div class="weekly-stat"><span class="weekly-stat-label">Sueño promedio</span><span class="weekly-stat-value">${slAvg!=='—'?slAvg+'h':'—'}</span></div>
+    <div class="weekly-stat"><span class="weekly-stat-label">Ansiedad / Irritabilidad</span><span class="weekly-stat-value">${avgF('anxietyScore')}</span></div>
+    <div class="weekly-stat"><span class="weekly-stat-label">Impulsividad</span><span class="weekly-stat-value">${avgF('impulsivityScore')}</span></div>
+  </div>
+  <div class="mood-section"><div class="mood-section-title">Hábitos & Estilo de vida</div>
+    <div class="weekly-stat"><span class="weekly-stat-label">Medicación tomada</span><span class="weekly-stat-value">${medDays}/${entries.length} días</span></div>
+    <div class="weekly-stat"><span class="weekly-stat-label">Ejercicio</span><span class="weekly-stat-value">${exDays}/${entries.length} días</span></div>
+    <div class="weekly-stat"><span class="weekly-stat-label">Alcohol</span><span class="weekly-stat-value">${alcDays}/${entries.length} días</span></div>
+  </div>
+  <div class="mood-section"><div class="mood-section-title">Día a día</div>`;
+  [...entries].reverse().forEach(e=>{
+    const d2=new Date(e.date+'T00:00:00');
+    const lbl=`${DAY_NAMES[d2.getDay()===0?6:d2.getDay()-1]} ${d2.getDate()} ${MONTHS[d2.getMonth()]}`;
+    const ec=e.moodScore!==null?MOOD_COLORS[String(e.moodScore)]:'var(--text-3)';
+    html+=`<div class="weekly-stat"><span class="weekly-stat-label">${lbl}</span><span class="weekly-stat-value" style="display:flex;gap:10px;font-size:0.68rem">
+      ${e.moodScore!==null?`<span style="color:${ec}">Á ${e.moodScore>0?'+':''}${e.moodScore}</span>`:''}
+      ${e.energyScore!==null?`<span>E ${e.energyScore}</span>`:''}
+      ${e.sleepHours!==null?`<span>Z ${e.sleepHours}h</span>`:''}
+      ${e.anxietyScore!==null?`<span>Ax ${e.anxietyScore}</span>`:''}
+    </span></div>`;
+  });
+  return html+'</div></div>';
+}
+
+function renderMoodContent() {
+  const c=document.getElementById('mood-content');
+  if (!c) return;
+  const sc=c.scrollTop;
+  document.querySelectorAll('.mood-subnav-btn').forEach(b=>b.classList.toggle('active',b.dataset.v===moodSubView));
+  c.innerHTML=moodSubView==='checkin'?renderMoodCheckinForm():moodSubView==='trends'?renderMoodTrendsView():renderWeeklySummaryView();
+  c.scrollTop=sc;
+}
+
+function renderMood() {
+  if (!moodDraft) initMoodDraft();
+  renderMoodContent();
+}
 
 // ── INIT ──
 renderSavedViews();
