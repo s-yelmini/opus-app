@@ -994,102 +994,46 @@ input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 
 
 
 /* ── MILESTONES VIEW ── */
-/* ── MILESTONES — table rows ── */
 .milestone-list { width: 100%; display: flex; flex-direction: column; }
 
-/* Table header */
-.milestone-table-header {
-  display: flex; align-items: center;
-  padding: 6px 20px; border-bottom: 1px solid var(--border);
-  position: sticky; top: 0; background: var(--bg); z-index: 2;
+/* Grid: [16px expand] [8px dot] [80px key] [1fr name] [180px progress] [72px issues] [100px due] [22px menu] */
+.ms-grid {
+  display: grid;
+  grid-template-columns: 16px 8px 80px 1fr 180px 72px 100px 22px;
+  gap: 12px; align-items: center; padding: 0 20px;
 }
-.ms-col-name    { flex: 1; font-size: 0.62rem; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
-.ms-col-date    { width: 100px; font-size: 0.62rem; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
-.ms-col-count   { width: 70px;  font-size: 0.62rem; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
-.ms-col-pct     { width: 80px;  font-size: 0.62rem; color: var(--text-3); letter-spacing: 0.06em; text-transform: uppercase; }
-.ms-col-actions { width: 48px; }
-
-/* Milestone row */
-.milestone-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 11px 20px; min-height: 48px;
+.ms-header {
+  height: 36px; background: var(--bg-sunken);
   border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 2;
+  font-size: 10.5px; font-weight: 600; color: var(--ink-4);
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.ms-row {
+  height: 44px; border-bottom: 1px solid var(--line);
   cursor: pointer; transition: background 80ms;
 }
-.milestone-row:hover { background: var(--bg-hover); }
-.milestone-row:hover .ms-row-actions { opacity: 1 !important; }
-
-.ms-row-drag {
-  color: var(--text-3); font-size: 0.62rem; opacity: 0;
-  cursor: grab; user-select: none; margin-right: 6px; flex-shrink: 0;
-  transition: opacity 0.1s;
+.ms-row:hover { background: var(--bg-hover); }
+.ms-row:hover .ms-actions { opacity: 1; }
+.ms-child-row {
+  height: 38px; border-bottom: 1px solid var(--line);
+  cursor: pointer; transition: background 80ms;
+  background: var(--bg);
 }
-.milestone-row:hover .ms-row-drag { opacity: 0.4; }
-
-.ms-row-color { width: 3px; height: 14px; border-radius: 2px; flex-shrink: 0; margin-right: 10px; }
-
-.ms-row-name { flex: 1; font-size: 0.8rem; color: var(--text); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-.ms-row-date { width: 100px; font-size: 0.72rem; color: var(--text-3); }
-.ms-row-date.overdue { color: var(--red); }
-.ms-row-date.soon    { color: var(--yellow); }
-
-.ms-row-count { width: 70px; font-size: 0.72rem; color: var(--text-3); }
-
-.ms-row-pct-wrap { width: 80px; display: flex; align-items: center; gap: 6px; }
-.ms-row-pct-bar  { flex: 1; height: 3px; background: var(--border2); border-radius: 2px; overflow: hidden; }
-.ms-row-pct-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
-.ms-row-pct-num  { font-size: 0.65rem; color: var(--text-3); width: 28px; text-align: right; flex-shrink: 0; }
-
-.ms-row-actions { width: 48px; display: flex; gap: 2px; opacity: 0; transition: opacity 0.1s; }
-.ms-row-btn {
-  background: none; border: none; color: var(--text-3); cursor: pointer;
-  font-size: 0.68rem; padding: 3px 5px; border-radius: 3px; transition: color 0.1s;
+.ms-child-row:hover { background: var(--bg-hover); }
+.ms-child-row:hover .ms-actions { opacity: 1; }
+.ms-actions { display: flex; gap: 2px; opacity: 0; transition: opacity 100ms; }
+.ms-btn {
+  width: 22px; height: 22px; display: grid; place-items: center;
+  border: none; background: none; color: var(--ink-4); cursor: pointer;
+  border-radius: var(--radius-sm); transition: background 80ms, color 80ms;
 }
-.ms-row-btn:hover { color: var(--text-2); }
+.ms-btn:hover { background: var(--bg-active); color: var(--ink-2); }
+.ms-progress-wrap { display: flex; align-items: center; gap: 8px; }
+.ms-progress-bar { flex: 1; height: 4px; background: var(--bg-sunken); border-radius: 2px; overflow: hidden; }
+.ms-progress-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
 
-/* Detail panel when milestone is clicked — issues slide in below */
-.milestone-detail {
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-  animation: rowIn 0.15s ease;
-}
-
-.milestone-issue-row {
-  display: flex; align-items: center; gap: 8px;
-  padding: 7px 20px 7px 48px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer; transition: background 0.08s;
-}
-.milestone-issue-row:last-child { border-bottom: none; }
-.milestone-issue-row:hover { background: var(--surface3); }
-.milestone-issue-check {
-  width: 12px; height: 12px; border-radius: 50%;
-  border: 1.5px solid var(--border2); flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.12s; cursor: pointer;
-}
-.milestone-issue-check:hover { border-color: var(--green); }
-.milestone-issue-check.done { background: var(--green); border-color: var(--green); }
-.milestone-issue-check.done::after {
-  content: ''; width: 5px; height: 3px;
-  border-left: 1.5px solid white; border-bottom: 1.5px solid white;
-  transform: rotate(-45deg) translateY(-1px); display: block;
-}
-.milestone-issue-prio { width: 6px; height: 6px; border-radius: 1px; flex-shrink: 0; }
-.milestone-issue-text { flex: 1; font-size: 0.78rem; color: var(--text-2); }
-.milestone-issue-text.done-text { text-decoration: line-through; color: var(--text-3); }
-.milestone-add-issue {
-  display: flex; align-items: center; gap: 8px;
-  padding: 7px 20px 7px 48px;
-}
-.milestone-add-issue input {
-  flex: 1; background: none; border: none; outline: none;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text);
-}
-.milestone-add-issue input::placeholder { color: var(--text-3); }
-
-.milestone-empty { padding: 60px 20px; text-align: center; font-size: 0.75rem; color: var(--text-3); }
+.milestone-empty { padding: 60px 20px; text-align: center; font-size: 13px; color: var(--ink-4); }
 .milestone-add-bar {
   display: flex; align-items: center; gap: 8px;
   padding: 10px 20px; border-bottom: 1px solid var(--border); cursor: text;
@@ -3369,79 +3313,71 @@ function getMilestoneProgress(mid) {
 
 let _milestonesRenderHash = '';
 
-function renderMilestoneRow(m, indent) {
+function msDateLabel(m, pct) {
+  if (!m.due) return { label: '—', style: 'color:var(--ink-4)' };
+  const due = new Date(m.due + 'T00:00:00');
+  const diff = Math.round((due - today()) / 86400000);
+  const mo = MONTHS[due.getMonth()].slice(0,3);
+  if (pct === 100) return { label: `${mo} ${due.getDate()}`, style: 'color:var(--ink-3)' };
+  if (diff < 0)   return { label: `${Math.abs(diff)}d vencido`, style: 'color:var(--urgent)' };
+  if (diff === 0) return { label: 'Hoy', style: 'color:var(--accent);font-weight:500' };
+  if (diff <= 7)  return { label: `${diff}d`, style: 'color:var(--orange)' };
+  return { label: `${mo} ${due.getDate()}`, style: 'color:var(--ink-3)' };
+}
+
+function msRowHTML(m, isChild) {
   const { total, done, pct } = getMilestoneProgress(m.id);
-  const isExpanded = milestoneExpanded[m.id] === true;
-  const pctColor = pct === 100 ? 'var(--accent)' : pct >= 50 ? 'var(--orange)' : pct > 0 ? 'var(--orange)' : 'var(--ink-4)';
-  const MONTHS_SHORT = MONTHS.map(x => x.slice(0,3));
-
-  let dateLabel = '—', dateStyle = 'color:var(--ink-3)';
-  if (m.due) {
-    const due = new Date(m.due + 'T00:00:00');
-    const diff = Math.round((due - today()) / 86400000);
-    if (pct === 100)   dateLabel = MONTHS_SHORT[due.getMonth()] + ' ' + due.getDate();
-    else if (diff < 0) { dateLabel = Math.abs(diff) + 'd vencido'; dateStyle = 'color:var(--urgent)'; }
-    else if (diff === 0) { dateLabel = 'Hoy'; dateStyle = 'color:var(--accent)'; }
-    else if (diff <= 7)  { dateLabel = diff + 'd'; dateStyle = 'color:var(--orange)'; }
-    else dateLabel = MONTHS_SHORT[due.getMonth()] + ' ' + due.getDate();
-  }
-
   const children = milestones.filter(x => x.parentId === m.id);
-  const chevron = children.length ? (isExpanded
-    ? `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transform:rotate(90deg);transition:transform 150ms"><path d="m9 6 6 6-6 6"/></svg>`
-    : `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg>`) : '';
+  const isExpanded = milestoneExpanded[m.id] !== false; // default expanded for parents
+  const { label: dateLabel, style: dateStyle } = msDateLabel(m, pct);
+  const rowClass = isChild ? 'ms-child-row ms-grid' : 'ms-row ms-grid';
 
-  const indentStyle = indent ? `padding-left:${16 + indent*20}px` : '';
+  // Chevron
+  const chevron = children.length
+    ? `<button onclick="event.stopPropagation();toggleMilestoneExpand(${m.id})" style="width:16px;height:16px;display:flex;align-items:center;justify-content:center;border:none;background:none;cursor:pointer;color:var(--ink-4);flex-shrink:0;border-radius:2px;padding:0;transition:transform 150ms" ${isExpanded?'':'style="transform:rotate(-90deg)"'}>
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="transition:transform 150ms;transform:rotate(${isExpanded?90:0}deg)"><path d="m9 6 6 6-6 6"/></svg>
+      </button>`
+    : '<span></span>';
 
-  let html = `<div class="milestone-row" onclick="toggleMilestoneExpand(${m.id})" style="${indentStyle}">
-    <span style="color:var(--ink-3);display:inline-flex;width:14px;flex-shrink:0">${chevron}</span>
+  // Progress bar + pct
+  const barColor = pct === 100 ? 'var(--accent)' : m.color;
+
+  // Key: first letters of each word, max 3 chars, or stored key
+  const key = m.key || m.name.split(/\s+/).map(w=>w[0]?.toUpperCase()||'').join('').slice(0,3);
+
+  let html = `<div class="${rowClass}" onclick="toggleMilestoneExpand(${m.id})" style="${isChild?'background:var(--bg-sunken);':''}">
+    ${chevron}
     <span style="width:8px;height:8px;border-radius:50%;background:${m.color};flex-shrink:0;display:inline-block"></span>
-    <div style="flex:1;min-width:0">
-      <div style="display:flex;align-items:center;gap:8px">
-        <span class="ms-row-name" style="font-size:13px;font-weight:${indent?450:500};color:var(--ink)">${esc(m.name)}</span>
-        ${indent ? `<span style="font-size:11px;color:var(--ink-4)">${esc(milestones.find(x=>x.id===m.parentId)?.name||'')}</span>` : ''}
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
-        <div style="flex:1;max-width:200px;height:3px;background:var(--line);border-radius:2px;overflow:hidden">
-          <div style="width:${pct}%;height:100%;background:${pctColor};border-radius:2px"></div>
-        </div>
-        <span class="mono" style="font-size:11px;color:${pctColor};font-variant-numeric:tabular-nums">${pct}%</span>
-        <span style="font-size:11px;color:var(--ink-4)">${done}/${total} issues</span>
-      </div>
+    <span class="mono" style="font-size:11.5px;color:var(--ink-4);letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(key)}</span>
+    <div style="min-width:0">
+      <span style="font-size:13px;font-weight:${isChild?450:500};color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block">${esc(m.name)}</span>
+      ${isChild?`<span style="font-size:11px;color:var(--ink-4)">hijo de ${esc(milestones.find(x=>x.id===m.parentId)?.name||'')}</span>`:''}
     </div>
-    <span class="mono" style="font-size:11.5px;${dateStyle};font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0">${dateLabel}</span>
-    <div class="ms-row-actions" style="display:flex;gap:2px;opacity:0;transition:opacity 100ms">
-      <button class="ms-row-btn" onclick="event.stopPropagation();editMilestone(${m.id})" title="Editar">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    <div class="ms-progress-wrap">
+      <div class="ms-progress-bar">
+        <div class="ms-progress-fill" style="width:${pct}%;background:${barColor}"></div>
+      </div>
+      <span class="mono" style="font-size:11px;color:var(--ink-4);min-width:28px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0">${pct}%</span>
+    </div>
+    <span class="mono" style="font-size:12px;color:var(--ink-2);text-align:right;font-variant-numeric:tabular-nums">
+      <span style="color:var(--ink)">${done}</span><span style="color:var(--ink-4)">/${total}</span>
+    </span>
+    <span class="mono" style="font-size:11.5px;${dateStyle};text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap">${esc(dateLabel)}</span>
+    <div class="ms-actions">
+      <button class="ms-btn" onclick="event.stopPropagation();editMilestone(${m.id})" title="Editar">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
       </button>
-      <button class="ms-row-btn" onclick="event.stopPropagation();deleteMilestone(${m.id})" title="Eliminar" style="color:var(--ink-3)" onmouseover="this.style.color='var(--urgent)'" onmouseout="this.style.color='var(--ink-3)'">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+      <button class="ms-btn" onclick="event.stopPropagation();deleteMilestone(${m.id})" title="Eliminar" onmouseover="this.style.color='var(--urgent)'" onmouseout="this.style.color='var(--ink-4)'">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
       </button>
     </div>
   </div>`;
 
-  // Expanded issues
-  if (isExpanded && !children.length) {
-    const ts = getMilestoneTasks(m.id);
-    const issueRows = ts.map(t => `
-      <div class="milestone-issue-row" onclick="selectTask(${t.id})" style="${indent?`padding-left:${32+indent*20}px`:''}">
-        <div style="flex-shrink:0">${statusIconSVG(t.done,13)}</div>
-        <span style="width:7px;height:7px;border-radius:50%;background:${PM[t.priority||'p4'].color};flex-shrink:0;display:inline-block"></span>
-        <span class="milestone-issue-text ${t.done?'done-text':''}" style="flex:1">${esc(t.text)}</span>
-        <span class="mono" style="font-size:11px;color:var(--ink-4)">TSK-${String(t.id).padStart(3,'0')}</span>
-      </div>`).join('');
-    html += `<div class="milestone-detail">
-      ${issueRows}
-      <div class="milestone-add-issue" style="${indent?`padding-left:${32+indent*20}px`:''}">
-        <div style="width:12px;height:12px;border:1.5px dashed var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;color:var(--ink-3);flex-shrink:0">+</div>
-        <input placeholder="Añadir issue..." autocomplete="off" onkeydown="if(event.key==='Enter')addIssueToMilestone(${m.id},this)" />
-      </div>
-    </div>`;
-  }
-
-  // Render children when parent is expanded (or always show them)
-  if (children.length) {
-    children.forEach(child => { html += renderMilestoneRow(child, (indent||0)+1); });
+  // Children (shown when parent is expanded or by default)
+  if (children.length && isExpanded) {
+    children.forEach(child => { html += msRowHTML(child, true); });
+    // Visual end-of-children separator
+    html += `<div style="height:6px;background:var(--bg-sunken);border-bottom:1px solid var(--line)"></div>`;
   }
 
   return html;
@@ -3461,22 +3397,23 @@ function renderMilestones() {
     return;
   }
 
-  // Table header
-  let html = `<div class="milestone-table-header" style="display:flex;align-items:center;gap:12px;padding:9px 20px;background:var(--bg-sunken);border-bottom:1px solid var(--line);font-size:10.5px;font-weight:600;color:var(--ink-4);text-transform:uppercase;letter-spacing:.06em">
-    <span style="width:22px;flex-shrink:0"></span>
-    <span style="width:8px;flex-shrink:0"></span>
-    <span style="flex:1">Milestone</span>
-    <span style="flex-shrink:0;white-space:nowrap">Vence</span>
-    <span style="width:60px"></span>
+  // Header row
+  let html = `<div class="ms-header ms-grid">
+    <span></span><span></span>
+    <span>Clave</span>
+    <span>Milestone</span>
+    <span>Progreso</span>
+    <span style="text-align:right">Issues</span>
+    <span style="text-align:right">Vence</span>
+    <span></span>
   </div>`;
 
-  // Render top-level milestones (no parent)
-  const topLevel = milestones.filter(m => !m.parentId);
-  topLevel.forEach(m => { html += renderMilestoneRow(m, 0); });
+  // Top-level milestones (no parent)
+  milestones.filter(m => !m.parentId).forEach(m => { html += msRowHTML(m, false); });
 
   // Quick add
   html += `<div class="milestone-add-bar" style="font-family:inherit">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--ink-3);flex-shrink:0"><path d="M12 5v14M5 12h14"/></svg>
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="color:var(--ink-4);flex-shrink:0"><path d="M12 5v14M5 12h14"/></svg>
     <input placeholder="Nuevo milestone..." autocomplete="off" style="font-family:inherit"
       onkeydown="if(event.key==='Enter'&&this.value.trim()){quickAddMilestone(this.value.trim());this.value='';}" />
   </div>`;
