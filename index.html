@@ -1527,6 +1527,18 @@ input:focus, textarea:focus, select:focus {
     <span style="flex:1;text-align:left">Capturar</span>
     <span class="kbd">C</span>
   </button>
+
+  <!-- Profile -->
+  <div style="display:flex;align-items:center;gap:9px;padding:6px 6px">
+    <div style="width:28px;height:28px;border-radius:6px;background:oklch(0.86 0.05 270);color:var(--accent-ink);display:grid;place-items:center;font-size:11px;font-weight:600;flex-shrink:0">SY</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)">Santiago Y.</div>
+      <div style="font-size:11px;color:var(--ink-3)">Personal</div>
+    </div>
+    <button title="Ajustes" style="width:24px;height:24px;border-radius:4px;color:var(--ink-3);display:grid;place-items:center;border:none;background:none;cursor:pointer" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </div>
 </div>
 
 <!-- MAIN -->
@@ -3010,7 +3022,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // ── TRIAGE ──
 // ════════════════════════════════════════
 
-let triageIdx = 0;      // index into inbox tasks array
+let triageIdx = 0;
+let triageSelectedId = null;
 let triagePrio = 'p4';
 let triageDay = null;
 let triageSkipped = []; // ids skipped this session
@@ -3030,39 +3043,65 @@ function triageQuickAdd() {
 
 function updateTriageBadge() { updateBadges(); }
 
+function selectTriageItem(id) {
+  triageSelectedId = id;
+  renderTriage();
+}
+
 function renderTriage() {
   const inbox = getInboxTasks();
   const container = document.getElementById('triage-content');
   if (!container) return;
 
+  // Auto-select first or keep selection valid
+  if (!triageSelectedId || !inbox.find(t => t.id === triageSelectedId))
+    triageSelectedId = inbox[0]?.id || null;
+
   if (inbox.length === 0) {
-    container.innerHTML = `
-      <div class="triage-empty">
-        <div class="triage-empty-icon">✓</div>
-        <div class="triage-empty-text">Inbox zero.</div>
-        <button onclick="toggleTriageInput(true)" style="margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:0.7rem;background:none;border:1px solid var(--border2);color:var(--text-3);padding:5px 14px;border-radius:5px;cursor:pointer" onmouseover="this.style.color='var(--text-2)'" onmouseout="this.style.color='var(--text-3)'">+ Add to inbox</button>
-      </div>`;
+    container.innerHTML = `<div style="flex:1;display:grid;place-items:center">
+      <div style="text-align:center">
+        <div style="font-size:13px;color:var(--ink-2);margin-bottom:4px;font-weight:500">Bandeja al día ✓</div>
+        <div style="font-size:12px;color:var(--ink-3)">Captura lo siguiente con <span style="display:inline-flex;align-items:center;min-width:18px;height:18px;padding:0 4px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3);background:var(--bg-elev);border:1px solid var(--line);border-bottom-width:1.5px;border-radius:4px">C</span></div>
+      </div>
+    </div>`;
     return;
   }
 
-  const rows = inbox.map(t => `
-    <div class="triage-row" id="triage-row-${t.id}">
-      <div class="triage-row-prio" style="background:${PM[t.priority||'p4'].color}"></div>
-      <span class="triage-row-text" ondblclick="triageEditText(${t.id})" title="Double-click to edit">${esc(t.text)}</span>
-      <div class="triage-row-actions">
-        <button class="triage-row-btn skip" onclick="triageDiscard(${t.id})">Discard</button>
-        <button class="triage-row-btn accept" onclick="triageAccept(${t.id})">Accept</button>
-      </div>
-    </div>`).join('');
+  const sel = inbox.find(t => t.id === triageSelectedId) || inbox[0];
+  const selIdx = inbox.findIndex(t => t.id === sel.id);
+  const ms = milestones.find(m => m.id === sel.milestone);
 
-  container.innerHTML = `
-    <div style="width:100%;max-width:580px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-        <span style="font-size:0.7rem;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase">${inbox.length} pending</span>
-        <button onclick="triageAcceptAll()" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--text-3);background:none;border:none;cursor:pointer;padding:3px 0" onmouseover="this.style.color='var(--text-2)'" onmouseout="this.style.color='var(--text-3)'">Accept all →</button>
+  const listHtml = inbox.map(t => {
+    const on = t.id === triageSelectedId;
+    return `<div onclick="selectTriageItem(${t.id})" style="display:flex;align-items:flex-start;gap:10px;padding:11px 16px;cursor:pointer;border-bottom:1px solid var(--line);background:${on?'var(--bg-hover)':'transparent'};${on?'box-shadow:inset 2px 0 0 var(--accent);':''}transition:background 80ms" onmouseover="if(!${on})this.style.background='var(--bg-hover)'" onmouseout="this.style.background='${on?'var(--bg-hover)':'transparent'}'">
+      <span style="width:6px;height:6px;border-radius:50%;background:${PM[t.priority||'p4'].color};flex-shrink:0;margin-top:4px"></span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;color:${on?'var(--ink)':'var(--ink-2)'};font-weight:${on?'500':'450'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4">${esc(t.text)}</div>
+        <div style="font-size:11px;color:var(--ink-4);margin-top:2px">${PM[t.priority||'p4'].label}</div>
       </div>
-      <div id="triage-list">${rows}</div>
     </div>`;
+  }).join('');
+
+  const detailHtml = `
+    <div style="flex:1;padding:36px 48px;overflow-y:auto">
+      <div class="mono" style="font-size:10.5px;color:var(--ink-4);letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px">${selIdx+1} de ${inbox.length}</div>
+      <h2 style="font-size:22px;font-weight:500;color:var(--ink);line-height:1.35;letter-spacing:-.01em;margin:0 0 16px">${esc(sel.text)}</h2>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <span style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;background:var(--bg-sunken);border-radius:4px;font-size:12px;color:var(--ink-2)"><span style="width:6px;height:6px;border-radius:50%;background:${PM[sel.priority||'p4'].color}"></span>${PM[sel.priority||'p4'].label}</span>
+        ${ms?`<span style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;background:var(--bg-sunken);border-radius:4px;font-size:12px;color:var(--ink-2)"><span style="width:6px;height:6px;border-radius:50%;background:${ms.color}"></span>${esc(ms.name)}</span>`:''}
+        ${sel.day?`<span style="display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;background:var(--bg-sunken);border-radius:4px;font-size:12px;color:var(--ink-2)">${sel.day.slice(5).replace('-','/')}</span>`:''}
+      </div>
+    </div>
+    <div style="flex-shrink:0;border-top:1px solid var(--line);padding:14px 48px;display:flex;align-items:center;gap:8px">
+      <div style="flex:1"></div>
+      <button onclick="triageDiscard(${sel.id})" style="height:30px;padding:0 14px;display:inline-flex;align-items:center;gap:5px;background:transparent;color:var(--ink-3);border:1px solid var(--line);border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit" onmouseover="this.style.color='var(--ink-2)';this.style.borderColor='var(--line-strong)'" onmouseout="this.style.color='var(--ink-3)';this.style.borderColor='var(--line)'">✕ Descartar</button>
+      <button onclick="triageAccept(${sel.id})" style="height:30px;padding:0 16px;display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:white;border:none;border-radius:var(--radius);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit">✓ Aceptar</button>
+    </div>`;
+
+  container.innerHTML = `<div style="display:flex;height:100%">
+    <div style="width:280px;flex-shrink:0;border-right:1px solid var(--line);overflow-y:auto">${listHtml}</div>
+    <div style="flex:1;display:flex;flex-direction:column;min-width:0">${detailHtml}</div>
+  </div>`;
 }
 
 function triageEditText(id) {
@@ -3116,13 +3155,14 @@ function setTriageDay(k) {
 }
 
 function triageAccept(id) {
+  const inbox = getInboxTasks();
+  const idx = inbox.findIndex(t => t.id === id);
   const t = tasks.find(t => t.id === id);
   if (!t) return;
-  t.inbox = false;
-  t.done = false;
-  save();
-  renderList();
-  updateTriageBadge();
+  t.inbox = false; t.done = false;
+  save(); renderList(); updateTriageBadge();
+  const remaining = getInboxTasks();
+  triageSelectedId = remaining[Math.min(idx, remaining.length-1)]?.id || null;
   renderTriage();
 }
 
@@ -3168,10 +3208,12 @@ function handleTriageInputKey(e) {
 }
 
 function triageDiscard(id) {
+  const inbox = getInboxTasks();
+  const idx = inbox.findIndex(t => t.id === id);
   tasks = tasks.filter(t => t.id !== id);
-  save();
-  renderList();
-  updateTriageBadge();
+  save(); renderList(); updateTriageBadge();
+  const remaining = getInboxTasks();
+  triageSelectedId = remaining[Math.min(idx, remaining.length-1)]?.id || null;
   renderTriage();
 }
 
