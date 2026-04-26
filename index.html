@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23121319'/><path d='M19 4L9 18h8l-4 10 14-16h-9z' fill='%235e6ad2'/></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Opus</title>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&family=Inter+Tight:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1327,67 +1327,114 @@ input:focus, textarea:focus, select:focus {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
-/* ── MOOD TRACKER ── */
+/* ── MOOD TRACKER — calm clinical-warm light theme ── */
+#mood-view {
+  --m-bg: #FAFAF7; --m-surface: #FFFFFF; --m-surface-2: #F4F2EC; --m-surface-3: #ECEAE3;
+  --m-border: #E5E3DD; --m-border-strong: #D6D3CA;
+  --m-ink: #1F2937; --m-ink-2: #44423C; --m-ink-3: #6B6963; --m-ink-4: #97948C; --m-ink-5: #B8B5AC;
+  --m-accent: #3D5A4C; --m-accent-soft: #E6EBE5; --m-accent-ink: #2A4035;
+  --m-warm: #A89B5B; --m-warm-soft: #F1ECD9;
+  --m-cool: #5B7FA8; --m-cool-soft: #E4EAF1;
+  --m-caution: #B8754C; --m-caution-soft: #F4E8DC;
+  --m-mood-n3: #6B7E91; --m-mood-n2: #8595A6; --m-mood-n1: #A4ADB5;
+  --m-mood-0: #B8B5AC; --m-mood-p1: #B8B687; --m-mood-p2: #B0A35F; --m-mood-p3: #98864A;
+  background: var(--m-bg); color: var(--m-ink);
+  font-family: 'Inter Tight', 'Geist', sans-serif; -webkit-font-smoothing: antialiased;
+}
+#mood-view .mood-subnav-wrap {
+  display: flex; gap: 0; padding: 0 24px; flex-shrink: 0;
+  border-bottom: 1px solid var(--m-border); background: var(--m-surface);
+}
 .mood-subnav-btn {
-  font-family: 'Geist Mono', monospace; font-size: 0.7rem;
-  padding: 7px 16px; border-radius: var(--radius) var(--radius) 0 0;
-  border: 1px solid transparent; border-bottom: none; margin-bottom: -1px;
-  background: none; color: var(--text-3); cursor: pointer; transition: all 0.1s;
+  font-family: 'Inter Tight', sans-serif; font-size: 0.78rem; font-weight: 500;
+  padding: 10px 18px; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  background: none; color: var(--m-ink-4); cursor: pointer; transition: all 0.12s;
 }
-.mood-subnav-btn:hover { color: var(--text-2); }
-.mood-subnav-btn.active { background: var(--bg); color: var(--text); border-color: var(--border); }
-.mood-inner { padding: 20px 24px; max-width: 680px; }
-.mood-section {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 14px;
+.mood-subnav-btn:hover { color: var(--m-ink-2); }
+.mood-subnav-btn.active { color: var(--m-accent); border-bottom-color: var(--m-accent); }
+.mood-inner { padding: 24px 28px; max-width: 680px; }
+.mood-card {
+  background: var(--m-surface); border: 1px solid var(--m-border);
+  border-radius: 14px; padding: 20px 22px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(20,20,15,0.04);
 }
-.mood-section-title { font-size: 0.6rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
-.mood-field { margin-bottom: 18px; }
+.mood-section-label {
+  font-size: 0.65rem; font-weight: 600; color: var(--m-ink-4);
+  text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 14px;
+}
+.mood-field { margin-bottom: 20px; }
 .mood-field:last-child { margin-bottom: 0; }
-.mood-field-label { font-size: 0.7rem; color: var(--text-2); margin-bottom: 8px; display: block; }
-.mood-field-sub { font-size: 0.62rem; color: var(--text-3); margin-bottom: 8px; display: block; }
-.mood-score-row { display: flex; gap: 4px; }
-.mood-score-btn {
-  flex: 1; padding: 8px 2px; border-radius: var(--radius);
-  border: 1px solid var(--border2); background: var(--surface2);
-  color: var(--text-3); cursor: pointer; font-family: 'Geist Mono', monospace;
-  font-size: 0.7rem; transition: all 0.1s; text-align: center; line-height: 1.3;
+.mood-field-label { font-size: 0.82rem; font-weight: 500; color: var(--m-ink); margin-bottom: 4px; display: flex; justify-content: space-between; align-items: baseline; }
+.mood-field-helper { font-size: 0.72rem; color: var(--m-ink-4); }
+.mood-field-sub { font-size: 0.7rem; color: var(--m-ink-4); margin-top: 6px; line-height: 1.5; }
+/* Mood dot scale */
+.mood-dot-row { display: flex; gap: 8px; align-items: flex-end; padding-bottom: 20px; }
+.mood-dot-btn {
+  width: 38px; height: 38px; border-radius: 50%; cursor: pointer; border: 1.5px solid var(--m-border-strong);
+  background: var(--m-surface); transition: all 0.15s; display: flex; align-items: center; justify-content: center;
+  position: relative; flex-shrink: 0;
 }
-.mood-score-btn:hover { background: var(--surface3); color: var(--text-2); }
-.mood-score-btn.active { color: white; border-color: transparent; }
-.toggle-pair { display: flex; border: 1px solid var(--border2); border-radius: var(--radius); overflow: hidden; width: fit-content; }
-.toggle-btn { padding: 6px 14px; background: none; border: none; cursor: pointer; font-family: 'Geist Mono', monospace; font-size: 0.7rem; color: var(--text-3); transition: all 0.1s; }
-.toggle-btn.active { background: var(--surface3); color: var(--text); }
-.lifestyle-row { display: flex; gap: 18px; flex-wrap: wrap; align-items: flex-start; }
-.lifestyle-item { display: flex; flex-direction: column; gap: 6px; }
-.lifestyle-label { font-size: 0.68rem; color: var(--text-2); }
-.caff-row { display: flex; gap: 3px; }
-.caff-btn { padding: 6px 10px; border: 1px solid var(--border2); border-radius: var(--radius); background: none; font-family: 'Geist Mono', monospace; font-size: 0.68rem; color: var(--text-3); cursor: pointer; transition: all 0.1s; }
-.caff-btn.active { background: var(--surface3); border-color: var(--border); color: var(--text-2); }
-.mood-note-ta { width: 100%; min-height: 80px; background: var(--surface2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 10px 12px; font-family: 'Geist Mono', monospace; font-size: 0.73rem; color: var(--text); line-height: 1.6; resize: none; outline: none; transition: border-color 0.15s; color-scheme: dark; }
-.mood-note-ta:focus { border-color: var(--accent); }
-.mood-save-row { display: flex; padding-bottom: 6px; }
-.mood-save-btn { font-family: 'Geist Mono', monospace; font-size: 0.73rem; padding: 9px 28px; border-radius: var(--radius); background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%); border: 1px solid var(--accent); color: white; cursor: pointer; transition: opacity 0.12s; }
+.mood-dot-btn.active { border-width: 2px; border-color: var(--m-ink); }
+.mood-dot-btn .dot-label {
+  position: absolute; top: 100%; margin-top: 5px; left: 50%; transform: translateX(-50%);
+  font-size: 0.68rem; color: var(--m-ink-4); white-space: nowrap; font-variant-numeric: tabular-nums;
+}
+.mood-dot-btn.active .dot-label { color: var(--m-ink); font-weight: 500; }
+/* 5-point scale */
+.mood-5scale { display: flex; gap: 5px; }
+.mood-5btn {
+  flex: 1; padding: 9px 0; border-radius: 8px; cursor: pointer; font-size: 0.82rem;
+  border: 1px solid var(--m-border); background: var(--m-surface); color: var(--m-ink-3);
+  font-variant-numeric: tabular-nums; transition: all 0.12s; font-family: inherit;
+}
+.mood-5btn.active { background: var(--m-accent-soft); border-color: var(--m-accent); color: var(--m-accent-ink); font-weight: 500; }
+/* Yes/No */
+.mood-yesno { display: inline-flex; overflow: hidden; border: 1px solid var(--m-border); border-radius: 8px; }
+.mood-yesno button { padding: 7px 18px; font-size: 0.78rem; border: none; cursor: pointer; font-family: inherit; transition: all 0.12s; background: var(--m-surface); color: var(--m-ink-3); }
+.mood-yesno button.active { background: var(--m-accent-soft); color: var(--m-accent-ink); font-weight: 500; }
+/* Segment / Caffeine */
+.mood-segment { display: inline-flex; padding: 2px; border-radius: 8px; background: var(--m-surface-2); }
+.mood-seg-btn { padding: 5px 10px; font-size: 0.75rem; border-radius: 6px; border: 1px solid transparent; cursor: pointer; background: transparent; color: var(--m-ink-3); font-family: inherit; transition: all 0.12s; }
+.mood-seg-btn.active { background: var(--m-surface); border-color: var(--m-border); color: var(--m-ink); box-shadow: 0 1px 2px rgba(20,20,15,0.04); }
+/* Chip toggles */
+.mood-chip { padding: 6px 12px; border-radius: 999px; font-size: 0.75rem; cursor: pointer; font-family: inherit; transition: all 0.12s; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--m-border); background: var(--m-surface); color: var(--m-ink-3); }
+.mood-chip.active { border-color: var(--m-accent); background: var(--m-accent-soft); color: var(--m-accent-ink); }
+.mood-chip-check { width: 14px; height: 14px; border-radius: 50%; border: 1px solid currentColor; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.mood-chip.active .mood-chip-check { background: var(--m-accent); border-color: var(--m-accent); }
+/* Note */
+.mood-note-ta { width: 100%; min-height: 76px; background: var(--m-surface); border: 1px solid var(--m-border); border-radius: 8px; padding: 10px 12px; font-size: 0.82rem; color: var(--m-ink); line-height: 1.55; resize: vertical; outline: none; font-family: inherit; }
+.mood-note-ta:focus { border-color: var(--m-accent); }
+/* Save */
+.mood-save-row { display: flex; align-items: center; justify-content: space-between; padding-top: 4px; padding-bottom: 8px; }
+.mood-save-btn { padding: 10px 22px; font-size: 0.82rem; font-weight: 500; border-radius: 8px; background: var(--m-accent); border: none; color: #fff; cursor: pointer; font-family: inherit; transition: opacity 0.12s; }
 .mood-save-btn:hover { opacity: 0.88; }
-.mood-char-count { font-size: 0.6rem; color: var(--text-3); margin-top: 4px; text-align: right; }
-.pattern-alert { border-radius: var(--radius-lg); padding: 14px 18px; margin-bottom: 14px; border: 1px solid; }
-.pattern-alert.warning { background: rgba(240,164,40,0.05); border-color: rgba(240,164,40,0.22); }
-.pattern-alert.info    { background: rgba(94,106,210,0.06); border-color: rgba(94,106,210,0.22); }
-.pattern-alert.support { background: rgba(160,100,220,0.06); border-color: rgba(160,100,220,0.22); }
-.pattern-alert-title { font-size: 0.68rem; font-weight: 500; margin-bottom: 6px; }
-.pattern-alert.warning .pattern-alert-title { color: #e8a825; }
-.pattern-alert.info    .pattern-alert-title { color: var(--accent); }
-.pattern-alert.support .pattern-alert-title { color: #c084fc; }
-.pattern-alert-body { font-size: 0.7rem; color: var(--text-3); line-height: 1.65; }
-.mood-disclaimer { font-size: 0.62rem; color: var(--text-3); line-height: 1.65; padding: 12px 0 20px; border-top: 1px solid var(--border); margin-top: 6px; }
-.chart-label { font-size: 0.6rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 5px; }
-.chart-wrap { margin-bottom: 22px; }
-.chart-wrap:last-child { margin-bottom: 0; }
-.weekly-stat { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--border); }
-.weekly-stat:last-child { border-bottom: none; }
-.weekly-stat-label { font-size: 0.7rem; color: var(--text-2); }
-.weekly-stat-value { font-family: 'Geist Mono', monospace; font-size: 0.72rem; color: var(--text); }
-.mood-done-banner { background: var(--green-soft); border: 1px solid rgba(48,164,108,0.22); border-radius: var(--radius-lg); padding: 10px 16px; margin-bottom: 14px; font-size: 0.72rem; color: var(--green); display: flex; align-items: center; gap: 8px; }
+/* Range slider */
+.mood-range { width: 100%; accent-color: var(--m-accent); }
+/* Pattern alert */
+.m-alert { display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; background: var(--m-surface); border: 1px solid var(--m-border); border-left: 3px solid var(--m-warm); border-radius: 8px; margin-bottom: 14px; }
+.m-alert-body { font-size: 0.78rem; color: var(--m-ink-2); line-height: 1.55; }
+.m-alert-title { color: var(--m-ink); font-weight: 500; }
+.m-alert.support { border-left-color: var(--m-cool); }
+/* Disclaimer */
+.mood-disclaimer { font-size: 0.68rem; color: var(--m-ink-4); line-height: 1.6; padding: 14px 0 20px; border-top: 1px solid var(--m-border); margin-top: 8px; }
+/* Done banner */
+.mood-done-banner { background: var(--m-accent-soft); border: 1px solid rgba(61,90,76,0.2); border-radius: 10px; padding: 10px 16px; margin-bottom: 16px; font-size: 0.78rem; color: var(--m-accent-ink); display: flex; align-items: center; gap: 8px; }
+/* Trends chart */
+.mood-chart-wrap { margin-bottom: 24px; }
+.mood-chart-label { font-size: 0.65rem; font-weight: 600; color: var(--m-ink-4); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+/* Metric switcher (DashB) */
+.mood-metric-card { background: var(--m-surface); border: 1px solid var(--m-border); border-radius: 14px; padding: 22px; margin-bottom: 14px; }
+.mood-metric-mini { background: var(--m-surface); border: 1px solid var(--m-border); border-radius: 12px; padding: 12px; cursor: pointer; font-family: inherit; text-align: left; transition: border-color 0.12s; }
+.mood-metric-mini:hover { border-color: var(--m-border-strong); }
+/* Weekly table */
+.mood-week-table { background: var(--m-surface); border: 1px solid var(--m-border); border-radius: 14px; overflow: hidden; }
+.mood-week-head { display: grid; grid-template-columns: 1fr 62px 62px 74px 56px 56px 62px; padding: 10px 18px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--m-ink-4); border-bottom: 1px solid var(--m-border); background: var(--m-surface-2); }
+.mood-week-row { display: grid; grid-template-columns: 1fr 62px 62px 74px 56px 56px 62px; padding: 14px 18px; align-items: center; border-bottom: 1px solid var(--m-border); font-variant-numeric: tabular-nums; }
+.mood-week-row:last-child { border-bottom: none; }
+/* AI analysis */
+.mood-ai-section { background: var(--m-surface); border: 1px solid var(--m-border); border-radius: 14px; padding: 20px 22px; margin-bottom: 14px; }
+.mood-ai-text { font-size: 0.82rem; color: var(--m-ink-2); line-height: 1.8; white-space: pre-wrap; }
+/* Serif util */
+.mood-serif { font-family: 'Source Serif 4', Georgia, serif; }
 </style>
 </head>
 <body>
@@ -1629,8 +1676,8 @@ input:focus, textarea:focus, select:focus {
 
     <!-- MOOD VIEW -->
     <div id="mood-view" style="display:none;flex:1;flex-direction:column;overflow:hidden;min-width:0">
-      <div style="display:flex;gap:2px;padding:10px 18px 0;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--surface)">
-        <button class="mood-subnav-btn active" data-v="checkin" onclick="setMoodSubView('checkin')">Hoy</button>
+      <div class="mood-subnav-wrap">
+        <button class="mood-subnav-btn active" data-v="checkin" onclick="setMoodSubView('checkin')">Check-in</button>
         <button class="mood-subnav-btn" data-v="trends" onclick="setMoodSubView('trends')">Tendencias</button>
         <button class="mood-subnav-btn" data-v="weekly" onclick="setMoodSubView('weekly')">Semanal</button>
       </div>
@@ -3929,9 +3976,17 @@ function updateBadges() {
 // ════════════════════════════════════════
 
 const MOOD_COLORS = {
-  '-3':'#9857d3','-2':'#7575a8','-1':'#6e7c8c',
-  '0':'#908f9e','1':'#4fa87d','2':'#e8a825','3':'#e07d3c'
+  '-3':'#6B7E91','-2':'#8595A6','-1':'#A4ADB5',
+  '0':'#B8B5AC','1':'#B8B687','2':'#B0A35F','3':'#98864A'
 };
+const MOOD_DESCS = {
+  '-3':'severe depression','-2':'moderate depression','-1':'mildly low',
+  '0':'stable / neutral','1':'positive mood','2':'elevated / activated','3':'hypomanic pattern'
+};
+const ENERGY_LABELS=['','muy baja','baja','normal','alta','muy alta'];
+const QUAL_LABELS=['','muy mal','mal','regular','bien','excelente'];
+const ANX_LABELS=['','calmo','leve','presente','alto','desbordado'];
+const IMP_LABELS=['','ninguna','leve','notable','alta','riesgosa'];
 
 function saveMoodData() { localStorage.setItem('mood_v1', JSON.stringify(moodEntries)); }
 
@@ -4067,6 +4122,51 @@ function detectMoodPatterns() {
 const DAY_NAMES_ES = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 const MONTHS_ES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 
+function moodDotColor(v) { return MOOD_COLORS[String(v)] || '#B8B5AC'; }
+
+function moodDotsSVG(values) {
+  const W=560, H=64, pad=10, innerW=W-pad*2, innerH=H-pad*2;
+  const midY = pad+innerH/2;
+  let svg = `<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="display:block">`;
+  svg += `<line x1="${pad}" x2="${W-pad}" y1="${midY}" y2="${midY}" stroke="#E5E3DD" stroke-width="1"/>`;
+  values.forEach((v,i) => {
+    const x = pad+(i/Math.max(1,values.length-1))*innerW;
+    const y = midY - (v/3)*(innerH/2-2);
+    svg += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="${moodDotColor(v)}"/>`;
+  });
+  svg += '</svg>';
+  return svg;
+}
+
+function moodSparkSVG(values, min, max, stroke) {
+  const W=160, H=30, pad=3;
+  if (!values.length) return '';
+  const xOf=i=>pad+(values.length===1?(W-pad*2)/2:(i/(values.length-1))*(W-pad*2));
+  const yOf=v=>pad+(H-pad*2)-((v-min)/(max-min||1))*(H-pad*2);
+  const pts=values.map((v,i)=>({x:xOf(i),y:yOf(v)}));
+  let d=`M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+  for(let i=1;i<pts.length;i++){const p0=pts[i-1],p1=pts[i],cx=(p0.x+p1.x)/2;d+=` C ${cx.toFixed(1)} ${p0.y.toFixed(1)} ${cx.toFixed(1)} ${p1.y.toFixed(1)} ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;}
+  return `<svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="display:block"><path d="${d}" fill="none" stroke="${stroke}" stroke-width="1.25" stroke-linecap="round"/></svg>`;
+}
+
+function getMoodWeeklySummaries() {
+  const entries = getMoodSorted();
+  const weeks = {};
+  entries.forEach(e => {
+    const d=new Date(e.date+'T00:00:00'), dow=d.getDay()===0?6:d.getDay()-1;
+    const mon=new Date(d); mon.setDate(d.getDate()-dow);
+    const wk=toKey(mon);
+    if (!weeks[wk]) { const sun=new Date(mon); sun.setDate(mon.getDate()+6); weeks[wk]={key:wk,mon,sun,es:[]}; }
+    weeks[wk].es.push(e);
+  });
+  return Object.values(weeks).sort((a,b)=>a.key>b.key?1:-1).map(w=>{
+    const es=w.es, avg=f=>{const v=es.filter(e=>e[f]!==null&&e[f]!==undefined);return v.length?v.reduce((s,e)=>s+e[f],0)/v.length:null;};
+    const label=`${DAY_NAMES_ES[0].slice(0,3)} ${w.mon.getDate()} ${MONTHS_ES[w.mon.getMonth()].slice(0,3)}`;
+    const range=`${w.mon.getDate()} ${MONTHS_ES[w.mon.getMonth()].slice(0,3)} – ${w.sun.getDate()} ${MONTHS_ES[w.sun.getMonth()].slice(0,3)}`;
+    return {key:w.key,label,range,avgMood:avg('moodScore'),avgEnergy:avg('energyScore'),avgSleep:avg('sleepHours'),avgAnxiety:avg('anxietyScore'),avgImpulse:avg('impulsivityScore'),medAdherence:es.filter(e=>e.medicationTaken===true).length/(es.length||1),entries:es};
+  });
+}
+
 function renderMoodCheckinForm() {
   if (!moodDraft) initMoodDraft();
   const d = moodDraft;
@@ -4079,126 +4179,123 @@ function renderMoodCheckinForm() {
 
   let html = '<div class="mood-inner">';
 
-  // Day navigation
-  html += `<div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
-    <button onclick="shiftMoodDay(-1)" style="width:28px;height:28px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:var(--text-2);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center" onmouseover="this.style.background='var(--surface3)'" onmouseout="this.style.background='none'">‹</button>
-    <span style="font-size:0.82rem;font-weight:500;color:var(--text);min-width:200px;text-align:center">${esc(dayLabel)}</span>
-    <button onclick="shiftMoodDay(1)" ${isToday?'disabled':''} style="width:28px;height:28px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:${isToday?'var(--border2)':'var(--text-2)'};cursor:${isToday?'default':'pointer'};font-size:1rem;display:flex;align-items:center;justify-content:center" ${!isToday?'onmouseover="this.style.background=\'var(--surface3)\'" onmouseout="this.style.background=\'none\'"':''}>›</button>
-    ${isToday
-      ? '<span style="font-size:0.62rem;color:var(--accent);letter-spacing:0.04em">HOY</span>'
-      : `<button onclick="goMoodToday()" style="font-family:'Geist Mono',monospace;font-size:0.65rem;padding:4px 10px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:var(--text-3);cursor:pointer;margin-left:4px" onmouseover="this.style.color='var(--text-2)';this.style.borderColor='var(--border)'" onmouseout="this.style.color='var(--text-3)';this.style.borderColor='var(--border2)'">Hoy</button>`}
+  // Day nav
+  html += `<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+    <button onclick="shiftMoodDay(-1)" style="width:28px;height:28px;border-radius:8px;border:1px solid var(--m-border);background:none;color:var(--m-ink-2);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .1s" onmouseover="this.style.background='var(--m-surface-2)'" onmouseout="this.style.background='none'">‹</button>
+    <span style="font-size:0.72rem;color:var(--m-ink-4);text-transform:uppercase;letter-spacing:0.08em;flex:1;text-align:center">${esc(dayLabel)}</span>
+    <button onclick="shiftMoodDay(1)" ${isToday?'disabled':''} style="width:28px;height:28px;border-radius:8px;border:1px solid var(--m-border);background:none;color:${isToday?'var(--m-border)':'var(--m-ink-2)'};cursor:${isToday?'default':'pointer'};font-size:1rem;display:flex;align-items:center;justify-content:center" ${!isToday?'onmouseover="this.style.background=\'var(--m-surface-2)\'" onmouseout="this.style.background=\'none\'"':''}>›</button>
+    ${!isToday?`<button onclick="goMoodToday()" style="font-size:0.72rem;padding:4px 10px;border-radius:6px;border:1px solid var(--m-border);background:none;color:var(--m-ink-4);cursor:pointer;font-family:inherit;transition:all .1s" onmouseover="this.style.borderColor='var(--m-accent)';this.style.color='var(--m-accent)'" onmouseout="this.style.borderColor='var(--m-border)';this.style.color='var(--m-ink-4)'">Hoy</button>`:''}
+  </div>`;
+
+  // Serif heading
+  html += `<div style="margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--m-border)">
+    <h1 class="mood-serif" style="font-size:1.75rem;font-weight:400;margin:0;color:var(--m-ink);letter-spacing:-0.01em">¿Cómo estás hoy?</h1>
+    <div style="font-size:0.78rem;color:var(--m-ink-4);margin-top:4px">Un registro rápido. Menos de un minuto.</div>
   </div>`;
 
   detectMoodPatterns().forEach(a => {
-    html += `<div class="pattern-alert ${a.level}"><div class="pattern-alert-title">${esc(a.title)}</div><div class="pattern-alert-body">${esc(a.msg)}</div></div>`;
+    html += `<div class="m-alert ${a.level==='support'?'support':''}"><svg width="14" height="14" viewBox="0 0 14 14" style="margin-top:2px;flex-shrink:0"><circle cx="7" cy="7" r="6" fill="none" stroke="var(--m-warm)" stroke-width="1.2"/><circle cx="7" cy="9.5" r="0.9" fill="var(--m-warm)"/><line x1="7" y1="3.5" x2="7" y2="7.5" stroke="var(--m-warm)" stroke-width="1.2" stroke-linecap="round"/></svg><div class="m-alert-body"><span class="m-alert-title">${esc(a.title)}.</span> ${esc(a.msg)}</div></div>`;
   });
-  if (saved) html += `<div class="mood-done-banner">✓ Check-in registrado &nbsp;·&nbsp; <span style="color:var(--text-2)">Podés actualizar tus valores.</span></div>`;
+  if (saved) html += `<div class="mood-done-banner">✓ Registro guardado &nbsp;·&nbsp; Podés actualizar los valores.</div>`;
 
-  // MOOD SCORE
-  html += `<div class="mood-section" id="mood-score-section"><div class="mood-section-title">Ánimo</div><div class="mood-field"><span class="mood-field-label">Puntaje de ánimo <span style="font-weight:300;color:var(--text-3)">(-3 severo — 0 estable — +3 hipo)</span></span><div class="mood-score-row">`;
-  [[-3,'Severo'],[-2,'Moderado'],[-1,'Leve ↓'],[0,'Estable'],[1,'Positivo'],[2,'Elevado'],[3,'Hipo']].forEach(([v,lbl]) => {
-    const act=d.moodScore===v, col=MOOD_COLORS[String(v)];
-    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?`background:${col};border-color:${col};`:`color:${col}`}" onclick="setMoodField('moodScore',${v})"><div>${v>0?'+':''}${v}</div><div style="font-size:0.52rem;margin-top:2px;opacity:0.75">${esc(lbl)}</div></button>`;
+  // MOOD section
+  const moodDesc = d.moodScore!==null ? MOOD_DESCS[String(d.moodScore)] : '';
+  html += `<div class="mood-card" id="mood-score-section"><div class="mood-field" style="margin-bottom:0">
+    <div class="mood-field-label">Ánimo <span class="mood-field-helper">${esc(moodDesc)}</span></div>
+    <div class="mood-dot-row" style="margin-top:16px">`;
+  [-3,-2,-1,0,1,2,3].forEach(v => {
+    const act=d.moodScore===v, col=moodDotColor(v);
+    html += `<button class="mood-dot-btn ${act?'active':''}" style="background:${act?col:'var(--m-surface)'};${act?`border-color:var(--m-ink);`:`border-color:var(--m-border-strong)`}" onclick="setMoodField('moodScore',${v})">
+      ${act?'<span style="width:8px;height:8px;border-radius:50%;background:#fff;display:block"></span>':''}
+      <span class="dot-label">${v>0?'+':''}${v}</span>
+    </button>`;
   });
   html += `</div></div></div>`;
 
   // ENERGY & SLEEP
-  html += `<div class="mood-section"><div class="mood-section-title">Energía & Sueño</div><div class="mood-field"><span class="mood-field-label">Energía / Activación <span style="font-weight:300;color:var(--text-3)">(1 muy baja — 5 muy alta)</span></span><div class="mood-score-row">`;
-  [1,2,3,4,5].forEach(v => {
-    const act=d.energyScore===v;
-    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?'background:var(--accent);border-color:var(--accent);':''}" onclick="setMoodField('energyScore',${v})">${v}</button>`;
-  });
-  html += `</div></div><div class="mood-field" style="display:flex;gap:16px"><div style="flex:1"><span class="mood-field-label">Horas de sueño</span><input id="mood-sleep-hours" type="number" min="0" max="24" step="0.5" value="${d.sleepHours??''}" placeholder="ej. 7.5" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:8px 10px;font-family:'Geist Mono',monospace;font-size:0.78rem;color:var(--text);outline:none;color-scheme:dark" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"/></div><div style="flex:2"><span class="mood-field-label">Calidad del sueño <span style="font-weight:300;color:var(--text-3)">(1–5)</span></span><div class="mood-score-row">`;
-  [1,2,3,4,5].forEach(v => {
-    const act=d.sleepQuality===v;
-    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?'background:var(--accent);border-color:var(--accent);':''}" onclick="setMoodField('sleepQuality',${v})">${v}</button>`;
-  });
-  html += `</div></div></div></div>`;
+  html += `<div class="mood-card"><div class="mood-section-label">Energía & Sueño</div>
+    <div class="mood-field"><div class="mood-field-label">Energía / activación <span class="mood-field-helper">${ENERGY_LABELS[d.energyScore||0]}</span></div>
+    <div class="mood-5scale">`;
+  [1,2,3,4,5].forEach(v=>{html+=`<button class="mood-5btn ${d.energyScore===v?'active':''}" onclick="setMoodField('energyScore',${v})">${v}</button>`;});
+  html+=`</div></div>
+    <div class="mood-field" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:0">
+      <div>
+        <div class="mood-field-label">Horas de sueño <span class="mood-field-helper">${d.sleepHours!=null?d.sleepHours+'h':''}</span></div>
+        <input type="range" class="mood-range" id="mood-sleep-hours" min="0" max="14" step="0.5" value="${d.sleepHours??7}" oninput="document.getElementById('mood-sleep-lbl').textContent=parseFloat(this.value).toFixed(1)+'h'"/>
+        <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:var(--m-ink-4);margin-top:2px"><span>0</span><span id="mood-sleep-lbl">${d.sleepHours!=null?d.sleepHours+'h':''}</span><span>14</span></div>
+      </div>
+      <div>
+        <div class="mood-field-label">Calidad del sueño <span class="mood-field-helper">${QUAL_LABELS[d.sleepQuality||0]}</span></div>
+        <div class="mood-5scale">`;
+  [1,2,3,4,5].forEach(v=>{html+=`<button class="mood-5btn ${d.sleepQuality===v?'active':''}" onclick="setMoodField('sleepQuality',${v})">${v}</button>`;});
+  html+=`</div></div></div></div>`;
 
   // MENTAL STATE
-  html += `<div class="mood-section"><div class="mood-section-title">Estado Mental</div><div class="mood-field"><span class="mood-field-label">Ansiedad / Irritabilidad <span style="font-weight:300;color:var(--text-3)">(1–5)</span></span><div class="mood-score-row">`;
-  [1,2,3,4,5].forEach(v => {
-    const act=d.anxietyScore===v;
-    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?'background:var(--accent);border-color:var(--accent);':''}" onclick="setMoodField('anxietyScore',${v})">${v}</button>`;
-  });
-  html += `</div></div><div class="mood-field" style="margin-bottom:0"><span class="mood-field-label">Impulsividad / Conductas de riesgo <span style="font-weight:300;color:var(--text-3)">(1–5)</span></span><span class="mood-field-sub">Compras impulsivas, decisiones apresuradas, planificación excesiva, exceso de confianza</span><div class="mood-score-row">`;
-  [1,2,3,4,5].forEach(v => {
-    const act=d.impulsivityScore===v;
-    html += `<button class="mood-score-btn ${act?'active':''}" style="${act?'background:var(--accent);border-color:var(--accent);':''}" onclick="setMoodField('impulsivityScore',${v})">${v}</button>`;
-  });
-  html += `</div></div></div>`;
+  html+=`<div class="mood-card"><div class="mood-section-label">Estado Mental</div>
+    <div class="mood-field"><div class="mood-field-label">Ansiedad / irritabilidad <span class="mood-field-helper">${ANX_LABELS[d.anxietyScore||0]}</span></div>
+    <div class="mood-5scale">`;
+  [1,2,3,4,5].forEach(v=>{html+=`<button class="mood-5btn ${d.anxietyScore===v?'active':''}" onclick="setMoodField('anxietyScore',${v})">${v}</button>`;});
+  html+=`</div></div>
+    <div class="mood-field" style="margin-bottom:0">
+      <div class="mood-field-label">Impulsividad / conductas de riesgo <span class="mood-field-helper">${IMP_LABELS[d.impulsivityScore||0]}</span></div>
+      <div class="mood-5scale">`;
+  [1,2,3,4,5].forEach(v=>{html+=`<button class="mood-5btn ${d.impulsivityScore===v?'active':''}" onclick="setMoodField('impulsivityScore',${v})">${v}</button>`;});
+  html+=`</div>
+      <div class="mood-field-sub">Compras impulsivas, decisiones apresuradas, exceso de planificación, sobreconfianza.</div>
+    </div></div>`;
 
-  // MEDICATION
-  html += `<div class="mood-section"><div class="mood-section-title">Medicación</div><div class="mood-field"><span class="mood-field-label">¿Tomaste tu medicación hoy?</span><div class="toggle-pair"><button class="toggle-btn ${d.medicationTaken===true?'active':''}" onclick="setMoodField('medicationTaken',true)">Sí</button><button class="toggle-btn ${d.medicationTaken===false?'active':''}" onclick="setMoodField('medicationTaken',false)">No</button></div></div><div class="mood-field" style="margin-bottom:0"><span class="mood-field-label">Notas de medicación <span style="font-weight:300;color:var(--text-3)">(opcional)</span></span><input id="mood-med-notes" type="text" value="${esc(d.medicationNotes||'')}" placeholder="Cambios, dosis, efectos..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);padding:8px 10px;font-family:'Geist Mono',monospace;font-size:0.73rem;color:var(--text);outline:none;color-scheme:dark" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"/></div></div>`;
-
-  // LIFESTYLE
-  html += `<div class="mood-section"><div class="mood-section-title">Estilo de Vida</div><div class="lifestyle-row">`;
-  [['exercise','Ejercicio'],['alcohol','Alcohol']].forEach(([f,lbl]) => {
-    html += `<div class="lifestyle-item"><span class="lifestyle-label">${lbl}</span><div class="toggle-pair"><button class="toggle-btn ${d[f]===true?'active':''}" onclick="setMoodField('${f}',true)">Sí</button><button class="toggle-btn ${d[f]===false?'active':''}" onclick="setMoodField('${f}',false)">No</button></div></div>`;
-  });
-  html += `<div class="lifestyle-item"><span class="lifestyle-label">Cafeína</span><div class="caff-row">`;
-  [['none','Ninguna'],['low','Baja'],['medium','Media'],['high','Alta']].forEach(([v,lbl]) => {
-    html += `<button class="caff-btn ${d.caffeineLevel===v?'active':''}" onclick="setMoodField('caffeineLevel','${v}')">${esc(lbl)}</button>`;
-  });
-  html += `</div></div></div></div>`;
+  // MEDICATION + LIFESTYLE (combined card with chips)
+  html+=`<div class="mood-card"><div class="mood-section-label">Hoy</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <button class="mood-chip ${d.medicationTaken===true?'active':''}" onclick="setMoodField('medicationTaken',true)"><span class="mood-chip-check">${d.medicationTaken===true?'<svg width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.5L3.5 7L8 1.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</span>Tomé medicación</button>
+      <button class="mood-chip ${d.exercise===true?'active':''}" onclick="setMoodField('exercise',true)"><span class="mood-chip-check">${d.exercise===true?'<svg width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.5L3.5 7L8 1.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</span>Ejercité</button>
+      <button class="mood-chip ${d.alcohol===true?'active':''}" onclick="setMoodField('alcohol',true)"><span class="mood-chip-check">${d.alcohol===true?'<svg width="9" height="9" viewBox="0 0 9 9"><path d="M1 4.5L3.5 7L8 1.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</span>Consumí alcohol</button>
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--m-border);border-radius:999px;background:var(--m-surface)"><span style="font-size:0.75rem;color:var(--m-ink-3)">Cafeína</span><div class="mood-segment">`;
+  [['none','Ninguna'],['low','Baja'],['medium','Media'],['high','Alta']].forEach(([v,lbl])=>{html+=`<button class="mood-seg-btn ${d.caffeineLevel===v?'active':''}" onclick="setMoodField('caffeineLevel','${v}')">${esc(lbl)}</button>`;});
+  html+=`</div></div></div>
+    <div style="margin-top:12px">
+      <input id="mood-med-notes" type="text" value="${esc(d.medicationNotes||'')}" placeholder="Notas de medicación — cambio de dosis, efectos (opcional)" style="width:100%;border:1px solid var(--m-border);border-radius:8px;padding:8px 10px;font-size:0.78rem;color:var(--m-ink);background:var(--m-surface);outline:none;font-family:inherit" onfocus="this.style.borderColor='var(--m-accent)'" onblur="this.style.borderColor='var(--m-border)'"/>
+    </div></div>`;
 
   // NOTE
   const noteLen=(d.note||'').length;
-  html += `<div class="mood-section"><div class="mood-section-title">Nota del Día</div><div class="mood-field" style="margin-bottom:0"><textarea class="mood-note-ta" id="mood-note-input" maxlength="280" placeholder="¿Cómo te sentiste hoy? (opcional, máx. 280 caracteres)" oninput="document.getElementById('mood-char-count').textContent=this.value.length+'/280'">${esc(d.note||'')}</textarea><div class="mood-char-count" id="mood-char-count">${noteLen}/280</div></div></div>`;
+  html+=`<div class="mood-card"><div class="mood-field" style="margin-bottom:0">
+    <div class="mood-field-label">Nota del día <span class="mood-field-helper" id="mood-char-count">${noteLen}/280</span></div>
+    <textarea class="mood-note-ta" id="mood-note-input" maxlength="280" placeholder="Algo que quieras recordar de hoy (opcional)" oninput="document.getElementById('mood-char-count').textContent=this.value.length+'/280'">${esc(d.note||'')}</textarea>
+  </div></div>`;
 
   // SAVE
-  html += `<div class="mood-save-row"><button class="mood-save-btn" onclick="saveMoodCheckin()">${saved?'Actualizar check-in':'Guardar check-in'}</button></div>`;
-  html += `<div class="mood-disclaimer">Este tracker es solo para autoobservación y reconocimiento de patrones. No es un dispositivo médico y no reemplaza la atención profesional. Si estás en crisis, contactá a tu médico o a una línea de crisis de salud mental.</div>`;
-  return html + '</div>';
+  html+=`<div class="mood-save-row"><button class="mood-save-btn" onclick="saveMoodCheckin()">${saved?'Actualizar registro':'Guardar registro de hoy'}</button></div>`;
+  html+=`<div class="mood-disclaimer">Solo para autoobservación y reconocimiento de patrones. No es un dispositivo médico y no reemplaza la atención profesional.</div>`;
+  return html+'</div>';
 }
 
-function moodChartSVG(entries, field, min, max, color) {
-  const PL=28, PR=6, PT=14, PB=20;
-  const W=620, H=100;
-  const CW=W-PL-PR, CH=H-PT-PB;
+function moodChartSVG(entries, field, min, max, stroke, height) {
+  const PL=8, PR=8, PT=10, PB=22, H=height||120, W=580, CW=W-PL-PR, CH=H-PT-PB;
   const valid=entries.filter(e=>e[field]!==null&&e[field]!==undefined);
-  if (!valid.length) return `<div style="height:${H}px;display:flex;align-items:center;color:var(--text-3);font-size:0.65rem">Sin datos suficientes</div>`;
+  if (!valid.length) return `<div style="height:${H}px;display:flex;align-items:center;color:var(--m-ink-4);font-size:0.72rem">Sin datos aún</div>`;
   const xOf=i=>PL+(valid.length===1?CW/2:(i/(valid.length-1))*CW);
-  const yOf=v=>PT+CH-((v-min)/(max-min))*CH;
+  const yOf=v=>PT+CH-((v-min)/(max-min||1))*CH;
   const pts=valid.map((e,i)=>({x:xOf(i),y:yOf(e[field]),v:e[field],date:e.date}));
-  const line=pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
-  const fill=`${pts[0].x.toFixed(1)},${PT+CH} ${line} ${pts[pts.length-1].x.toFixed(1)},${PT+CH}`;
-
-  // Gridlines + Y labels at min, max, and 0 if applicable
-  const gridVals=[...new Set([min,max,...(min<0&&max>0?[0]:[])])];
-  const gridLayer=gridVals.map(v=>{
-    const y=yOf(v), lbl=Number.isInteger(v)?(v>0?`+${v}`:String(v)):v.toFixed(1);
-    return `<line x1="${PL}" y1="${y.toFixed(1)}" x2="${W-PR}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.05)" stroke-width="0.8"/>
-      <text x="${PL-4}" y="${(y+3.5).toFixed(1)}" text-anchor="end" fill="rgba(144,143,158,0.55)" font-size="8.5" font-family="Geist Mono,monospace">${lbl}</text>`;
-  }).join('');
-
-  // Zero line (mood only)
-  const zeroLine=min<0&&max>0?`<line x1="${PL}" y1="${yOf(0).toFixed(1)}" x2="${W-PR}" y2="${yOf(0).toFixed(1)}" stroke="rgba(255,255,255,0.14)" stroke-width="0.9" stroke-dasharray="4,3"/>` :'';
-
-  // X date labels: first, evenly spaced, last (max 6)
+  // Smooth bezier
+  let pathD=`M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
+  for(let i=1;i<pts.length;i++){const p0=pts[i-1],p1=pts[i],cx=(p0.x+p1.x)/2;pathD+=` C ${cx.toFixed(1)} ${p0.y.toFixed(1)} ${cx.toFixed(1)} ${p1.y.toFixed(1)} ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;}
+  const fillD=`${pathD} L ${pts[pts.length-1].x.toFixed(1)} ${PT+CH} L ${pts[0].x.toFixed(1)} ${PT+CH} Z`;
+  // Zero line (mood)
+  const zy=min<0&&max>0?yOf(0):null;
+  // Date labels
   const step=Math.max(1,Math.round((valid.length-1)/5));
-  const xIdxs=new Set([0]);
-  for(let i=step;i<valid.length-1;i+=step) xIdxs.add(i);
-  xIdxs.add(valid.length-1);
-  const xLabels=[...xIdxs].map(i=>{
-    const d=new Date(valid[i].date+'T00:00:00');
-    return `<text x="${xOf(i).toFixed(1)}" y="${H-2}" text-anchor="middle" fill="rgba(144,143,158,0.45)" font-size="8" font-family="Geist Mono,monospace">${d.getDate()} ${MONTHS[d.getMonth()]}</text>`;
-  }).join('');
-
-  // Value labels at each dot when ≤ 14 points
-  const valLabels=valid.length<=14?pts.map(p=>{
-    const above=p.y>PT+CH/2;
-    const lbl=p.v>0?`+${p.v}`:String(p.v);
-    return `<text x="${p.x.toFixed(1)}" y="${(above?p.y-5:p.y+11).toFixed(1)}" text-anchor="middle" fill="${color}" fill-opacity="0.85" font-size="8" font-family="Geist Mono,monospace">${lbl}</text>`;
-  }).join(''):'';
-
+  const dateIdxs=new Set([0]);
+  for(let i=step;i<valid.length-1;i+=step) dateIdxs.add(i);
+  dateIdxs.add(valid.length-1);
+  const xLabels=[...dateIdxs].map(i=>{const d=new Date(valid[i].date+'T00:00:00');return `<text x="${xOf(i).toFixed(1)}" y="${H-4}" text-anchor="middle" fill="#97948C" font-size="9" font-family="'JetBrains Mono',monospace">${d.getDate()} ${MONTHS[d.getMonth()]}</text>`;}).join('');
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:${H}px;display:block">
-    <defs><linearGradient id="g_${field}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity="0.2"/><stop offset="100%" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
-    ${gridLayer}${zeroLine}
-    <polygon points="${fill}" fill="url(#g_${field})"/>
-    <polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
-    ${pts.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.8" fill="${color}" stroke="rgba(18,19,25,0.6)" stroke-width="1"/>`).join('')}
-    ${valLabels}${xLabels}
+    <defs><linearGradient id="mg_${field}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${stroke}" stop-opacity="0.12"/><stop offset="100%" stop-color="${stroke}" stop-opacity="0"/></linearGradient></defs>
+    ${zy?`<line x1="${PL}" x2="${W-PR}" y1="${zy.toFixed(1)}" y2="${zy.toFixed(1)}" stroke="#E5E3DD" stroke-width="1" stroke-dasharray="3,3"/>` :''}
+    <path d="${fillD}" fill="url(#mg_${field})"/>
+    <path d="${pathD}" fill="none" stroke="${stroke}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    ${pts.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.5" fill="#fff" stroke="${stroke}" stroke-width="1.5"/>`).join('')}
+    ${xLabels}
   </svg>`;
 }
 
@@ -4237,81 +4334,146 @@ async function runMoodTrendAnalysis() {
   }
 }
 
+let moodTrendMetric = 'mood';
+
 function renderMoodTrendsView() {
   const entries=getMoodSorted(30);
   let html='<div class="mood-inner">';
 
-  // AI Analysis section
-  html+=`<div class="mood-section"><div class="mood-section-title">Análisis de tendencias · IA</div>`;
-  if (moodTrendLoading) {
-    html+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;color:var(--text-3);font-size:0.72rem">
-      <div class="plan-loading-dot"></div><div class="plan-loading-dot"></div><div class="plan-loading-dot"></div>
-      Analizando tus datos…
+  // Header
+  html+=`<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px">
+    <div>
+      <div style="font-size:0.65rem;font-weight:600;color:var(--m-ink-4);text-transform:uppercase;letter-spacing:0.09em">Tendencias</div>
+      <h2 class="mood-serif" style="font-size:1.4rem;font-weight:400;margin:3px 0 0;color:var(--m-ink);letter-spacing:-0.01em">Tus patrones</h2>
+    </div>
+  </div>`;
+
+  // Pattern alerts
+  detectMoodPatterns().forEach(a=>{
+    html+=`<div class="m-alert ${a.level==='support'?'support':''}"><svg width="14" height="14" viewBox="0 0 14 14" style="margin-top:2px;flex-shrink:0"><circle cx="7" cy="7" r="6" fill="none" stroke="var(--m-warm)" stroke-width="1.2"/><circle cx="7" cy="9.5" r="0.9" fill="var(--m-warm)"/><line x1="7" y1="3.5" x2="7" y2="7.5" stroke="var(--m-warm)" stroke-width="1.2" stroke-linecap="round"/></svg><div class="m-alert-body"><span class="m-alert-title">${esc(a.title)}.</span> ${esc(a.msg)}</div></div>`;
+  });
+
+  const METRICS=[
+    {key:'mood',    label:'Ánimo',      field:'moodScore',          min:-3,max:3,  stroke:'#3D5A4C',fmt:v=>v>0?`+${v}`:String(v)},
+    {key:'energy',  label:'Energía',    field:'energyScore',         min:1, max:5,  stroke:'#5B7FA8',fmt:v=>String(v)},
+    {key:'sleep',   label:'Sueño',      field:'sleepHours',          min:0, max:12, stroke:'#5B7FA8',fmt:v=>`${v.toFixed(1)}h`},
+    {key:'anxiety', label:'Ansiedad',   field:'anxietyScore',        min:1, max:5,  stroke:'#A89B5B',fmt:v=>String(v)},
+    {key:'impulse', label:'Impulsividad',field:'impulsivityScore',   min:1, max:5,  stroke:'#B8754C',fmt:v=>String(v)},
+  ];
+  const mc = METRICS.find(m=>m.key===moodTrendMetric)||METRICS[0];
+  const vals = entries.map(e=>e[mc.field]).filter(v=>v!==null&&v!==undefined);
+  const lastVal = vals.length ? vals[vals.length-1] : null;
+  const prevVal = vals.length>=8 ? vals[vals.length-8] : null;
+  const delta = lastVal!==null&&prevVal!==null ? lastVal-prevVal : null;
+
+  if (entries.length>=2) {
+    // Main focus chart (Dashboard B style)
+    html+=`<div class="mood-metric-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px">
+        <div>
+          <div style="font-size:0.65rem;font-weight:600;color:var(--m-ink-4);text-transform:uppercase;letter-spacing:0.09em;margin-bottom:6px">${mc.label}</div>
+          <div style="display:flex;align-items:baseline;gap:12px">
+            <span class="mood-serif" style="font-size:2.8rem;font-weight:400;color:var(--m-ink);letter-spacing:-0.02em">${lastVal!==null?mc.fmt(lastVal):'—'}</span>
+            ${delta!==null?`<span style="font-size:0.78rem;color:${delta>0?'var(--m-accent)':delta<0?'var(--m-caution)':'var(--m-ink-4)'}">${delta>0?'↑':'↓'} ${Math.abs(delta).toFixed(mc.key==='sleep'?1:0)} <span style="color:var(--m-ink-4)">vs hace 7 días</span></span>`:''}
+          </div>
+        </div>
+        <div class="mood-segment">`;
+    METRICS.forEach(m=>{html+=`<button class="mood-seg-btn ${m.key===moodTrendMetric?'active':''}" onclick="moodTrendMetric='${m.key}';renderMoodContent()">${m.label}</button>`;});
+    html+=`</div></div>`;
+    html+= mc.key==='mood' ? moodDotsSVG(entries.map(e=>e.moodScore).filter(v=>v!==null)) : moodChartSVG(entries,mc.field,mc.min,mc.max,mc.stroke,130);
+    html+=`<div style="display:flex;justify-content:space-between;font-size:0.68rem;color:var(--m-ink-4);margin-top:8px;font-variant-numeric:tabular-nums">
+      ${entries.length?`<span>${entries[0].date.slice(5).replace('-',' ')}</span><span>hoy</span>`:''}
+    </div>
     </div>`;
-  } else if (moodTrendAnalysis) {
-    html+=`<div style="font-size:0.73rem;color:var(--text-2);line-height:1.8;white-space:pre-wrap">${esc(moodTrendAnalysis)}</div>
-    <div style="margin-top:16px"><button onclick="runMoodTrendAnalysis()" style="font-family:'Geist Mono',monospace;font-size:0.68rem;padding:6px 14px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:var(--text-3);cursor:pointer" onmouseover="this.style.color='var(--text-2)'" onmouseout="this.style.color='var(--text-3)'">↻ Regenerar análisis</button></div>`;
-  } else if (entries.length<2) {
-    html+=`<div style="font-size:0.7rem;color:var(--text-3)">Completá al menos 2 check-ins para generar un análisis.</div>`;
+
+    // Mini sparkline grid for other metrics
+    html+=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">`;
+    METRICS.filter(m=>m.key!==moodTrendMetric).forEach(m=>{
+      const v=entries.map(e=>e[m.field]).filter(x=>x!==null&&x!==undefined);
+      const last=v.length?v[v.length-1]:null;
+      html+=`<button class="mood-metric-mini" onclick="moodTrendMetric='${m.key}';renderMoodContent()">
+        <div style="font-size:0.62rem;font-weight:600;color:var(--m-ink-4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px">${m.label}</div>
+        ${moodSparkSVG(v,m.min,m.max,m.stroke)}
+        <div class="mood-serif" style="font-size:1rem;color:var(--m-ink);margin-top:4px">${last!==null?m.fmt(last):'—'}</div>
+      </button>`;
+    });
+    html+=`</div>`;
   } else {
-    html+=`<div style="font-size:0.7rem;color:var(--text-3);margin-bottom:14px">El análisis considera tus check-ins de los últimos 14 días y el cumplimiento de tus hábitos.</div>
-    <button onclick="runMoodTrendAnalysis()" style="font-family:'Geist Mono',monospace;font-size:0.72rem;padding:8px 20px;border-radius:var(--radius);background:linear-gradient(135deg,var(--accent) 0%,#7c3aed 100%);border:1px solid var(--accent);color:white;cursor:pointer">✦ Generar análisis</button>`;
+    html+=`<div style="padding:40px 0;text-align:center;color:var(--m-ink-4);font-size:0.82rem">Completá al menos 2 check-ins para ver tendencias.</div>`;
+  }
+
+  // AI Analysis
+  html+=`<div class="mood-ai-section"><div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+    <div style="font-size:0.65rem;font-weight:600;color:var(--m-ink-4);text-transform:uppercase;letter-spacing:0.09em">Análisis · IA</div>
+  </div>`;
+  if (moodTrendLoading) {
+    html+=`<div style="display:flex;align-items:center;gap:8px;color:var(--m-ink-4);font-size:0.78rem"><div class="plan-loading-dot"></div><div class="plan-loading-dot"></div><div class="plan-loading-dot"></div>Analizando…</div>`;
+  } else if (moodTrendAnalysis) {
+    html+=`<div class="mood-ai-text">${esc(moodTrendAnalysis)}</div>
+    <div style="margin-top:14px"><button onclick="runMoodTrendAnalysis()" style="font-size:0.75rem;padding:6px 14px;border-radius:8px;border:1px solid var(--m-border);background:none;color:var(--m-ink-3);cursor:pointer;font-family:inherit;transition:all .12s" onmouseover="this.style.borderColor='var(--m-accent)';this.style.color='var(--m-accent)'" onmouseout="this.style.borderColor='var(--m-border)';this.style.color='var(--m-ink-3)'">↻ Regenerar análisis</button></div>`;
+  } else if (entries.length<2) {
+    html+=`<div style="font-size:0.78rem;color:var(--m-ink-4)">Completá al menos 2 check-ins para generar un análisis.</div>`;
+  } else {
+    html+=`<div style="font-size:0.78rem;color:var(--m-ink-4);margin-bottom:14px">Considera check-ins de los últimos 14 días y el cumplimiento de tus hábitos.</div>
+    <button onclick="runMoodTrendAnalysis()" style="font-size:0.82rem;font-weight:500;padding:9px 22px;border-radius:8px;background:var(--m-accent);border:none;color:#fff;cursor:pointer;font-family:inherit">Generar análisis</button>`;
   }
   html+='</div>';
 
-  // Charts
-  if (entries.length>=2) {
-    html+=`<div class="mood-section"><div class="mood-section-title">Últimos ${entries.length} registros</div>`;
-    [{field:'moodScore',label:'Ánimo',min:-3,max:3,color:'#7575a8'},
-     {field:'energyScore',label:'Energía',min:1,max:5,color:'#4fa87d'},
-     {field:'sleepHours',label:'Horas de sueño',min:0,max:12,color:'#5e6ad2'},
-     {field:'anxietyScore',label:'Ansiedad / Irritabilidad',min:1,max:5,color:'#e8a825'},
-     {field:'impulsivityScore',label:'Impulsividad',min:1,max:5,color:'#e07d3c'},
-    ].forEach(c=>{
-      html+=`<div class="chart-wrap"><div class="chart-label">${c.label}</div>${moodChartSVG(entries,c.field,c.min,c.max,c.color)}</div>`;
-    });
-    html+='</div>';
-  }
+  html+=`<div class="mood-disclaimer">Solo para autoobservación y reconocimiento de patrones. No es un dispositivo médico.</div>`;
   return html+'</div>';
 }
 
 function renderWeeklySummaryView() {
-  const entries=getMoodSorted(7);
+  const weeks = getMoodWeeklySummaries();
   let html='<div class="mood-inner">';
-  if (!entries.length) return html+`<div style="padding:40px 0;text-align:center;color:var(--text-3);font-size:0.75rem">Aún no hay datos esta semana.</div></div>`;
-  const avgF=(f)=>{const v=entries.filter(e=>e[f]!==null&&e[f]!==undefined);return v.length?(v.reduce((s,e)=>s+e[f],0)/v.length).toFixed(1):'—';};
-  const mAvg=avgF('moodScore'), mNum=parseFloat(mAvg);
-  const mc=isNaN(mNum)?'var(--text-3)':(MOOD_COLORS[String(Math.round(Math.max(-3,Math.min(3,mNum))))]||'var(--text-3)');
-  const medDays=entries.filter(e=>e.medicationTaken===true).length;
-  const exDays=entries.filter(e=>e.exercise===true).length;
-  const alcDays=entries.filter(e=>e.alcohol===true).length;
-  const slAvg=avgF('sleepHours');
 
-  html+=`<div class="mood-section"><div class="mood-section-title">Promedios · últimos 7 días (${entries.length} registros)</div>
-    <div class="weekly-stat"><span class="weekly-stat-label">Ánimo promedio</span><span class="weekly-stat-value" style="color:${mc}">${mAvg!=='—'?(parseFloat(mAvg)>0?'+':'')+mAvg:'—'}</span></div>
-    <div class="weekly-stat"><span class="weekly-stat-label">Energía promedio</span><span class="weekly-stat-value">${avgF('energyScore')}</span></div>
-    <div class="weekly-stat"><span class="weekly-stat-label">Sueño promedio</span><span class="weekly-stat-value">${slAvg!=='—'?slAvg+'h':'—'}</span></div>
-    <div class="weekly-stat"><span class="weekly-stat-label">Ansiedad / Irritabilidad</span><span class="weekly-stat-value">${avgF('anxietyScore')}</span></div>
-    <div class="weekly-stat"><span class="weekly-stat-label">Impulsividad</span><span class="weekly-stat-value">${avgF('impulsivityScore')}</span></div>
-  </div>
-  <div class="mood-section"><div class="mood-section-title">Hábitos & Estilo de vida</div>
-    <div class="weekly-stat"><span class="weekly-stat-label">Medicación tomada</span><span class="weekly-stat-value">${medDays}/${entries.length} días</span></div>
-    <div class="weekly-stat"><span class="weekly-stat-label">Ejercicio</span><span class="weekly-stat-value">${exDays}/${entries.length} días</span></div>
-    <div class="weekly-stat"><span class="weekly-stat-label">Alcohol</span><span class="weekly-stat-value">${alcDays}/${entries.length} días</span></div>
-  </div>
-  <div class="mood-section"><div class="mood-section-title">Día a día</div>`;
-  [...entries].reverse().forEach(e=>{
-    const d2=new Date(e.date+'T00:00:00');
-    const lbl=`${DAY_NAMES[d2.getDay()===0?6:d2.getDay()-1]} ${d2.getDate()} ${MONTHS[d2.getMonth()]}`;
-    const ec=e.moodScore!==null?MOOD_COLORS[String(e.moodScore)]:'var(--text-3)';
-    html+=`<div class="weekly-stat"><span class="weekly-stat-label">${lbl}</span><span class="weekly-stat-value" style="display:flex;gap:10px;font-size:0.68rem">
-      ${e.moodScore!==null?`<span style="color:${ec}">Á ${e.moodScore>0?'+':''}${e.moodScore}</span>`:''}
-      ${e.energyScore!==null?`<span>E ${e.energyScore}</span>`:''}
-      ${e.sleepHours!==null?`<span>Z ${e.sleepHours}h</span>`:''}
-      ${e.anxietyScore!==null?`<span>Ax ${e.anxietyScore}</span>`:''}
-    </span></div>`;
+  // Header
+  html+=`<div style="margin-bottom:18px">
+    <div style="font-size:0.65rem;font-weight:600;color:var(--m-ink-4);text-transform:uppercase;letter-spacing:0.09em">Resumen semanal</div>
+    <h2 class="mood-serif" style="font-size:1.4rem;font-weight:400;margin:3px 0 0;color:var(--m-ink)">Semana a semana</h2>
+  </div>`;
+
+  if (!weeks.length) {
+    html+=`<div style="padding:40px 0;text-align:center;color:var(--m-ink-4);font-size:0.82rem">Aún no hay registros.</div>`;
+    return html+'</div>';
+  }
+
+  // Table (Weekly A design)
+  html+=`<div class="mood-week-table">
+    <div class="mood-week-head">
+      <div>Semana</div>
+      <div style="text-align:right">Ánimo</div>
+      <div style="text-align:right">Energía</div>
+      <div style="text-align:right">Sueño</div>
+      <div style="text-align:right">Ans</div>
+      <div style="text-align:right">Imp</div>
+      <div style="text-align:right">Med%</div>
+    </div>`;
+  [...weeks].reverse().forEach((w,i,arr)=>{
+    const mRound=w.avgMood!==null?Math.round(Math.max(-3,Math.min(3,w.avgMood))):null;
+    const dotCol=mRound!==null?(MOOD_COLORS[String(mRound)]||'#B8B5AC'):'#B8B5AC';
+    const fmt=(v,dec=1)=>v!==null?v.toFixed(dec):'—';
+    const med=Math.round(w.medAdherence*100);
+    html+=`<div class="mood-week-row" style="${i<arr.length-1?'':'border-bottom:none'}">
+      <div>
+        <div style="font-size:0.82rem;color:var(--m-ink);font-weight:500">${w.label}</div>
+        <div style="font-size:0.68rem;color:var(--m-ink-4);margin-top:2px">${w.range}</div>
+      </div>
+      <div style="text-align:right;display:flex;justify-content:flex-end;align-items:center;gap:5px">
+        <span style="width:8px;height:8px;border-radius:50%;background:${dotCol};flex-shrink:0"></span>
+        <span style="font-size:0.82rem;color:var(--m-ink)">${w.avgMood!==null?(w.avgMood>0?'+':'')+w.avgMood.toFixed(1):'—'}</span>
+      </div>
+      <div style="text-align:right;font-size:0.82rem;color:var(--m-ink)">${fmt(w.avgEnergy)}</div>
+      <div style="text-align:right;font-size:0.82rem;color:var(--m-ink)">${w.avgSleep!==null?w.avgSleep.toFixed(1)+'<span style="font-size:0.65rem;color:var(--m-ink-4)">h</span>':'—'}</div>
+      <div style="text-align:right;font-size:0.82rem;color:var(--m-ink)">${fmt(w.avgAnxiety)}</div>
+      <div style="text-align:right;font-size:0.82rem;color:var(--m-ink)">${fmt(w.avgImpulse)}</div>
+      <div style="text-align:right;font-size:0.82rem;color:${med>=80?'var(--m-accent)':med>=50?'var(--m-ink)':'var(--m-caution)'}">${w.entries.length?med+'%':'—'}</div>
+    </div>`;
   });
-  return html+'</div></div>';
+  html+='</div>';
+
+  html+=`<div class="mood-disclaimer">Solo para autoobservación. No reemplaza la atención profesional.</div>`;
+  return html+'</div>';
 }
 
 function renderMoodContent() {
