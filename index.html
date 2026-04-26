@@ -3959,6 +3959,13 @@ function shiftMoodDay(delta) {
   renderMoodContent();
 }
 
+function goMoodToday() {
+  captureTextDraft();
+  moodCheckinDate = toKey(today());
+  initMoodDraft();
+  renderMoodContent();
+}
+
 function captureTextDraft() {
   if (!moodDraft) return;
   const g = id => document.getElementById(id);
@@ -4077,7 +4084,9 @@ function renderMoodCheckinForm() {
     <button onclick="shiftMoodDay(-1)" style="width:28px;height:28px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:var(--text-2);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center" onmouseover="this.style.background='var(--surface3)'" onmouseout="this.style.background='none'">‹</button>
     <span style="font-size:0.82rem;font-weight:500;color:var(--text);min-width:200px;text-align:center">${esc(dayLabel)}</span>
     <button onclick="shiftMoodDay(1)" ${isToday?'disabled':''} style="width:28px;height:28px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:${isToday?'var(--border2)':'var(--text-2)'};cursor:${isToday?'default':'pointer'};font-size:1rem;display:flex;align-items:center;justify-content:center" ${!isToday?'onmouseover="this.style.background=\'var(--surface3)\'" onmouseout="this.style.background=\'none\'"':''}>›</button>
-    ${isToday?'<span style="font-size:0.62rem;color:var(--accent);letter-spacing:0.04em">HOY</span>':''}
+    ${isToday
+      ? '<span style="font-size:0.62rem;color:var(--accent);letter-spacing:0.04em">HOY</span>'
+      : `<button onclick="goMoodToday()" style="font-family:'Geist Mono',monospace;font-size:0.65rem;padding:4px 10px;border-radius:var(--radius);border:1px solid var(--border2);background:none;color:var(--text-3);cursor:pointer;margin-left:4px" onmouseover="this.style.color='var(--text-2)';this.style.borderColor='var(--border)'" onmouseout="this.style.color='var(--text-3)';this.style.borderColor='var(--border2)'">Hoy</button>`}
   </div>`;
 
   detectMoodPatterns().forEach(a => {
@@ -4144,22 +4153,52 @@ function renderMoodCheckinForm() {
 }
 
 function moodChartSVG(entries, field, min, max, color) {
-  const W=600, H=58;
+  const PL=28, PR=6, PT=14, PB=20;
+  const W=620, H=100;
+  const CW=W-PL-PR, CH=H-PT-PB;
   const valid=entries.filter(e=>e[field]!==null&&e[field]!==undefined);
   if (!valid.length) return `<div style="height:${H}px;display:flex;align-items:center;color:var(--text-3);font-size:0.65rem">Sin datos suficientes</div>`;
-  const pts=valid.map((e,i)=>({
-    x: valid.length===1 ? W/2 : (i/(valid.length-1))*W,
-    y: H-3-((e[field]-min)/(max-min))*(H-6)
-  }));
+  const xOf=i=>PL+(valid.length===1?CW/2:(i/(valid.length-1))*CW);
+  const yOf=v=>PT+CH-((v-min)/(max-min))*CH;
+  const pts=valid.map((e,i)=>({x:xOf(i),y:yOf(e[field]),v:e[field],date:e.date}));
   const line=pts.map(p=>`${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
-  const fill=`${pts[0].x.toFixed(1)},${H} ${line} ${pts[pts.length-1].x.toFixed(1)},${H}`;
-  const zy=(H-3-((0-min)/(max-min))*(H-6)).toFixed(1);
-  const zeroLine=(min<0&&max>0)?`<line x1="0" y1="${zy}" x2="${W}" y2="${zy}" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>`:'';
+  const fill=`${pts[0].x.toFixed(1)},${PT+CH} ${line} ${pts[pts.length-1].x.toFixed(1)},${PT+CH}`;
+
+  // Gridlines + Y labels at min, max, and 0 if applicable
+  const gridVals=[...new Set([min,max,...(min<0&&max>0?[0]:[])])];
+  const gridLayer=gridVals.map(v=>{
+    const y=yOf(v), lbl=Number.isInteger(v)?(v>0?`+${v}`:String(v)):v.toFixed(1);
+    return `<line x1="${PL}" y1="${y.toFixed(1)}" x2="${W-PR}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.05)" stroke-width="0.8"/>
+      <text x="${PL-4}" y="${(y+3.5).toFixed(1)}" text-anchor="end" fill="rgba(144,143,158,0.55)" font-size="8.5" font-family="Geist Mono,monospace">${lbl}</text>`;
+  }).join('');
+
+  // Zero line (mood only)
+  const zeroLine=min<0&&max>0?`<line x1="${PL}" y1="${yOf(0).toFixed(1)}" x2="${W-PR}" y2="${yOf(0).toFixed(1)}" stroke="rgba(255,255,255,0.14)" stroke-width="0.9" stroke-dasharray="4,3"/>` :'';
+
+  // X date labels: first, evenly spaced, last (max 6)
+  const step=Math.max(1,Math.round((valid.length-1)/5));
+  const xIdxs=new Set([0]);
+  for(let i=step;i<valid.length-1;i+=step) xIdxs.add(i);
+  xIdxs.add(valid.length-1);
+  const xLabels=[...xIdxs].map(i=>{
+    const d=new Date(valid[i].date+'T00:00:00');
+    return `<text x="${xOf(i).toFixed(1)}" y="${H-2}" text-anchor="middle" fill="rgba(144,143,158,0.45)" font-size="8" font-family="Geist Mono,monospace">${d.getDate()} ${MONTHS[d.getMonth()]}</text>`;
+  }).join('');
+
+  // Value labels at each dot when ≤ 14 points
+  const valLabels=valid.length<=14?pts.map(p=>{
+    const above=p.y>PT+CH/2;
+    const lbl=p.v>0?`+${p.v}`:String(p.v);
+    return `<text x="${p.x.toFixed(1)}" y="${(above?p.y-5:p.y+11).toFixed(1)}" text-anchor="middle" fill="${color}" fill-opacity="0.85" font-size="8" font-family="Geist Mono,monospace">${lbl}</text>`;
+  }).join(''):'';
+
   return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" style="width:100%;height:${H}px;display:block">
-    <defs><linearGradient id="g_${field}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity="0.18"/><stop offset="100%" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
-    ${zeroLine}<polygon points="${fill}" fill="url(#g_${field})"/>
+    <defs><linearGradient id="g_${field}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity="0.2"/><stop offset="100%" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
+    ${gridLayer}${zeroLine}
+    <polygon points="${fill}" fill="url(#g_${field})"/>
     <polyline points="${line}" fill="none" stroke="${color}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
-    ${pts.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.5" fill="${color}"/>`).join('')}
+    ${pts.map(p=>`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.8" fill="${color}" stroke="rgba(18,19,25,0.6)" stroke-width="1"/>`).join('')}
+    ${valLabels}${xLabels}
   </svg>`;
 }
 
@@ -4171,14 +4210,22 @@ async function runMoodTrendAnalysis() {
     const entries = getMoodSorted(14);
     const todayD = today();
     const cutoff = entries[0]?.date || toKey(addDays(todayD,-14));
-    const activeHabits = habits.filter(h=>!h.paused).map(h=>({id:h.id, name:h.name, freq:h.freq}));
-    const habitCompliance = activeHabits.map(h=>{
-      const logs = Object.keys(habitLogs)
-        .filter(k=>k.startsWith(h.id+'_'))
+    const daysInPeriod = entries.length || 14;
+    const habitCompliance = habits.filter(h=>!h.paused).map(h=>{
+      const loggedDates = Object.keys(habitLogs)
+        .filter(k=>k.startsWith(h.id+'_') && habitLogs[k])
         .map(k=>k.split('_')[1])
         .filter(date=>date>=cutoff)
         .sort();
-      return {...h, loggedDates:logs};
+      const pct = daysInPeriod>0 ? Math.round((loggedDates.length/daysInPeriod)*100) : 0;
+      return {
+        nombre: h.name,
+        frecuenciaObjetivo: `${h.freq} veces/semana`,
+        diasCumplidos: loggedDates.length,
+        diasDelPeriodo: daysInPeriod,
+        cumplimiento: pct+'%',
+        fechasCumplidas: loggedDates
+      };
     });
     const result = await callClaude('mood-trend', {entries, habits:habitCompliance});
     moodTrendAnalysis = typeof result==='string' ? result : JSON.stringify(result);
