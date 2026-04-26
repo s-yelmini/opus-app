@@ -1685,13 +1685,16 @@ input:focus, textarea:focus, select:focus {
     <div id="triage-view" style="display:none;flex:1;flex-direction:column;overflow:hidden;min-width:0">
 
       <!-- Quick add bar -->
-      <div id="triage-input-bar" style="display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0">
-        <div style="width:15px;height:15px;border:1.5px dashed var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:0.7rem;flex-shrink:0;margin-left:18px">+</div>
-        <input id="triage-inbox-input" type="text" placeholder="Issue title..." autocomplete="off"
-          style="flex:1;background:none;border:none;outline:none;font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--text);padding:10px 12px;"
+      <div id="triage-input-bar" style="display:flex;align-items:center;gap:8px;height:49px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--bg);flex-shrink:0">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.5" stroke-linecap="round" style="flex-shrink:0"><path d="M12 5v14M5 12h14"/></svg>
+        <input id="triage-inbox-input" type="text" placeholder="Captura rápida…" autocomplete="off"
+          style="flex:1;background:none;border:none;outline:none;font-size:13px;color:var(--ink);font-family:inherit"
           onkeydown="handleTriageInputKey(event)" />
-        <button onclick="submitTriageInput()" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;padding:5px 12px;background:var(--accent);border:1px solid var(--accent);color:white;border-radius:var(--radius);cursor:pointer;margin-right:6px">Add</button>
-        <button id="gen-issues-btn" onclick="toggleGeneratePanel(true)" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;padding:5px 14px;margin-right:10px;background:var(--accent);border:none;color:white;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap">&#10022; Generar issues</button>
+        <button onclick="submitTriageInput()" class="btn-sm btn-bordered">Añadir</button>
+        <button id="gen-issues-btn" onclick="toggleGeneratePanel(true)" class="btn-sm btn-bordered" style="display:flex;align-items:center;gap:6px;white-space:nowrap">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg>
+          Generar issues
+        </button>
       </div>
 
       <!-- AI Generate panel -->
@@ -4078,9 +4081,10 @@ function updateBadges() {
   set('badge-triage-nav', vals.triage);
   tog('triage-dot-sidebar', vals.triage > 0);
   const gb = document.getElementById('gen-issues-btn');
-  if (gb) gb.innerHTML = vals.triage > 0
-    ? '&#10022; Generar issues <span style="opacity:0.7;font-size:0.62rem">('+vals.triage+')</span>'
-    : '&#10022; Generar issues';
+  if (gb) {
+    const svg = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg>';
+    gb.innerHTML = svg + ' Generar issues' + (vals.triage > 0 ? ` <span class="mono" style="font-size:11px;color:var(--ink-4)">(${vals.triage})</span>` : '');
+  }
   _badgeCache = vals;
 }
 
