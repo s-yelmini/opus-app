@@ -5,7 +5,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23121319'/><path d='M19 4L9 18h8l-4 10 14-16h-9z' fill='%235e6ad2'/></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Opus</title>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&family=Inter+Tight:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -52,7 +52,7 @@
 }
 
 body {
-  font-family: 'Inter Tight', 'Geist', -apple-system, sans-serif;
+  font-family: 'Inter Tight', 'Inter Tight', -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   height: 100vh;
@@ -109,7 +109,7 @@ body {
 .view-tabs { display: flex; gap: 2px; }
 
 .view-tab {
-  font-family: 'Geist Mono', monospace; font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
   padding: 4px 10px; border-radius: var(--radius);
   border: none; background: none; color: var(--text-3); cursor: pointer; transition: all 0.1s;
 }
@@ -130,7 +130,7 @@ body {
 .week-nav-btn:hover { background: var(--surface3); color: var(--text); }
 .week-label { font-size: 0.72rem; color: var(--text-2); min-width: 130px; text-align: center; }
 .today-btn {
-  font-family: 'Geist Mono', monospace; font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
   padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border2);
   background: none; color: var(--text-3); cursor: pointer; transition: all 0.1s;
 }
@@ -139,7 +139,7 @@ body {
 .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 6px; }
 
 .btn-sm {
-  font-family: 'Geist Mono', monospace; font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
   padding: 4px 9px; border-radius: var(--radius);
   border: 1px solid var(--border2); background: var(--surface2);
   color: var(--text-2); cursor: pointer; transition: all 0.1s;
@@ -284,7 +284,7 @@ body {
 .unsched-day-btn {
   width: 24px; height: 24px; border-radius: 4px;
   border: 1px solid var(--border2); background: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.62rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
   color: var(--text-3); cursor: pointer;
   transition: background 0.08s, color 0.08s;
   display: flex; align-items: center; justify-content: center;
@@ -325,14 +325,14 @@ body {
 .new-issue-bar:focus-within .new-issue-icon { border-color: var(--accent); color: var(--accent); }
 #task-input {
   flex: 1; background: none; border: none; outline: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.78rem; color: var(--text);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text);
 }
 #task-input::placeholder { color: var(--text-3); }
 
 .meta-btn {
   display: flex; align-items: center; gap: 5px; padding: 3px 7px;
   border-radius: 4px; border: 1px solid transparent; background: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.68rem; color: var(--text-3);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text-3);
   cursor: pointer; transition: all 0.1s;
 }
 .meta-btn:hover { background: var(--surface3); color: var(--text-2); border-color: var(--border); }
@@ -436,7 +436,7 @@ body {
 
 .detail-title {
   width: 100%; background: none; border: none; outline: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.82rem; font-weight: 500;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: 500;
   color: var(--text); line-height: 1.5; resize: none;
   border-radius: 4px; padding: 4px 6px; margin: -4px -6px;
   transition: background 0.1s;
@@ -465,7 +465,7 @@ body {
   display: flex; align-items: center; gap: 6px;
   padding: 3px 6px; border-radius: 4px; cursor: pointer;
   border: none; background: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
   color: var(--text-2); transition: background 0.1s; width: 100%; text-align: left;
 }
 .status-toggle:hover { background: var(--surface3); }
@@ -479,7 +479,7 @@ body {
 .prio-mini-btn {
   flex: 1; padding: 4px 3px; border-radius: 4px;
   border: 1px solid var(--border); background: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.6rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.6rem;
   color: var(--text-3); cursor: pointer; transition: all 0.1s; text-align: center;
 }
 .prio-mini-btn:hover { background: var(--surface3); color: var(--text-2); }
@@ -496,7 +496,7 @@ body {
 .date-native {
   width: 100%; background: var(--surface3); border: 1px solid var(--border2);
   border-radius: 4px; outline: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.73rem; color: var(--text);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.73rem; color: var(--text);
   padding: 6px 8px; cursor: pointer;
   color-scheme: light;
 }
@@ -504,7 +504,7 @@ body {
 
 .date-clear {
   width: 100%; background: none; border: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
   color: var(--text-3); cursor: pointer; text-align: left;
   padding: 2px 2px; transition: color 0.1s;
 }
@@ -523,7 +523,7 @@ body {
 .week-mini-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
 .day-mini-btn {
   padding: 4px 2px; border-radius: 3px; border: 1px solid transparent;
-  background: none; font-family: 'Geist Mono', monospace;
+  background: none; font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem; color: var(--text-3); cursor: pointer;
   transition: all 0.1s; text-align: center; line-height: 1.4;
 }
@@ -538,7 +538,7 @@ body {
 .delete-btn {
   width: 100%; padding: 6px; border-radius: var(--radius);
   border: 1px solid var(--border2); background: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
   color: var(--text-3); cursor: pointer; transition: all 0.1s;
 }
 .delete-btn:hover { background: rgba(229,72,77,0.1); border-color: var(--red); color: var(--red); }
@@ -563,7 +563,7 @@ body {
 .modal-input {
   width: 100%; background: var(--surface2); border: 1px solid var(--border2);
   border-radius: var(--radius); outline: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.8rem; color: var(--text);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text);
   padding: 9px 12px; margin-bottom: 12px;
 }
 .modal-input:focus { border-color: var(--accent); }
@@ -573,7 +573,7 @@ body {
 .day-picker { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; flex: 1; }
 .day-pick-btn {
   padding: 5px 3px; border-radius: 4px; border: 1px solid var(--border);
-  background: none; font-family: 'Geist Mono', monospace;
+  background: none; font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem; color: var(--text-3); cursor: pointer; transition: all 0.1s; text-align: center; line-height: 1.4;
 }
 .day-pick-btn:hover { background: var(--surface3); color: var(--text-2); }
@@ -583,7 +583,7 @@ body {
 .prio-picker { display: flex; gap: 4px; flex: 1; }
 .prio-pick-btn {
   flex: 1; padding: 5px 4px; border-radius: 4px; border: 1px solid var(--border);
-  background: none; font-family: 'Geist Mono', monospace;
+  background: none; font-family: 'JetBrains Mono', monospace;
   font-size: 0.62rem; color: var(--text-3); cursor: pointer; transition: all 0.1s; text-align: center;
 }
 .prio-pick-btn:hover { background: var(--surface3); color: var(--text-2); }
@@ -593,13 +593,13 @@ body {
 .prio-pick-btn[data-p="p4"].selected { color: var(--text-2); background: var(--surface3); border-color: var(--border2); }
 .modal-actions { display: flex; justify-content: flex-end; gap: 6px; margin-top: 4px; }
 .modal-cancel {
-  font-family: 'Geist Mono', monospace; font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
   padding: 6px 12px; border-radius: var(--radius); border: 1px solid var(--border2);
   background: none; color: var(--text-3); cursor: pointer; transition: all 0.1s;
 }
 .modal-cancel:hover { background: var(--surface3); color: var(--text-2); }
 .modal-save {
-  font-family: 'Geist Mono', monospace; font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
   padding: 6px 14px; border-radius: var(--radius);
   border: 1px solid var(--accent); background: var(--accent);
   color: white; cursor: pointer; transition: all 0.1s;
@@ -681,7 +681,7 @@ body {
 .habit-add-row td { padding: 8px 16px; }
 .habit-add-btn {
   display: flex; align-items: center; gap: 6px;
-  font-family: 'Geist Mono', monospace; font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
   color: var(--text-3); background: none; border: none;
   cursor: pointer; padding: 4px 0; transition: color 0.1s;
 }
@@ -752,7 +752,7 @@ body {
 .triage-row-actions { display: flex; gap: 5px; flex-shrink: 0; }
 
 .triage-row-btn {
-  font-family: 'Geist Mono', monospace; font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
   padding: 4px 10px; border-radius: 4px; cursor: pointer; transition: all 0.1s;
 }
 
@@ -841,7 +841,7 @@ body {
 .triage-prio-btns { display: flex; gap: 4px; }
 
 .triage-prio-btn {
-  font-family: 'Geist Mono', monospace; font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
   padding: 4px 10px; border-radius: 4px;
   border: 1px solid var(--border2); background: none;
   color: var(--text-3); cursor: pointer; transition: all 0.1s;
@@ -859,7 +859,7 @@ body {
 }
 
 .triage-day-btn {
-  font-family: 'Geist Mono', monospace; font-size: 0.62rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
   padding: 4px 8px; border-radius: 4px;
   border: 1px solid var(--border2); background: none;
   color: var(--text-3); cursor: pointer; transition: all 0.1s;
@@ -879,7 +879,7 @@ body {
 }
 
 .triage-action {
-  font-family: 'Geist Mono', monospace; font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
   padding: 8px 16px; border-radius: var(--radius);
   border: 1px solid var(--border2); cursor: pointer;
   transition: all 0.12s; flex: 1; text-align: center;
@@ -950,7 +950,7 @@ body {
 .palette-icon { font-size: 0.8rem; color: var(--text-3); flex-shrink: 0; }
 #palette-input {
   flex: 1; background: none; border: none; outline: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.85rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
   color: var(--text); letter-spacing: 0.01em;
 }
 #palette-input::placeholder { color: var(--text-3); }
@@ -1066,7 +1066,7 @@ body {
 }
 .milestone-add-issue input {
   flex: 1; background: none; border: none; outline: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.75rem; color: var(--text);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text);
 }
 .milestone-add-issue input::placeholder { color: var(--text-3); }
 
@@ -1078,7 +1078,7 @@ body {
 .milestone-add-bar:focus-within { background: var(--surface2); }
 .milestone-add-bar input {
   flex: 1; background: none; border: none; outline: none;
-  font-family: 'Geist Mono', monospace; font-size: 0.78rem; color: var(--text);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text);
 }
 .milestone-add-bar input::placeholder { color: var(--text-3); }
 /* keep old classes as no-ops to avoid JS errors */
@@ -1098,7 +1098,7 @@ body {
 
 .filter-chip {
   display: inline-flex; align-items: center; gap: 5px;
-  font-family: 'Geist Mono', monospace; font-size: 0.67rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.67rem;
   padding: 3px 8px; border-radius: 4px;
   border: 1px solid var(--border2); background: none;
   color: var(--text-3); cursor: pointer; transition: all 0.1s;
@@ -1140,7 +1140,7 @@ body {
 .filter-sep { width: 1px; height: 16px; background: var(--border); margin: 0 1px; }
 
 .filter-clear-btn {
-  font-family: 'Geist Mono', monospace; font-size: 0.63rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.63rem;
   color: var(--text-3); background: none; border: none;
   cursor: pointer; padding: 3px 6px; border-radius: 4px;
   transition: color 0.1s; margin-left: auto;
@@ -1152,7 +1152,7 @@ body {
 }
 .saved-view-del:hover { color: var(--red); }
 
-/* Geist Mono for labels, IDs, code, metadata */
+/* JetBrains Mono for labels, IDs, code, metadata */
 .row-id, .detail-id, .nav-badge, .nav-label,
 .filter-chip, .filter-dropdown-label,
 .btn-sm, .ai-btn, .triage-row-btn,
@@ -1162,7 +1162,7 @@ kbd, .week-label, .topbar-page-title,
 input[type="text"], textarea,
 .quick-add-input, .detail-title,
 .detail-notes-ta {
-  font-family: 'Geist Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
 }
 
 /* Focus glow */
@@ -1275,7 +1275,7 @@ input:focus, textarea:focus, select:focus {
   display: inline-flex; align-items: center; gap: 4px;
   font-size: 0.65rem; padding: 2px 8px; border-radius: 10px;
   border: 1px solid var(--border2); color: var(--text-3); background: none;
-  cursor: pointer; transition: all 0.1s; font-family: 'Geist Mono', monospace;
+  cursor: pointer; transition: all 0.1s; font-family: 'JetBrains Mono', monospace;
 }
 .plan-meta-chip:hover { background: var(--surface3); color: var(--text-2); }
 .plan-meta-chip.active { border-color: var(--accent-border); background: var(--accent-soft); color: var(--accent); }
@@ -1288,7 +1288,7 @@ input:focus, textarea:focus, select:focus {
 .plan-issue-actions { display: flex; gap: 6px; }
 
 .plan-accept-btn {
-  font-family: 'Geist Mono', monospace; font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
   padding: 5px 14px; border-radius: var(--radius);
   background: var(--accent); border: 1px solid var(--accent);
   color: white; cursor: pointer; transition: all 0.1s;
@@ -1296,7 +1296,7 @@ input:focus, textarea:focus, select:focus {
 .plan-accept-btn:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--bg); }
 
 .plan-dismiss-btn {
-  font-family: 'Geist Mono', monospace; font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
   padding: 5px 12px; border-radius: var(--radius);
   background: none; border: 1px solid var(--border2);
   color: var(--text-3); cursor: pointer; transition: all 0.1s;
@@ -1304,7 +1304,7 @@ input:focus, textarea:focus, select:focus {
 .plan-dismiss-btn:hover { color: var(--red); border-color: var(--red); }
 
 .plan-accept-all-btn {
-  font-family: 'Geist Mono', monospace; font-size: 0.72rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
   padding: 7px 18px; border-radius: var(--radius);
   background: var(--accent-soft); border: 1px solid var(--accent-border);
   color: var(--accent); cursor: pointer; transition: all 0.1s; margin-bottom: 16px;
@@ -1590,7 +1590,7 @@ input:focus, textarea:focus, select:focus {
 
     <div class="filter-sep"></div>
     <button class="filter-clear-btn" id="filter-clear-btn" style="display:none" onclick="clearViewFilters()">Clear</button>
-    <button id="save-view-btn" style="display:none;font-family:'Geist Mono',monospace;font-size:0.63rem;color:var(--text-3);background:none;border:1px solid var(--border2);padding:3px 8px;border-radius:4px;cursor:pointer;margin-left:4px" onclick="promptSaveView()">Save view</button>
+    <button id="save-view-btn" style="display:none;font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--text-3);background:none;border:1px solid var(--border2);padding:3px 8px;border-radius:4px;cursor:pointer;margin-left:4px" onclick="promptSaveView()">Save view</button>
   </div>
 
   <!-- CONTENT ROW -->
@@ -1633,10 +1633,10 @@ input:focus, textarea:focus, select:focus {
       <div id="triage-input-bar" style="display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0">
         <div style="width:15px;height:15px;border:1.5px dashed var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:0.7rem;flex-shrink:0;margin-left:18px">+</div>
         <input id="triage-inbox-input" type="text" placeholder="Issue title..." autocomplete="off"
-          style="flex:1;background:none;border:none;outline:none;font-family:'Geist Mono',monospace;font-size:0.78rem;color:var(--text);padding:10px 12px;"
+          style="flex:1;background:none;border:none;outline:none;font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--text);padding:10px 12px;"
           onkeydown="handleTriageInputKey(event)" />
-        <button onclick="submitTriageInput()" style="font-family:'Geist Mono',monospace;font-size:0.68rem;padding:5px 12px;background:var(--accent);border:1px solid var(--accent);color:white;border-radius:var(--radius);cursor:pointer;margin-right:6px">Add</button>
-        <button id="gen-issues-btn" onclick="toggleGeneratePanel(true)" style="font-family:'Geist Mono',monospace;font-size:0.68rem;padding:5px 14px;margin-right:10px;background:var(--accent);border:none;color:white;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap">&#10022; Generar issues</button>
+        <button onclick="submitTriageInput()" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;padding:5px 12px;background:var(--accent);border:1px solid var(--accent);color:white;border-radius:var(--radius);cursor:pointer;margin-right:6px">Add</button>
+        <button id="gen-issues-btn" onclick="toggleGeneratePanel(true)" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;padding:5px 14px;margin-right:10px;background:var(--accent);border:none;color:white;border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap">&#10022; Generar issues</button>
       </div>
 
       <!-- AI Generate panel -->
@@ -1644,7 +1644,7 @@ input:focus, textarea:focus, select:focus {
         <textarea id="triage-plan-input"
           placeholder="Contame cómo va a ser tu semana — reuniones, proyectos, deadlines, compromisos. Claude los convierte en issues."
           style="width:100%;min-height:110px;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-lg);
-                 padding:12px 14px;font-family:'Geist Mono',monospace;font-size:0.75rem;color:var(--text);
+                 padding:12px 14px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--text);
                  line-height:1.6;resize:none;outline:none;transition:border-color 0.15s;color-scheme:light;"
           onfocus="this.style.borderColor='var(--accent)'"
           onblur="this.style.borderColor='var(--border2)'"
@@ -1652,11 +1652,11 @@ input:focus, textarea:focus, select:focus {
         ></textarea>
         <div style="display:flex;justify-content:flex-end;gap:8px">
           <button onclick="toggleGeneratePanel(false)"
-            style="font-family:'Geist Mono',monospace;font-size:0.7rem;padding:6px 12px;border-radius:var(--radius);
+            style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;padding:6px 12px;border-radius:var(--radius);
                    border:1px solid var(--border2);background:none;color:var(--text-3);cursor:pointer"
             onmouseover="this.style.color='var(--text-2)'" onmouseout="this.style.color='var(--text-3)'">Cancel</button>
           <button onclick="runGeneratePlan()" id="triage-gen-btn"
-            style="font-family:'Geist Mono',monospace;font-size:0.7rem;padding:6px 18px;border-radius:var(--radius);
+            style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;padding:6px 18px;border-radius:var(--radius);
                    background:var(--accent);
                    border:1px solid var(--accent);color:white;cursor:pointer;
                    display:flex;align-items:center;gap:5px">
@@ -1772,7 +1772,7 @@ input:focus, textarea:focus, select:focus {
     </div>
     <div class="modal-actions" id="habit-modal-actions">
       <button class="modal-cancel" onclick="closeHabitModal()">Cancel</button>
-      <button id="habit-pause-btn" style="display:none;font-family:'Geist Mono',monospace;font-size:0.72rem;padding:6px 12px;border-radius:6px;border:1px solid var(--border2);background:none;color:var(--text-3);cursor:pointer" onclick="toggleHabitPause()">Pause</button>
+      <button id="habit-pause-btn" style="display:none;font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:6px 12px;border-radius:6px;border:1px solid var(--border2);background:none;color:var(--text-3);cursor:pointer" onclick="toggleHabitPause()">Pause</button>
       <button class="modal-save" id="habit-modal-save" onclick="saveHabitModal()">Create</button>
     </div>
   </div>
@@ -2133,7 +2133,7 @@ function renderDetail() {
         <select id="detail-milestone-select"
           onchange="setTaskMilestone(${t.id}, this.value)"
           style="background:var(--surface2);border:1px solid var(--border2);border-radius:4px;
-                 font-family:'Geist Mono',monospace;font-size:0.7rem;color:var(--text-2);
+                 font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text-2);
                  padding:4px 6px;outline:none;cursor:pointer;width:100%;color-scheme:light">
           <option value="">No milestone</option>
           ${milestones.map(m=>`<option value="${m.id}" ${t.milestone==m.id?'selected':''}>${esc(m.name)}</option>`).join('')}
@@ -2144,7 +2144,7 @@ function renderDetail() {
       <span class="detail-field-label" style="width:auto">Notes</span>
       <textarea id="detail-notes-ta" placeholder="Add notes..."
         style="flex:1;min-height:110px;width:100%;background:none;border:none;outline:none;
-               font-family:'Geist Mono',monospace;font-size:0.73rem;color:var(--text-2);
+               font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--text-2);
                line-height:1.6;resize:none;padding:2px 0;"
       >${esc(t.notes||'')}</textarea>
     </div>
@@ -2516,7 +2516,7 @@ function toggleKbdHelp() {
   if (ov) { ov.remove(); return; }
   ov = document.createElement('div');
   ov.id = 'kbd-help';
-  ov.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:200;background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:14px 16px;min-width:210px;box-shadow:0 8px 32px rgba(0,0,0,0.4);font-family:\'Geist Mono\',monospace;animation:modalIn 0.15s ease;';
+  ov.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:200;background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:14px 16px;min-width:210px;box-shadow:0 8px 32px rgba(0,0,0,0.4);font-family:\'JetBrains Mono\',monospace;animation:modalIn 0.15s ease;';
   const shortcuts = [['↑ / k','Navigate'],['⇧↑↓','Multi-select'],['D','Toggle done'],['T','Assign today'],['E','Edit title'],['N','Quick add task'],['C','New issue (modal)'],['Del','Delete'],['Tab','Switch view'],['Esc','Close'],['?','Help']];
   ov.innerHTML = '<div style="font-size:0.63rem;color:var(--text-3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">Shortcuts</div>' +
     shortcuts.map(([k,v])=>`<div style="display:flex;justify-content:space-between;gap:20px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="font-size:0.68rem;color:var(--accent)">${k}</span><span style="font-size:0.68rem;color:var(--text-3)">${v}</span></div>`).join('') +
@@ -2990,7 +2990,7 @@ function renderTriage() {
       <div class="triage-empty">
         <div class="triage-empty-icon">✓</div>
         <div class="triage-empty-text">Inbox zero.</div>
-        <button onclick="toggleTriageInput(true)" style="margin-top:8px;font-family:'Geist Mono',monospace;font-size:0.7rem;background:none;border:1px solid var(--border2);color:var(--text-3);padding:5px 14px;border-radius:5px;cursor:pointer" onmouseover="this.style.color='var(--text-2)'" onmouseout="this.style.color='var(--text-3)'">+ Add to inbox</button>
+        <button onclick="toggleTriageInput(true)" style="margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:0.7rem;background:none;border:1px solid var(--border2);color:var(--text-3);padding:5px 14px;border-radius:5px;cursor:pointer" onmouseover="this.style.color='var(--text-2)'" onmouseout="this.style.color='var(--text-3)'">+ Add to inbox</button>
       </div>`;
     return;
   }
@@ -3009,7 +3009,7 @@ function renderTriage() {
     <div style="width:100%;max-width:580px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
         <span style="font-size:0.7rem;color:var(--text-3);letter-spacing:0.06em;text-transform:uppercase">${inbox.length} pending</span>
-        <button onclick="triageAcceptAll()" style="font-family:'Geist Mono',monospace;font-size:0.68rem;color:var(--text-3);background:none;border:none;cursor:pointer;padding:3px 0" onmouseover="this.style.color='var(--text-2)'" onmouseout="this.style.color='var(--text-3)'">Accept all →</button>
+        <button onclick="triageAcceptAll()" style="font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--text-3);background:none;border:none;cursor:pointer;padding:3px 0" onmouseover="this.style.color='var(--text-2)'" onmouseout="this.style.color='var(--text-3)'">Accept all →</button>
       </div>
       <div id="triage-list">${rows}</div>
     </div>`;
@@ -3025,7 +3025,7 @@ function triageEditText(id) {
   const inp = document.createElement('input');
   inp.type = 'text';
   inp.value = t.text;
-  inp.style.cssText = 'flex:1;background:none;border:none;border-bottom:1px solid var(--accent);color:var(--text);font-family:"Geist Mono",monospace;font-size:0.78rem;outline:none;padding:0 2px;min-width:0';
+  inp.style.cssText = 'flex:1;background:none;border:none;border-bottom:1px solid var(--accent);color:var(--text);font-family:"JetBrains Mono",monospace;font-size:0.78rem;outline:none;padding:0 2px;min-width:0';
   span.replaceWith(inp);
   inp.focus();
   inp.select();
@@ -3287,7 +3287,7 @@ function renderMilestones() {
 
   if (!milestones.length) {
     el.innerHTML = `<div class="milestone-empty">No milestones yet.<br><br>
-      <button onclick="openMilestoneModal()" style="font-family:'Geist Mono',monospace;font-size:0.72rem;background:none;border:1px solid var(--border2);color:var(--text-3);padding:6px 14px;border-radius:5px;cursor:pointer">+ New milestone</button>
+      <button onclick="openMilestoneModal()" style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;background:none;border:1px solid var(--border2);color:var(--text-3);padding:6px 14px;border-radius:5px;cursor:pointer">+ New milestone</button>
     </div>`;
     return;
   }
@@ -3890,7 +3890,7 @@ const AI_ENDPOINT='/api/claude';
 async function callClaude(action,payload){const res=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})});if(!res.ok)throw new Error('API '+res.status);const data=await res.json();if(!data.ok)throw new Error(data.error||'err');return data.result;}
 let triageGenSuggestions=[];
 let _activeToast=null;
-function showToast(msg,undoFn){if(_activeToast)_activeToast.remove();const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:10px 18px;font-family:"Geist Mono",monospace;font-size:0.72rem;color:var(--text-2);display:flex;align-items:center;gap:12px;z-index:999;box-shadow:0 8px 28px rgba(0,0,0,0.5)';t.innerHTML=msg;if(undoFn){const b=document.createElement('button');b.textContent='Deshacer';b.style.cssText='border:1px solid var(--border2);background:none;color:var(--accent);border-radius:var(--radius);padding:3px 10px;cursor:pointer;font-family:"Geist Mono",monospace;font-size:0.68rem';b.onclick=()=>{undoFn();t.remove();_activeToast=null;};t.appendChild(b);}document.body.appendChild(t);_activeToast=t;setTimeout(()=>{if(t.parentNode){t.remove();if(_activeToast===t)_activeToast=null;}},4500);}
+function showToast(msg,undoFn){if(_activeToast)_activeToast.remove();const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:10px 18px;font-family:"JetBrains Mono",monospace;font-size:0.72rem;color:var(--text-2);display:flex;align-items:center;gap:12px;z-index:999;box-shadow:0 8px 28px rgba(0,0,0,0.5)';t.innerHTML=msg;if(undoFn){const b=document.createElement('button');b.textContent='Deshacer';b.style.cssText='border:1px solid var(--border2);background:none;color:var(--accent);border-radius:var(--radius);padding:3px 10px;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:0.68rem';b.onclick=()=>{undoFn();t.remove();_activeToast=null;};t.appendChild(b);}document.body.appendChild(t);_activeToast=t;setTimeout(()=>{if(t.parentNode){t.remove();if(_activeToast===t)_activeToast=null;}},4500);}
 function toggleGeneratePanel(open){const p=document.getElementById('triage-generate-panel');if(!p)return;p.style.display=open?'flex':'none';if(open){const ta=document.getElementById('triage-plan-input');if(ta){ta.value='';setTimeout(()=>ta.focus(),60);}const gr=document.getElementById('triage-gen-results');if(gr)gr.style.display='none';triageGenSuggestions=[];}}
 async function runGeneratePlan(){const ta=document.getElementById('triage-plan-input');const text=ta?ta.value.trim():'';if(!text){if(ta)ta.focus();return;}const btn=document.getElementById('triage-gen-btn');const rw=document.getElementById('triage-gen-results');const ct=document.getElementById('triage-gen-content');if(btn){btn.style.opacity='0.6';btn.style.pointerEvents='none';btn.innerHTML='<span>&#10022;</span> Generando...';}if(rw)rw.style.display='block';if(ct)ct.innerHTML='<div style="font-size:0.72rem;color:var(--text-3);padding:4px 0">Procesando...</div>';try{const wk=getWeekDays(0).map((d,i)=>({label:DAY_NAMES[i],date:toKey(d)}));const result=await callClaude('plan',{input:text,weekDays:wk,milestones:milestones.map(m=>({id:m.id,name:m.name}))});const suggestions=Array.isArray(result)?result:[];const startId=counter;suggestions.forEach(s=>{addTask(s.title,s.priority||'p4',null,true);if(s.milestone_id){const t2=tasks[0];if(t2)t2.milestone=s.milestone_id;}});const addedIds=suggestions.map((_,i)=>startId+i);if(suggestions.length){save();updateTriageBadge();renderTriage();}if(ta)ta.value='';if(ct){ct.innerHTML=suggestions.length?'<div style="font-size:0.72rem;color:var(--green)">&#10003; '+suggestions.length+' issue'+(suggestions.length!==1?'s':'')+' añadido'+(suggestions.length!==1?'s':'')+' al triage</div>':'<div style="font-size:0.72rem;color:var(--text-3)">Sin sugerencias.</div>';}if(suggestions.length){showToast('✓ '+suggestions.length+' issue'+(suggestions.length!==1?'s':'')+' añadido'+(suggestions.length!==1?'s':'')+' al triage',()=>{addedIds.forEach(id=>{const idx=tasks.findIndex(t=>t.id===id);if(idx!==-1)tasks.splice(idx,1);});save();updateTriageBadge();renderTriage();});}setTimeout(()=>{if(rw)rw.style.display='none';if(ta)ta.focus();},2200);}catch(e){if(ct)ct.innerHTML='<div style="font-size:0.72rem;color:var(--red)">Error: '+e.message+'</div>';}finally{if(btn){btn.style.opacity='';btn.style.pointerEvents='';btn.innerHTML='<span>&#10022;</span> Generar issues';}}}
 function renderTriageGenResults(){const ct=document.getElementById('triage-gen-content');if(!ct)return;if(!triageGenSuggestions.length){ct.innerHTML='<div style="font-size:0.72rem;color:var(--text-3)">Sin sugerencias.</div>';return;}const PL={p1:'Urgent',p2:'High',p3:'Medium',p4:'Low'},PC={p1:'var(--red)',p2:'var(--orange)',p3:'var(--yellow)',p4:'var(--text-3)'};let html='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-size:0.68rem;color:var(--text-3)">'+triageGenSuggestions.length+' sugerencias</span><button onclick="acceptAllGenSuggestions()" class="plan-accept-all-btn">Aceptar todas</button></div>';triageGenSuggestions.forEach((s,i)=>{const ms=milestones.find(m=>m.id===s.milestone_id),pc=PC[s.priority]||'var(--text-3)';html+='<div class="plan-issue-card" id="gen-card-'+i+'"><div class="plan-issue-title">'+esc(s.title)+'</div><div class="plan-issue-meta"><span class="plan-meta-chip active" style="border-color:'+pc+';color:'+pc+'"><span style="width:6px;height:6px;border-radius:1px;background:'+pc+';display:inline-block"></span> '+(PL[s.priority]||'Low')+'</span>'+(ms?'<span class="plan-meta-chip active">&#9672; '+esc(ms.name)+'</span>':'')+'</div>'+(s.reasoning?'<div class="plan-issue-reasoning">"'+esc(s.reasoning)+'"</div>':'')+'<div class="plan-issue-actions"><button class="plan-accept-btn" onclick="acceptGenSuggestion('+i+')">&#10003; Aceptar</button><button class="plan-dismiss-btn" onclick="dismissGenSuggestion('+i+')">&#10005; Descartar</button></div></div>';});ct.innerHTML=html;}
@@ -3900,7 +3900,7 @@ function acceptAllGenSuggestions(){triageGenSuggestions.forEach(s=>{addTask(s.ti
 function smartAdd(rawText){if(!rawText.trim())return;addTask(rawText,'p4',null,false);}
 function expandNotes(taskId){}
 let ctxMenu=null;
-function showContextMenu(e,taskId){e.preventDefault();hideContextMenu();const t=tasks.find(t=>t.id===taskId);if(!t)return;const tk=toKey(today());const menu=document.createElement('div');menu.id='ctx-menu';menu.style.cssText='position:fixed;z-index:500;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:4px;min-width:160px;box-shadow:0 8px 32px rgba(0,0,0,0.45);backdrop-filter:blur(12px);font-family:"Geist Mono",monospace;left:'+Math.min(e.clientX,window.innerWidth-180)+'px;top:'+Math.min(e.clientY,window.innerHeight-160)+'px;';[{label:t.done?'&#9675; Todo':'&#10003; Done',fn:()=>toggleDone(taskId)},{label:t.day===tk?'&#8212; Clear':'Today',fn:()=>updateTask(taskId,{day:t.day===tk?null:tk})},{sep:true},{label:'&#10005; Delete',fn:()=>deleteTask(taskId),danger:true}].forEach(item=>{if(item.sep){const hr=document.createElement('div');hr.style.cssText='height:1px;background:var(--border);margin:3px 0';menu.appendChild(hr);return;}const btn=document.createElement('button');btn.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;border:none;background:none;border-radius:3px;cursor:pointer;font-size:0.72rem;font-family:"Geist Mono",monospace;color:'+(item.danger?'var(--red)':'var(--text-2)')+';transition:background 0.08s';btn.innerHTML=item.label;btn.onmouseover=()=>btn.style.background='var(--surface3)';btn.onmouseout=()=>btn.style.background='none';btn.onclick=()=>{item.fn();hideContextMenu();};menu.appendChild(btn);});document.body.appendChild(menu);ctxMenu=menu;setTimeout(()=>document.addEventListener('click',hideContextMenu,{once:true}),10);}
+function showContextMenu(e,taskId){e.preventDefault();hideContextMenu();const t=tasks.find(t=>t.id===taskId);if(!t)return;const tk=toKey(today());const menu=document.createElement('div');menu.id='ctx-menu';menu.style.cssText='position:fixed;z-index:500;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:4px;min-width:160px;box-shadow:0 8px 32px rgba(0,0,0,0.45);backdrop-filter:blur(12px);font-family:"JetBrains Mono",monospace;left:'+Math.min(e.clientX,window.innerWidth-180)+'px;top:'+Math.min(e.clientY,window.innerHeight-160)+'px;';[{label:t.done?'&#9675; Todo':'&#10003; Done',fn:()=>toggleDone(taskId)},{label:t.day===tk?'&#8212; Clear':'Today',fn:()=>updateTask(taskId,{day:t.day===tk?null:tk})},{sep:true},{label:'&#10005; Delete',fn:()=>deleteTask(taskId),danger:true}].forEach(item=>{if(item.sep){const hr=document.createElement('div');hr.style.cssText='height:1px;background:var(--border);margin:3px 0';menu.appendChild(hr);return;}const btn=document.createElement('button');btn.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;border:none;background:none;border-radius:3px;cursor:pointer;font-size:0.72rem;font-family:"JetBrains Mono",monospace;color:'+(item.danger?'var(--red)':'var(--text-2)')+';transition:background 0.08s';btn.innerHTML=item.label;btn.onmouseover=()=>btn.style.background='var(--surface3)';btn.onmouseout=()=>btn.style.background='none';btn.onclick=()=>{item.fn();hideContextMenu();};menu.appendChild(btn);});document.body.appendChild(menu);ctxMenu=menu;setTimeout(()=>document.addEventListener('click',hideContextMenu,{once:true}),10);}
 function hideContextMenu(){ctxMenu?.remove();ctxMenu=null;}
 function getTodayDot(t){return t.day===toKey(today())&&!t.done?'<span style="width:5px;height:5px;border-radius:50%;background:var(--accent);display:inline-block;margin-left:6px;flex-shrink:0;vertical-align:middle"></span>':'';}
 document.addEventListener('keydown',e=>{if(e.key!=='Tab'||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(document.getElementById('modal')?.style.display!=='none')return;e.preventDefault();const views=['triage','list','week','milestones','habits','mood'];const next=views[(views.indexOf(currentView)+1)%views.length];switchView(next);syncSidebarNav(next);});
