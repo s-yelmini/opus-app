@@ -17,7 +17,12 @@ function fmtList(arr) {
   return arr.map(t => `  ${PRIORITY_ICON[t.priority] || '[ ]'} ${t.text}`).join('\n');
 }
 
+const CRON_SECRET = process.env.CRON_SECRET;
+
 export default async function handler(req, res) {
+  if (CRON_SECRET && req.headers['authorization'] !== `Bearer ${CRON_SECRET}`) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
   if (!SUPABASE_URL || !SERVICE_KEY || !RESEND_KEY) {
     return res.status(500).json({ error: 'Missing env vars: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, RESEND_API_KEY' });
   }

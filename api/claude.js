@@ -118,8 +118,32 @@ Respond ONLY with valid JSON:
   }),
 };
 
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://opus-code.vercel.app';
+
+const INPUT_LIMITS = {
+  'smart-add': { input: 2000 },
+  'triage':    { tasks: 200 },
+  'brief':     { tasks: 500, habits: 100, milestones: 50 },
+  'plan':      { input: 3000, milestones: 50 },
+  'mood-trend':{ entries: 90, habits: 50 },
+  'notes':     { taskText: 500, notes: 5000 },
+};
+
+function validatePayload(action, payload) {
+  const limits = INPUT_LIMITS[action] || {};
+  for (const [key, max] of Object.entries(limits)) {
+    const val = payload[key];
+    if (val === undefined) continue;
+    if (typeof val === 'string' && val.length > max)
+      return `${key} exceeds ${max} characters`;
+    if (Array.isArray(val) && val.length > max)
+      return `${key} exceeds ${max} items`;
+  }
+  return null;
+}
+
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || '*');
+  res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
@@ -127,8 +151,12 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   if (!ANTHROPIC_API_KEY) return res.status(500).json({ error: 'ANTHROPIC_API_KEY not set' });
 
-  const { action, ...payload } = req.body;
-  if (!PROMPTS[action]) return res.status(400).json({ error: `Unknown action: ${action}` });
+  const { action, ...payload } = req.body || {};
+  if (typeof action !== 'string' || !PROMPTS[action])
+    return res.status(400).json({ error: 'Unknown action' });
+
+  const validationError = validatePayload(action, payload);
+  if (validationError) return res.status(400).json({ error: validationError });
 
   try {
     const { system, user } = PROMPTS[action](payload);

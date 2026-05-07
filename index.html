@@ -1906,7 +1906,7 @@ function addTask(text, priority, dayKey, inbox) {
 }
 
 function updateTask(id, changes) {
-  const t = tasks.find(t=>t.id===id);
+  const t = tasks.find(task => task.id === id);
   if (!t) return;
   Object.assign(t, changes);
   save();
@@ -2075,7 +2075,7 @@ function closeDetail() {
 }
 
 function renderDetail() {
-  const t = tasks.find(t=>t.id===selectedId);
+  const t = tasks.find(task => task.id === selectedId);
   if (!t) return;
 
   document.getElementById('detail-id').textContent = `TSK-${String(t.id).padStart(3,'0')}`;
@@ -2995,15 +2995,6 @@ function getInboxTasks() {
   return tasks.filter(t => t.inbox && !t.done);
 }
 
-function triageQuickAdd() {
-  const inp = document.getElementById('triage-quick-input');
-  if (!inp) return;
-  const text = inp.value.trim();
-  if (!text) return;
-  addTask(text, 'p4', null, true);
-  // renderTriage called via renderAll inside addTask
-}
-
 function updateTriageBadge() { updateBadges(); }
 
 function renderTriage() {
@@ -3087,15 +3078,6 @@ function triageEditText(id) {
     if (e.key === 'Escape') { e.preventDefault(); cancel(); }
   });
   inp.addEventListener('blur', commit);
-}
-
-function triageQuickAdd() {
-  const el = document.getElementById('triage-quick-input');
-  if (!el) return;
-  const text = el.value.trim();
-  if (!text) return;
-  addTask(text, 'p4', null, true);
-  renderTriage();
 }
 
 function setTriagePrio(p) {
@@ -3451,7 +3433,7 @@ function addIssueToMilestone(mid, input) {
   // refocus input
   setTimeout(() => {
     const inputs = document.querySelectorAll('.milestone-add-issue input');
-    inputs.forEach(inp => { if (inp.closest('[data-mid]') || true) inp.focus(); });
+    const firstInput = inputs[0]; if (firstInput) firstInput.focus();
   }, 50);
 }
 
