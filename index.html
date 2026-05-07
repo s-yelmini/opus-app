@@ -456,8 +456,8 @@ input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 
 
 .detail-title {
   width: 100%; background: none; border: none; outline: none;
-  font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; font-weight: 500;
-  color: var(--text); line-height: 1.5; resize: none;
+  font-family: inherit; font-size: 15px; font-weight: 500;
+  color: var(--ink); line-height: 1.4; resize: none;
   border-radius: 4px; padding: 4px 6px; margin: -4px -6px;
   transition: background 0.1s;
 }
@@ -1402,6 +1402,29 @@ input:focus, textarea:focus, select:focus {
 .mood-ai-text { font-size: 0.82rem; color: var(--m-ink-2); line-height: 1.8; white-space: pre-wrap; }
 /* Serif util — sans only */
 .mood-serif { font-family: 'Inter Tight', sans-serif; }
+
+/* ── FONT SYSTEM: force Inter Tight on all UI controls ──────────────
+   JetBrains Mono is reserved for: .mono, .kbd, .row-id, .detail-id,
+   .nav-badge, .date-native, .day-mini-btn (numeric/tabular data only) */
+#task-input,
+.meta-btn,
+.detail-title,
+.status-toggle,
+.prio-mini-btn,
+.date-clear,
+.delete-btn,
+.habit-add-btn,
+.unsched-day-btn,
+.triage-row-btn, .triage-prio-btn, .triage-day-btn, .triage-action,
+#palette-input,
+.filter-clear-btn, .filter-clear-all,
+.plan-meta-chip, .plan-accept-btn, .plan-dismiss-btn, .plan-accept-all-btn,
+.modal-cancel, .modal-save,
+.milestone-add-bar input,
+.ms-add-ms-row input,
+.ms-add-task-input {
+  font-family: inherit;
+}
 </style>
 </head>
 <body>
@@ -1601,7 +1624,7 @@ input:focus, textarea:focus, select:focus {
 
     <div class="filter-sep"></div>
     <button class="filter-clear-btn" id="filter-clear-btn" style="display:none" onclick="clearViewFilters()">Clear</button>
-    <button id="save-view-btn" style="display:none;font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--text-3);background:none;border:1px solid var(--border2);padding:3px 8px;border-radius:4px;cursor:pointer;margin-left:4px" onclick="promptSaveView()">Save view</button>
+    <button id="save-view-btn" style="display:none;font-size:12px;color:var(--text-3);background:none;border:1px solid var(--border2);padding:3px 8px;border-radius:4px;cursor:pointer;margin-left:4px;font-family:inherit" onclick="promptSaveView()">Save view</button>
   </div>
 
   <!-- CONTENT ROW -->
@@ -1785,7 +1808,7 @@ input:focus, textarea:focus, select:focus {
     </div>
     <div class="modal-actions" id="habit-modal-actions">
       <button class="modal-cancel" onclick="closeHabitModal()">Cancel</button>
-      <button id="habit-pause-btn" style="display:none;font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:6px 12px;border-radius:6px;border:1px solid var(--border2);background:none;color:var(--text-3);cursor:pointer" onclick="toggleHabitPause()">Pause</button>
+      <button id="habit-pause-btn" style="display:none;font-size:13px;padding:6px 12px;border-radius:6px;border:1px solid var(--border2);background:none;color:var(--text-3);cursor:pointer;font-family:inherit" onclick="toggleHabitPause()">Pause</button>
       <button class="modal-save" id="habit-modal-save" onclick="saveHabitModal()">Create</button>
     </div>
   </div>
@@ -2141,7 +2164,7 @@ function renderDetail() {
         <select id="detail-milestone-select"
           onchange="setTaskMilestone(${t.id}, this.value)"
           style="background:var(--surface2);border:1px solid var(--border2);border-radius:4px;
-                 font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text-2);
+                 font-family:inherit;font-size:13px;color:var(--text-2);
                  padding:4px 6px;outline:none;cursor:pointer;width:100%;color-scheme:light">
           <option value="">No milestone</option>
           ${milestones.map(m=>`<option value="${m.id}" ${t.milestone==m.id?'selected':''}>${esc(m.name)}</option>`).join('')}
@@ -2152,7 +2175,7 @@ function renderDetail() {
       <span class="detail-field-label" style="width:auto">Notes</span>
       <textarea id="detail-notes-ta" placeholder="Add notes..."
         style="flex:1;min-height:110px;width:100%;background:none;border:none;outline:none;
-               font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--text-2);
+               font-family:inherit;font-size:13px;color:var(--text-2);
                line-height:1.6;resize:none;padding:2px 0;"
       >${esc(t.notes||'')}</textarea>
     </div>
@@ -2546,7 +2569,7 @@ function toggleKbdHelp() {
   if (ov) { ov.remove(); return; }
   ov = document.createElement('div');
   ov.id = 'kbd-help';
-  ov.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:200;background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:14px 16px;min-width:210px;box-shadow:0 8px 32px rgba(0,0,0,0.4);font-family:\'JetBrains Mono\',monospace;animation:modalIn 0.15s ease;';
+  ov.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:200;background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:14px 16px;min-width:210px;box-shadow:0 8px 32px rgba(0,0,0,0.4);font-family:inherit;animation:modalIn 0.15s ease;';
   const shortcuts = [['↑ / k','Navigate'],['⇧↑↓','Multi-select'],['D','Toggle done'],['T','Assign today'],['E','Edit title'],['N','Quick add task'],['C','New issue (modal)'],['Del','Delete'],['Tab','Switch view'],['Esc','Close'],['?','Help']];
   ov.innerHTML = '<div style="font-size:0.63rem;color:var(--text-3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">Shortcuts</div>' +
     shortcuts.map(([k,v])=>`<div style="display:flex;justify-content:space-between;gap:20px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="font-size:0.68rem;color:var(--accent)">${k}</span><span style="font-size:0.68rem;color:var(--text-3)">${v}</span></div>`).join('') +
@@ -3062,7 +3085,7 @@ function triageEditText(id) {
   const inp = document.createElement('input');
   inp.type = 'text';
   inp.value = t.text;
-  inp.style.cssText = 'flex:1;background:none;border:none;border-bottom:1px solid var(--accent);color:var(--text);font-family:"JetBrains Mono",monospace;font-size:0.78rem;outline:none;padding:0 2px;min-width:0';
+  inp.style.cssText = 'flex:1;background:none;border:none;border-bottom:1px solid var(--accent);color:var(--ink);font-family:inherit;font-size:13.5px;outline:none;padding:0 2px;min-width:0';
   span.replaceWith(inp);
   inp.focus();
   inp.select();
@@ -3942,7 +3965,7 @@ const AI_ENDPOINT='/api/claude';
 async function callClaude(action,payload){const res=await fetch(AI_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,...payload})});if(!res.ok)throw new Error('API '+res.status);const data=await res.json();if(!data.ok)throw new Error(data.error||'err');return data.result;}
 let triageGenSuggestions=[];
 let _activeToast=null;
-function showToast(msg,undoFn){if(_activeToast)_activeToast.remove();const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:10px 18px;font-family:"JetBrains Mono",monospace;font-size:0.72rem;color:var(--text-2);display:flex;align-items:center;gap:12px;z-index:999;box-shadow:0 8px 28px rgba(0,0,0,0.5)';t.innerHTML=msg;if(undoFn){const b=document.createElement('button');b.textContent='Deshacer';b.style.cssText='border:1px solid var(--border2);background:none;color:var(--accent);border-radius:var(--radius);padding:3px 10px;cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:0.68rem';b.onclick=()=>{undoFn();t.remove();_activeToast=null;};t.appendChild(b);}document.body.appendChild(t);_activeToast=t;setTimeout(()=>{if(t.parentNode){t.remove();if(_activeToast===t)_activeToast=null;}},4500);}
+function showToast(msg,undoFn){if(_activeToast)_activeToast.remove();const t=document.createElement('div');t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:10px 18px;font-family:inherit;font-size:13px;color:var(--text-2);display:flex;align-items:center;gap:12px;z-index:999;box-shadow:0 8px 28px rgba(0,0,0,0.5)';t.innerHTML=msg;if(undoFn){const b=document.createElement('button');b.textContent='Deshacer';b.style.cssText='border:1px solid var(--border2);background:none;color:var(--accent);border-radius:var(--radius);padding:3px 10px;cursor:pointer;font-family:inherit;font-size:12.5px';b.onclick=()=>{undoFn();t.remove();_activeToast=null;};t.appendChild(b);}document.body.appendChild(t);_activeToast=t;setTimeout(()=>{if(t.parentNode){t.remove();if(_activeToast===t)_activeToast=null;}},4500);}
 function toggleGeneratePanel(open){const p=document.getElementById('triage-generate-panel');if(!p)return;p.style.display=open?'flex':'none';if(open){const ta=document.getElementById('triage-plan-input');if(ta){ta.value='';setTimeout(()=>ta.focus(),60);}const gr=document.getElementById('triage-gen-results');if(gr)gr.style.display='none';triageGenSuggestions=[];}}
 async function runGeneratePlan(){const ta=document.getElementById('triage-plan-input');const text=ta?ta.value.trim():'';if(!text){if(ta)ta.focus();return;}const btn=document.getElementById('triage-gen-btn');const rw=document.getElementById('triage-gen-results');const ct=document.getElementById('triage-gen-content');if(btn){btn.style.opacity='0.6';btn.style.pointerEvents='none';btn.innerHTML='Generando…';}if(rw)rw.style.display='block';if(ct)ct.innerHTML='<div style="font-size:0.72rem;color:var(--text-3);padding:4px 0">Procesando...</div>';try{const wk=getWeekDays(0).map((d,i)=>({label:DAY_NAMES[i],date:toKey(d)}));const result=await callClaude('plan',{input:text,weekDays:wk,milestones:milestones.map(m=>({id:m.id,name:m.name}))});const suggestions=Array.isArray(result)?result:[];const startId=counter;suggestions.forEach(s=>{addTask(s.title,s.priority||'p4',null,true);if(s.milestone_id){const t2=tasks[0];if(t2)t2.milestone=s.milestone_id;}});const addedIds=suggestions.map((_,i)=>startId+i);if(suggestions.length){save();updateTriageBadge();renderTriage();}if(ta)ta.value='';if(ct){ct.innerHTML=suggestions.length?'<div style="font-size:0.72rem;color:var(--green)">&#10003; '+suggestions.length+' issue'+(suggestions.length!==1?'s':'')+' añadido'+(suggestions.length!==1?'s':'')+' al triage</div>':'<div style="font-size:0.72rem;color:var(--text-3)">Sin sugerencias.</div>';}if(suggestions.length){showToast('✓ '+suggestions.length+' issue'+(suggestions.length!==1?'s':'')+' añadido'+(suggestions.length!==1?'s':'')+' al triage',()=>{addedIds.forEach(id=>{const idx=tasks.findIndex(t=>t.id===id);if(idx!==-1)tasks.splice(idx,1);});save();updateTriageBadge();renderTriage();});}setTimeout(()=>{if(rw)rw.style.display='none';if(ta)ta.focus();},2200);}catch(e){if(ct)ct.innerHTML='<div style="font-size:0.72rem;color:var(--red)">Error: '+e.message+'</div>';}finally{if(btn){btn.style.opacity='';btn.style.pointerEvents='';btn.innerHTML='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg> Generar';}}}
 function renderTriageGenResults(){const ct=document.getElementById('triage-gen-content');if(!ct)return;if(!triageGenSuggestions.length){ct.innerHTML='<div style="font-size:0.72rem;color:var(--text-3)">Sin sugerencias.</div>';return;}const PL={p1:'Urgent',p2:'High',p3:'Medium',p4:'Low'},PC={p1:'var(--red)',p2:'var(--orange)',p3:'var(--yellow)',p4:'var(--text-3)'};let html='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-size:0.68rem;color:var(--text-3)">'+triageGenSuggestions.length+' sugerencias</span><button onclick="acceptAllGenSuggestions()" class="plan-accept-all-btn">Aceptar todas</button></div>';triageGenSuggestions.forEach((s,i)=>{const ms=milestones.find(m=>m.id===s.milestone_id),pc=PC[s.priority]||'var(--text-3)';html+='<div class="plan-issue-card" id="gen-card-'+i+'"><div class="plan-issue-title">'+esc(s.title)+'</div><div class="plan-issue-meta"><span class="plan-meta-chip active" style="border-color:'+pc+';color:'+pc+'"><span style="width:6px;height:6px;border-radius:1px;background:'+pc+';display:inline-block"></span> '+(PL[s.priority]||'Low')+'</span>'+(ms?'<span class="plan-meta-chip active">&#9672; '+esc(ms.name)+'</span>':'')+'</div>'+(s.reasoning?'<div class="plan-issue-reasoning">"'+esc(s.reasoning)+'"</div>':'')+'<div class="plan-issue-actions"><button class="plan-accept-btn" onclick="acceptGenSuggestion('+i+')">&#10003; Aceptar</button><button class="plan-dismiss-btn" onclick="dismissGenSuggestion('+i+')">&#10005; Descartar</button></div></div>';});ct.innerHTML=html;}
@@ -3952,7 +3975,7 @@ function acceptAllGenSuggestions(){triageGenSuggestions.forEach(s=>{addTask(s.ti
 function smartAdd(rawText){if(!rawText.trim())return;addTask(rawText,'p4',null,false);}
 function expandNotes(taskId){}
 let ctxMenu=null;
-function showContextMenu(e,taskId){e.preventDefault();hideContextMenu();const t=tasks.find(t=>t.id===taskId);if(!t)return;const tk=toKey(today());const menu=document.createElement('div');menu.id='ctx-menu';menu.style.cssText='position:fixed;z-index:500;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:4px;min-width:160px;box-shadow:0 8px 32px rgba(0,0,0,0.45);backdrop-filter:blur(12px);font-family:"JetBrains Mono",monospace;left:'+Math.min(e.clientX,window.innerWidth-180)+'px;top:'+Math.min(e.clientY,window.innerHeight-160)+'px;';[{label:t.done?'&#9675; Todo':'&#10003; Done',fn:()=>toggleDone(taskId)},{label:t.day===tk?'&#8212; Clear':'Today',fn:()=>updateTask(taskId,{day:t.day===tk?null:tk})},{sep:true},{label:'&#10005; Delete',fn:()=>deleteTask(taskId),danger:true}].forEach(item=>{if(item.sep){const hr=document.createElement('div');hr.style.cssText='height:1px;background:var(--border);margin:3px 0';menu.appendChild(hr);return;}const btn=document.createElement('button');btn.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;border:none;background:none;border-radius:3px;cursor:pointer;font-size:0.72rem;font-family:"JetBrains Mono",monospace;color:'+(item.danger?'var(--red)':'var(--text-2)')+';transition:background 0.08s';btn.innerHTML=item.label;btn.onmouseover=()=>btn.style.background='var(--surface3)';btn.onmouseout=()=>btn.style.background='none';btn.onclick=()=>{item.fn();hideContextMenu();};menu.appendChild(btn);});document.body.appendChild(menu);ctxMenu=menu;setTimeout(()=>document.addEventListener('click',hideContextMenu,{once:true}),10);}
+function showContextMenu(e,taskId){e.preventDefault();hideContextMenu();const t=tasks.find(t=>t.id===taskId);if(!t)return;const tk=toKey(today());const menu=document.createElement('div');menu.id='ctx-menu';menu.style.cssText='position:fixed;z-index:500;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:4px;min-width:160px;box-shadow:0 8px 32px rgba(0,0,0,0.45);backdrop-filter:blur(12px);font-family:inherit;left:'+Math.min(e.clientX,window.innerWidth-180)+'px;top:'+Math.min(e.clientY,window.innerHeight-160)+'px;';[{label:t.done?'&#9675; Todo':'&#10003; Done',fn:()=>toggleDone(taskId)},{label:t.day===tk?'&#8212; Clear':'Today',fn:()=>updateTask(taskId,{day:t.day===tk?null:tk})},{sep:true},{label:'&#10005; Delete',fn:()=>deleteTask(taskId),danger:true}].forEach(item=>{if(item.sep){const hr=document.createElement('div');hr.style.cssText='height:1px;background:var(--border);margin:3px 0';menu.appendChild(hr);return;}const btn=document.createElement('button');btn.style.cssText='display:block;width:100%;text-align:left;padding:7px 10px;border:none;background:none;border-radius:3px;cursor:pointer;font-size:13px;font-family:inherit;color:'+(item.danger?'var(--red)':'var(--text-2)')+';transition:background 0.08s';btn.innerHTML=item.label;btn.onmouseover=()=>btn.style.background='var(--surface3)';btn.onmouseout=()=>btn.style.background='none';btn.onclick=()=>{item.fn();hideContextMenu();};menu.appendChild(btn);});document.body.appendChild(menu);ctxMenu=menu;setTimeout(()=>document.addEventListener('click',hideContextMenu,{once:true}),10);}
 function hideContextMenu(){ctxMenu?.remove();ctxMenu=null;}
 function getTodayDot(t){return t.day===toKey(today())&&!t.done?'<span style="width:5px;height:5px;border-radius:50%;background:var(--accent);display:inline-block;margin-left:6px;flex-shrink:0;vertical-align:middle"></span>':'';}
 document.addEventListener('keydown',e=>{if(e.key!=='Tab'||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;if(document.getElementById('modal')?.style.display!=='none')return;e.preventDefault();const views=['triage','list','week','milestones','habits','mood'];const next=views[(views.indexOf(currentView)+1)%views.length];switchView(next);syncSidebarNav(next);});
