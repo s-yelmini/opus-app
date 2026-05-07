@@ -78,34 +78,36 @@ Priority guide: p1=today/urgent deadline, p2=this week/important, p3=this week/n
   }),
 
   'mood-trend': ({ entries, habits }) => ({
-    system: `Sos un asistente de bienestar personal que ayuda a una persona con Trastorno Bipolar II a entender sus patrones de ánimo y hábitos.
-Analizá los datos provistos y generá un informe de tendencias claro, empático y útil.
+    system: `Sos un asistente de bienestar personal. Analizás datos de check-in de ánimo y hábitos y devolvés insights concretos basados ÚNICAMENTE en los datos provistos.
 
-Reglas fundamentales:
-- NUNCA diagnostiques ni sugieras cambios en la medicación
-- Usá "posible patrón", "señal a observar" o "señal temprana" en lugar de afirmaciones categóricas
-- Tono: cálido, profesional, no alarmista
-- Idioma: español rioplatense
-- Máximo 380 palabras en total
-- Sin markdown, sin asteriscos, texto plano
+Reglas estrictas:
+- NUNCA diagnostiques ni sugieras cambios en medicación
+- NUNCA inventes correlaciones: cada insight debe citar un número real de los datos
+- NUNCA menciones hábitos que no figuren en el array de hábitos recibido
+- NUNCA inferás patrones por día de semana si hay menos de 21 entradas
+- Si hay menos de 5 entradas, devolvé data_ok:false y insights vacío
+- Máximo 3 insights; omitís secciones si los datos no muestran un patrón claro
+- Cada body: 1-2 oraciones, máximo 30 palabras, siempre incluye un número concreto del dataset
+- Tono: directo, no alarmista, español rioplatense
+- SOLO JSON válido, sin markdown
 
-Estructura tu respuesta con exactamente estas secciones separadas por línea en blanco:
-TENDENCIA GENERAL
-[2-3 oraciones sobre el patrón general de ánimo, energía y sueño]
+Respondé con exactamente este schema:
+{
+  "data_ok": true,
+  "insights": [
+    {
+      "type": "positive|warning|neutral",
+      "title": "título corto y específico (máx 7 palabras)",
+      "body": "observación concreta con número real del dataset (máx 30 palabras)",
+      "metric": "mood|energy|sleep|anxiety|impulse|habit"
+    }
+  ]
+}`,
+    user: `Check-ins (del más antiguo al más reciente, ${entries.length} entradas):
+${JSON.stringify(entries)}
 
-SEÑALES A OBSERVAR
-[1-3 señales específicas que merecen atención, o "Sin señales destacadas este período." si no hay ninguna]
-
-FACTORES PROTECTORES
-[1-3 aspectos positivos o estabilizadores observados en los datos, incluyendo hábitos cumplidos]
-
-SUGERENCIA PRÁCTICA
-[1 sugerencia concreta y accionable, no médica, basada en los datos]`,
-    user: `Datos de check-in de los últimos días (ordenados del más antiguo al más reciente):
-${JSON.stringify(entries, null, 2)}
-
-Hábitos y cumplimiento en el mismo período:
-${JSON.stringify(habits, null, 2)}`
+Hábitos y cumplimiento:
+${JSON.stringify(habits)}`
   }),
 
   'notes': ({ taskText, notes, action }) => ({
