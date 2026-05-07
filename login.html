@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opus · Acceso</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23121319'/><path d='M19 4L9 18h8l-4 10 14-16h-9z' fill='%235e6ad2'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #ffffff;
+  --line:      #e6e6ea;
+  --ink:       #0e0e12;
+  --ink-2:     #3d3d45;
+  --ink-3:     #6e6e78;
+  --ink-4:     #9e9ea8;
+  --accent:    oklch(0.42 0.10 270);
+  --urgent:    oklch(0.55 0.18 25);
+  --radius:    6px;
+  --shadow:    0 1px 3px rgba(20,20,30,.08), 0 4px 16px rgba(20,20,30,.06);
+}
+
+body {
+  font-family: 'Inter Tight', ui-sans-serif, -apple-system, sans-serif;
+  font-size: 14px;
+  background: #f4f4f6;
+  color: var(--ink);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.card {
+  background: var(--bg);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 40px 36px 36px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.logo-icon {
+  width: 30px;
+  height: 30px;
+  background: #121319;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.logo-name {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink-3);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+input[type="password"] {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 120ms;
+}
+
+input[type="password"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px oklch(0.97 0.012 270);
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  height: 40px;
+  margin-top: 16px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 120ms;
+  letter-spacing: -0.01em;
+}
+
+.btn:hover { background: var(--ink-2); }
+.btn:active { background: #000; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.error {
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: var(--urgent);
+  display: none;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="none">
+        <path d="M19 4L9 18h8l-4 10 14-16h-9z" fill="#5e6ad2"/>
+      </svg>
+    </div>
+    <span class="logo-name">Opus</span>
+  </div>
+
+  <form id="form">
+    <label for="pwd">Contraseña</label>
+    <input type="password" id="pwd" autofocus autocomplete="current-password" placeholder="••••••••" />
+    <button type="submit" class="btn" id="btn">Entrar</button>
+    <div class="error" id="err">Contraseña incorrecta</div>
+  </form>
+</div>
+
+<script>
+document.getElementById('form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const pwd  = document.getElementById('pwd').value;
+  const btn  = document.getElementById('btn');
+  const err  = document.getElementById('err');
+  err.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Verificando…';
+
+  try {
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd }),
+    });
+
+    if (res.ok) {
+      window.location.replace('/');
+    } else {
+      err.style.display = 'block';
+      document.getElementById('pwd').select();
+    }
+  } catch {
+    err.textContent = 'Error de red. Intentá de nuevo.';
+    err.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+  }
+});
+</script>
+</body>
+</html>
