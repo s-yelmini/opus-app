@@ -1009,30 +1009,21 @@ input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 
 .ms-row:hover { background: var(--bg-hover); }
 .ms-row:hover .ms-actions { opacity: 1; }
 
-/* Sub-milestone children */
-.ms-child-block { border-left: 2px solid var(--line); margin-left: 29px; }
-.ms-child-row {
-  height: 38px; border-bottom: 1px solid var(--line);
-  cursor: pointer; transition: background 80ms; display: flex; align-items: center; gap: 12px; padding: 0 20px 0 12px;
-}
-.ms-child-row:hover { background: var(--bg-hover); }
-.ms-child-row:hover .ms-actions { opacity: 1; }
-
-/* Task rows inside milestones — align name with ms-grid column 3 (starts at 110px from edge) */
-.ms-task-block { background: var(--bg-sunken); border-bottom: 1px solid var(--line); }
-.ms-task-row {
-  height: 36px; border-bottom: 1px solid var(--line);
-  display: flex; align-items: center; gap: 10px;
-  padding: 0 20px 0 110px;
+/* Children rows (tasks + sub-milestones) — same grid, sunken bg */
+.ms-child-row, .ms-task-row {
+  background: var(--bg-sunken);
+  border-bottom: 1px solid var(--line);
   cursor: pointer; transition: background 80ms;
 }
-.ms-task-row:last-child { border-bottom: none; }
-.ms-task-row:hover { background: var(--bg-hover); }
+.ms-child-row:hover, .ms-task-row:hover { background: var(--bg-hover); }
+.ms-child-row:hover .ms-actions, .ms-task-row:hover .ms-actions { opacity: 1; }
+.ms-child-row { height: 38px; }
+.ms-task-row  { height: 36px; }
 .ms-task-check {
   width: 13px; height: 13px; border-radius: 50%;
   border: 1.5px solid var(--line-strong); flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all 120ms;
+  cursor: pointer; transition: all 120ms; margin: 0 auto;
 }
 .ms-task-check:hover { border-color: var(--accent); }
 .ms-task-check.done { background: var(--accent); border-color: var(--accent); }
@@ -1044,16 +1035,6 @@ input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 
 .ms-task-prio { width: 6px; height: 6px; border-radius: 1px; flex-shrink: 0; }
 .ms-task-text { flex: 1; font-size: 12.5px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ms-task-text.done { text-decoration: line-through; color: var(--ink-4); }
-.ms-task-id { font-size: 11px; color: var(--ink-4); flex-shrink: 0; }
-.ms-add-task-row {
-  height: 32px; display: flex; align-items: center; gap: 10px;
-  padding: 0 20px 0 110px;
-}
-.ms-add-task-input {
-  background: none; border: none; outline: none;
-  font-family: inherit; font-size: 12.5px; color: var(--ink); flex: 1;
-}
-.ms-add-task-input::placeholder { color: var(--ink-4); }
 
 .ms-actions { display: flex; gap: 2px; opacity: 0; transition: opacity 100ms; justify-content: flex-end; }
 .ms-btn {
@@ -3367,78 +3348,56 @@ function msRowHTML(m, rowNum) {
   const barColor = pct === 100 ? 'var(--accent)' : (pct > 0 ? m.color : 'transparent');
   const hasExpandable = children.length || ts.length;
 
-  const numCell = `<div style="display:flex;align-items:center;gap:4px;min-width:0">
-    ${hasExpandable
-      ? `<button onclick="event.stopPropagation();toggleMilestoneExpand(${m.id})" style="width:18px;height:18px;display:flex;align-items:center;justify-content:center;border:none;background:none;cursor:pointer;color:var(--ink-3);flex-shrink:0;border-radius:3px;padding:0">
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="transform:rotate(${isExpanded?90:0}deg);transition:transform 150ms"><path d="m9 6 6 6-6 6"/></svg>
-        </button>`
-      : `<span style="width:18px;flex-shrink:0"></span>`}
-    <span style="font-size:11.5px;color:var(--ink-4);font-variant-numeric:tabular-nums">${rowNum}</span>
-  </div>`;
+  const chevron = hasExpandable
+    ? `<button onclick="event.stopPropagation();toggleMilestoneExpand(${m.id})" style="width:16px;height:16px;display:flex;align-items:center;justify-content:center;border:none;background:none;cursor:pointer;color:var(--ink-3);border-radius:2px;padding:0;flex-shrink:0">
+        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="transform:rotate(${isExpanded?90:0}deg);transition:transform 150ms"><path d="m9 6 6 6-6 6"/></svg>
+      </button>`
+    : `<span style="width:16px;flex-shrink:0"></span>`;
 
   let html = `<div class="ms-row ms-grid" onclick="toggleMilestoneExpand(${m.id})">
-    ${numCell}
+    <div style="display:flex;align-items:center;gap:6px">${chevron}<span style="font-size:11px;color:var(--ink-4);font-variant-numeric:tabular-nums">${rowNum}</span></div>
     <span style="width:10px;height:10px;border-radius:50%;background:${m.color};flex-shrink:0;display:inline-block"></span>
-    <div style="min-width:0;display:flex;align-items:center;gap:10px">
-      <span style="font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(m.name)}</span>
-      ${children.length ? `<span style="font-size:11px;color:var(--ink-4);flex-shrink:0">${children.length} sub</span>` : ''}
-    </div>
+    <span style="font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">${esc(m.name)}</span>
     <div class="ms-progress-wrap">
-      <div class="ms-progress-bar">
-        <div class="ms-progress-fill" style="width:${pct}%;background:${barColor}"></div>
-      </div>
+      <div class="ms-progress-bar"><div class="ms-progress-fill" style="width:${pct}%;background:${barColor}"></div></div>
       <span class="mono" style="font-size:11px;color:${pct>0?'var(--ink-2)':'var(--ink-4)'};min-width:32px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0">${pct}%</span>
     </div>
-    <span class="mono" style="font-size:12px;text-align:right;font-variant-numeric:tabular-nums">
-      <span style="color:${done>0?'var(--ink)':'var(--ink-4)'}">${done}</span><span style="color:var(--ink-4)">/${total}</span>
-    </span>
+    <span class="mono" style="font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:${done>0?'var(--ink)':'var(--ink-4)'}">${done}<span style="color:var(--ink-4)">/${total}</span></span>
     <span class="mono" style="font-size:11.5px;${dateStyle};text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap">${dateLabel}</span>
     ${MS_ACTIONS(m.id)}
   </div>`;
 
   if (isExpanded) {
-    // Task rows
-    if (ts.length || true) {
-      const taskRows = ts.map(t => `
-        <div class="ms-task-row" onclick="selectTask(${t.id})">
-          <div class="ms-task-check ${t.done?'done':''}" onclick="event.stopPropagation();toggleDone(${t.id})"></div>
-          <div class="ms-task-prio" style="background:${PM[t.priority].color}"></div>
-          <span class="ms-task-text ${t.done?'done':''}">${esc(t.text)}</span>
-          <span class="ms-task-id">TSK-${String(t.id).padStart(3,'0')}</span>
-        </div>`).join('');
-      const addRow = `<div class="ms-add-task-row">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--ink-4);flex-shrink:0"><path d="M12 5v14M5 12h14"/></svg>
-        <input class="ms-add-task-input" placeholder="Agregar tarea..." autocomplete="off"
-          onkeydown="if(event.key==='Enter')addIssueToMilestone(${m.id},this)" />
+    // Task rows — use same grid, checkbox in col 1, prio dot in col 2
+    ts.forEach(t => {
+      html += `<div class="ms-task-row ms-grid" onclick="selectTask(${t.id})">
+        <div class="ms-task-check ${t.done?'done':''}" onclick="event.stopPropagation();toggleDone(${t.id})"></div>
+        <div class="ms-task-prio" style="background:${PM[t.priority].color}"></div>
+        <span class="ms-task-text ${t.done?'done':''}">${esc(t.text)}</span>
+        <div></div><div></div>
+        <div style="font-size:11px;color:var(--ink-4);text-align:right;font-variant-numeric:tabular-nums">${t.done?'✓':''}</div>
+        <div></div>
       </div>`;
-      html += `<div class="ms-task-block">${taskRows}${addRow}</div>`;
-    }
+    });
 
-    // Sub-milestone children
-    if (children.length) {
-      html += `<div class="ms-child-block">`;
-      children.forEach(child => {
-        const cp = getMilestoneProgress(child.id);
-        const { label: cdl, style: cds } = msDateLabel(child, cp.pct);
-        const cBar = cp.pct===100?'var(--accent)':cp.pct>0?child.color:'transparent';
-        html += `<div class="ms-child-row" onclick="toggleMilestoneExpand(${child.id})">
-          <span style="width:8px;height:8px;border-radius:50%;background:${child.color};flex-shrink:0;display:inline-block"></span>
-          <div style="flex:1;min-width:0">
-            <span style="font-size:12.5px;font-weight:450;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block">${esc(child.name)}</span>
-          </div>
-          <div class="ms-progress-wrap" style="width:220px;flex-shrink:0">
-            <div class="ms-progress-bar"><div class="ms-progress-fill" style="width:${cp.pct}%;background:${cBar}"></div></div>
-            <span class="mono" style="font-size:11px;color:${cp.pct>0?'var(--ink-2)':'var(--ink-4)'};min-width:32px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0">${cp.pct}%</span>
-          </div>
-          <span class="mono" style="font-size:12px;text-align:right;font-variant-numeric:tabular-nums;width:72px;flex-shrink:0">
-            <span style="color:${cp.done>0?'var(--ink)':'var(--ink-4)'}">${cp.done}</span><span style="color:var(--ink-4)">/${cp.total}</span>
-          </span>
-          <span class="mono" style="font-size:11.5px;${cds};text-align:right;font-variant-numeric:tabular-nums;width:100px;flex-shrink:0;white-space:nowrap">${cdl}</span>
-          ${MS_ACTIONS(child.id)}
-        </div>`;
-      });
-      html += `</div>`;
-    }
+    // Sub-milestone children — same grid, no number, slightly lighter
+    children.forEach(child => {
+      const cp = getMilestoneProgress(child.id);
+      const { label: cdl, style: cds } = msDateLabel(child, cp.pct);
+      const cBar = cp.pct===100?'var(--accent)':cp.pct>0?child.color:'transparent';
+      html += `<div class="ms-child-row ms-grid" onclick="event.stopPropagation();openMilestoneModal(${child.id})">
+        <span></span>
+        <span style="width:8px;height:8px;border-radius:50%;background:${child.color};flex-shrink:0;display:inline-block"></span>
+        <span style="font-size:12.5px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0">${esc(child.name)}</span>
+        <div class="ms-progress-wrap">
+          <div class="ms-progress-bar"><div class="ms-progress-fill" style="width:${cp.pct}%;background:${cBar}"></div></div>
+          <span class="mono" style="font-size:11px;color:${cp.pct>0?'var(--ink-2)':'var(--ink-4)'};min-width:32px;text-align:right;font-variant-numeric:tabular-nums;flex-shrink:0">${cp.pct}%</span>
+        </div>
+        <span class="mono" style="font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:${cp.done>0?'var(--ink)':'var(--ink-4)'}">${cp.done}<span style="color:var(--ink-4)">/${cp.total}</span></span>
+        <span class="mono" style="font-size:11.5px;${cds};text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap">${cdl}</span>
+        ${MS_ACTIONS(child.id)}
+      </div>`;
+    });
   }
 
   return html;
