@@ -3351,7 +3351,7 @@ function msRowHTML(m, rowNum) {
   const isExpanded = milestoneExpanded[m.id] !== false;
   const { label: dateLabel, style: dateStyle } = msDateLabel(m, pct);
   const barColor = pct === 100 ? 'var(--accent)' : (pct > 0 ? m.color : 'transparent');
-  const hasExpandable = children.length || ts.length;
+  const hasExpandable = children.length > 0;
 
   const chevron = hasExpandable
     ? `<button onclick="event.stopPropagation();toggleMilestoneExpand(${m.id})" style="width:16px;height:16px;display:flex;align-items:center;justify-content:center;border:none;background:none;cursor:pointer;color:var(--ink-3);border-radius:2px;padding:0;flex-shrink:0">
@@ -3372,19 +3372,7 @@ function msRowHTML(m, rowNum) {
     ${MS_ACTIONS(m.id)}
   </div>`;
 
-  if (isExpanded) {
-    // Task rows — use same grid, checkbox in col 1, prio dot in col 2
-    ts.forEach(t => {
-      html += `<div class="ms-task-row ms-grid" onclick="selectTask(${t.id})">
-        <div class="ms-task-check ${t.done?'done':''}" onclick="event.stopPropagation();toggleDone(${t.id})"></div>
-        <div class="ms-task-prio" style="background:${PM[t.priority].color}"></div>
-        <span class="ms-task-text ${t.done?'done':''}">${esc(t.text)}</span>
-        <div></div><div></div>
-        <div style="font-size:11px;color:var(--ink-4);text-align:right;font-variant-numeric:tabular-nums">${t.done?'✓':''}</div>
-        <div></div>
-      </div>`;
-    });
-
+  if (isExpanded && children.length) {
     // Sub-milestone children — same grid, no number, slightly lighter
     children.forEach(child => {
       const cp = getMilestoneProgress(child.id);
